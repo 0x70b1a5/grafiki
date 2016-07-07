@@ -1,0 +1,27 @@
+<h1>Has Anyone</h1>
+<%= form_for :bounty, url: bounties_path do |f| %>
+
+  <div class="box">
+    <div id="nym"><%= f.label :title %></div>
+    <div id="myn"><%= f.text_field :title %></div>
+  </div>
+
+  <div class="box">
+    <div id="txt"><%= f.label :description %></div>
+    <div id="xtx"><%= f.text_area :description %>
+  </div>
+
+  <div class="box">
+    <div id="loc"><%= f.label :location %></div>
+    <div id="lat"><%= f.number_field :lat, :class => 'text_field', :step => 0.000001 %>
+    <div id="lng"><%= f.number_field :lng, :class => 'text_field', :step => 0.000001 %>
+  </div>
+
+  <div class="box">
+    <div id="btc"><%= f.label :amount %></div>
+    <div id="ctb"><%= f.number_field :amount, :class => 'text_field', :step => 0.000001 %>
+  </div>
+
+  <div id="sub"><%= f.submit %></div>
+
+<% end %>
