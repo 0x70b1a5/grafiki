@@ -85,6 +85,7 @@
 </style>
 </head>
 <body>
+
  <div id="invis-top-menu">
    <div id="hed" class="in-float">grafiki</div>
    <div id="searchbar" class="in-float">
@@ -93,25 +94,46 @@
        <button action"submit" value="search" id="search-button" class="in-float">search</button>
      </form>
    </div>
-   <a href="bounties/new"><div id="add-new-button" class="in-float">+ post a bounty</div></a>
-   <a href="bounties"><div id="add-new-button" class="in-float">$ fill a bounty</div></a>
-   <a href="bounties/new_art"><div id="add-new-button" class="in-float">^ upload artwork</div></a>
+
+   <a href="bounties/new"><div class="add-new-button in-float">+ post a bounty</div></a>
+   <a href="bounties"><div class="add-new-button in-float">$ fill a bounty</div></a>
+   <a href="bounties/new_art"><div class="add-new-button in-float">^ upload artwork</div></a>
    <a href="about"><div id="about-button" class="in-float">what is grafiki?</div></a>
+
  </div>
+
  <div id="map">this a map</div>
+
  <script>
-     var map;
-     var service;
-     
-     function initMap() {
-         var tt = {lat: 40.7625, lng: -73.974167};
-         map = new google.maps.Map(document.getElementById('map'), {
-             zoom: 3,
-             center: tt
-         });	
-     }
+   var map;
+   var service;
+   
+   function initMap() {
+     var tt = {lat: 40.7625, lng: -73.974167};
+     map = new google.maps.Map(document.getElementById('map'), {
+       zoom: 3,
+       center: tt
+     });	
+   }
+
+   $(document).ready(function(){
+   <% Bounty.all.each do |bounty| %> 
+     res_<%= bounty.id %> = $.get("/bounties/<%= bounty.id %>.json").then(function(b){ 
+       marker_<%= bounty.id %>  = new google.maps.Marker({
+         position: { lat: b.lat, lng: b.lng },
+         map: map,
+         title: b.title,
+         content: b.description
+       }); 
+       marker_<%= bounty.id %>.setMap(map);
+     });
+   <% end %> 
+   });
+
+
  </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>
 </body>
+
 </html>

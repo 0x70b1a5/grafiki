@@ -7,5 +7,5 @@ class Bounty < ApplicationRecord
     numericality: { less_than_or_equal_to: 180,
                     greater_than_or_equal_to: 0 }
   validates :amount, numericality: { greater_than_or_equal_to: 0 }
-  validates :desc, presence: true, length: { minimum: 64 }
+  validates :description, presence: true, length: { minimum: 64 }
 end

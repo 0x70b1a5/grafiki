@@ -5,6 +5,11 @@ class BountiesController < ApplicationController
 
   def show
     @bounty = Bounty.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @bounty.to_json }
+    end
   end
 
   def new
@@ -43,6 +48,6 @@ class BountiesController < ApplicationController
   end
   private
     def bounty_params
-      params.require(:bounty).permit(:title,:lat,:lng,:amount,:desc)
+      params.require(:bounty).permit(:title,:lat,:lng,:amount,:description)
     end
 end
