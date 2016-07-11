@@ -1,0 +1,34 @@
+<%= form_for @bounty do |f| %>
+  <% if @bounty.errors.any? %>
+    <%= pluralize(@bounty.errors.count, "error") %> must be fixed. 
+    <ul> 
+      <% @bounty.errors.full_messages.each do |m| %>
+        <li><%= m %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div class="box">
+    <div id="nym"><%= f.label :title %></div>
+    <div id="myn"><%= f.text_field :title %></div>
+  </div>
+
+  <div class="box">
+    <div id="txt"><%= f.label :description %></div>
+    <div id="xtx"><%= f.text_area :desc %></div>
+  </div>
+
+  <div class="box">
+    <div id="loc"><%= f.label :location %></div>
+    <div id="lat"><%= f.number_field :lat, :class => 'text_field', :step => 0.000001 %></div>
+    <div id="lng"><%= f.number_field :lng, :class => 'text_field', :step => 0.000001 %></div>
+  </div>
+
+  <div class="box">
+    <div id="btc"><%= f.label :amount %></div>
+    <div id="ctb"><%= f.number_field :amount, :class => 'text_field', :step => 0.000001 %></div>
+  </div>
+
+  <div id="sub"><%= f.submit %></div>
+
+<% end %>

@@ -1,0 +1,21 @@
+<h1>Listing bountys</h1>
+ 
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th colspan="2"></th>
+  </tr>
+ 
+  <% @bounties.each do |bounty| %>
+    <tr>
+      <td><%= bounty.title %></td>
+      <td><%= bounty.lat %>, <%= bounty.lng %></td>
+      <td><%= link_to 'show', bounty_path(bounty) %></td>
+      <td><%= link_to 'edit', edit_bounty_path(bounty) %></td>
+      <td><%= link_to 'kill', bounty_path(bounty),
+              method: :delete, 
+              data: { confirm: 'u sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
