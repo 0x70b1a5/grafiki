@@ -13,3 +13,108 @@
  *= require_tree .
  *= require_self
  */
+html, body { 
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif; 
+  background-color: transparent;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+}
+
+#invis-top-menu {
+  float: left;
+  z-index: 1;
+  margin: 5px;
+  width: 100%;
+}
+
+#hed {
+  font-size: 2em;
+  padding: 0 15px;
+  margin-right: 40px;
+}
+
+#searchbar {
+  width: 400px;
+  padding-right: 0;
+}
+
+.in-float {
+  height: 2em;
+  line-height: 2em;
+  background-color: #fff;
+  color: #000;
+  float: left;
+  box-shadow: 1px 1px 1px #AAA;
+  margin: 0 5px;
+  padding: 1em;
+}
+
+.in-float label {
+  font-size: 1em;
+  margin: 10px;
+  vertical-align: top;
+}
+
+.in-float input {
+  border: none;
+  font-size: 1em;
+  font-family: inherit;
+}
+
+.box .in-float {
+  display: block;
+}
+
+.box {
+  margin: 10px;
+  float: left;
+  clear: both;
+}
+
+.box input[type=submit] {
+  background: #fff;
+  font-weight: bold;
+}
+
+#search-text-input {
+  font-size: 1em;
+  width: 100%;
+  border: 0px;
+  background: transparent;
+}
+
+#search-button {
+  height: 64px;
+  background-color: #cdcccc;
+  border: 0;
+  font-family: Roboto, sans-serif;
+  font-size: 1em;
+  margin: 0;
+  float: right;
+  margin-top: -3rem;
+  box-shadow: none;
+}
+
+.headline-info {
+  font-weight: normal;
+  font-size: smaller;
+}
+
+code {
+  background-color: #898888;
+  padding: 2px;
+  color: #fff;
+  border-radius: 2px;
+}
+
+input:focus{
+  outline: none;
+}
+

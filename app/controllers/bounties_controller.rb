@@ -40,14 +40,37 @@ class BountiesController < ApplicationController
     end
   end
 
+  def vote
+    @bounty = Bounty.find(params[:id])
+    @bounty.votes.create
+    redirect_to(bounties_path)
+  end
+
+  def fill
+    @bounty = Bounty.find(params[:id])
+
+    if not @bounty[:artist]
+      render 'fill'
+    elsif @bounty.update(artwork_fill_params)
+      redirect_to @bounty
+    else
+      render 'fill'
+    end
+  end
+
   def destroy
     @bounty = Bounty.find(params[:id])
     @bounty.destroy
 
     redirect_to bounties_path
   end
+
   private
     def bounty_params
-      params.require(:bounty).permit(:title,:lat,:lng,:amount,:description)
+      params.require(:bounty).permit(:title,:lat,:lng,:amount,:description, :patron)
+    end
+
+    def artwork_fill_params
+      params.require(:bounty).permit(:artist,:pic,:address)
     end
 end

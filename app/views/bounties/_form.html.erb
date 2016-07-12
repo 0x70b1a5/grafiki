@@ -9,26 +9,44 @@
   <% end %>
 
   <div class="box">
-    <div id="nym"><%= f.label :title %></div>
-    <div id="myn"><%= f.text_field :title %></div>
+  <div class="in-float">
+    <%= f.label :title %>
+    <%= f.text_field :title, placeholder: 'name your bounty' %>
+  </div>
   </div>
 
   <div class="box">
-    <div id="txt"><%= f.label :description %></div>
-    <div id="xtx"><%= f.text_area :description %></div>
+  <div class="in-float">
+    <%= f.label :description %>
+    <%= f.text_field :description, 
+      placeholder: 'a summary of the art you want, and details about where you want it.',
+      style: "min-width: 500px" %>
+  </div>
   </div>
 
   <div class="box">
-    <div id="loc"><%= f.label :location %></div>
-    <div id="lat"><%= f.number_field :lat, :class => 'text_field', :step => 0.000001 %></div>
-    <div id="lng"><%= f.number_field :lng, :class => 'text_field', :step => 0.000001 %></div>
+  <div class="in-float">
+    <%= f.label :location %>
+    <%= f.number_field :lat, :class => 'text_field', :step => 0.000001, placeholder: 'latitude' %>
+    <%= f.number_field :lng, :class => 'text_field', :step => 0.000001, placeholder: 'longitude' %>
+  </div>
   </div>
 
   <div class="box">
-    <div id="btc"><%= f.label :amount %></div>
-    <div id="ctb"><%= f.number_field :amount, :class => 'text_field', :step => 0.000001 %></div>
+  <div class="in-float">
+    <%= f.label :amount %>
+    <%= f.number_field :amount, :class => 'text_field', :step => 0.000001, placeholder: 'artist reward (btc)' %>
+  </div>
   </div>
 
-  <div id="sub"><%= f.submit %></div>
+  <div class="box">
+  <div class="in-float">
+    <%= f.label :patron %>
+    <%= f.text_field :patron, placeholder: 'your name & contact info (optional)',
+      style: "min-width: 400px" %>
+  </div>
+  </div>
+
+  <div class="in-float box"><%= f.submit %></div>
 
 <% end %>

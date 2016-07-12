@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707214554) do
+ActiveRecord::Schema.define(version: 20160712035128) do
 
   create_table "bounties", force: :cascade do |t|
     t.float    "lat"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 20160707214554) do
     t.float    "amount"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "score"
+    t.string   "patron"
+    t.string   "artist"
+    t.string   "pic"
+    t.string   "address"
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "bounty_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
