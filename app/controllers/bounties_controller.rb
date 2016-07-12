@@ -67,7 +67,8 @@ class BountiesController < ApplicationController
 
   private
     def bounty_params
-      params.require(:bounty).permit(:title,:lat,:lng,:amount,:description, :patron)
+      params.require(:bounty).permit(:title,:lat,:lng,:amount,:description,
+        :patron,:artist,:pic,:address)
     end
 
     def artwork_fill_params
