@@ -1,7 +1,7 @@
-<div id="hed">bounties</div>
+<div id="hed">artwork</div>
 
 <% @bounties.each do |bounty| %>
-<% next if bounty.artist %>
+<% next unless bounty.artist %>
 <div class="box">
   <div class="row">
     <div class="num">
@@ -16,6 +16,18 @@
       <%= bounty.lat %>, <%= bounty.lng %>
     </div>
 
+    <div class="pic">
+      <img src="<%= bounty.pic %>">
+    </div>
+
+    <div class="art">
+      by <%= bounty.artist %>
+    </div>
+
+    <div class="adr">
+      <%= bounty.address %>
+    </div>
+
     <div class="wut">
       <%= bounty.description %>
     </div>
@@ -25,12 +37,11 @@
     </div>
   </div>
 
-  <a href="bounties/<%= bounty.id %>/fill"><div class="row fill">fill</div></a>
-
   <div class="row tic">
     <%= bounty.votes.count %>
   </div>
-  <%= button_to '+want', vote_bounty_path(bounty), method: :post, class: "row" %>
+
+  <%= button_to '+love', vote_bounty_path(bounty), method: :post, class: "row" %>
 
     <%= link_to 'edit', edit_bounty_path(bounty) %>
     <%= link_to 'kill', bounty_path(bounty),

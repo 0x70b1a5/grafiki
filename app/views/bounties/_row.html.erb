@@ -1,8 +1,5 @@
-<div id="hed">bounties</div>
-
-<% @bounties.each do |bounty| %>
-<% next if bounty.artist %>
-<div class="box">
+<%= @bounties.each do |bounty| %>
+<div class="nox">
   <div class="row">
     <div class="num">
       <%= bounty.amount %> BTC
@@ -37,4 +34,4 @@
       method: :delete, 
       data: { confirm: 'u sure?' } %>
 </div>
-<% end %>
+<%end%>

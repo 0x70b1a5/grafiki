@@ -3,6 +3,10 @@ class BountiesController < ApplicationController
     @bounties = Bounty.all
   end
 
+  def filled
+    @bounties = Bounty.all
+  end
+
   def show
     @bounty = Bounty.find(params[:id])
 
