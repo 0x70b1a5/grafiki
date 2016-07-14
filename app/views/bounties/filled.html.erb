@@ -2,9 +2,26 @@
 
 <% @bounties.each do |bounty| %>
 <% next unless bounty.artist %>
+<div class="box" style="margin-bottom:0">
+  <div class="pic">
+    <img src="<%= bounty.pic %>">
+  </div>
+  <div class="row">
+    <div class="wut">
+    by <%= bounty.artist %>
+    </div>
+    <div class="adr">
+      <img class="qr"
+        src="https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=<%=
+        bounty.address %>">
+      <%= bounty.address %>
+    </div>
+  </div>
+</div>
+
 <div class="box">
   <div class="row">
-    <div class="num">
+    <div class="num fil">
       <%= bounty.amount %> BTC
     </div>
 
@@ -16,18 +33,10 @@
       <%= bounty.lat %>, <%= bounty.lng %>
     </div>
 
-    <div class="pic">
-      <img src="<%= bounty.pic %>">
+    <div class="row tic">
+      <%= bounty.votes.count %>
     </div>
-
-    <div class="art">
-      by <%= bounty.artist %>
-    </div>
-
-    <div class="adr">
-      <%= bounty.address %>
-    </div>
-
+   <%= button_to '+love', vote_bounty_path(bounty), method: :post, class: "row" %>
     <div class="wut">
       <%= bounty.description %>
     </div>
@@ -36,12 +45,6 @@
       commissioned by <%= bounty.patron || 'anonymous' %>
     </div>
   </div>
-
-  <div class="row tic">
-    <%= bounty.votes.count %>
-  </div>
-
-  <%= button_to '+love', vote_bounty_path(bounty), method: :post, class: "row" %>
 
     <%= link_to 'edit', edit_bounty_path(bounty) %>
     <%= link_to 'kill', bounty_path(bounty),

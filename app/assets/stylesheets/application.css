@@ -133,8 +133,19 @@ input:focus{
 
   .num {
     background: #B8E4BD;
-    height: 100%;
     padding: 10px;
+  }
+
+  .num.fil {
+    background: forestgreen;
+    color: #fff;
+    text-shadow: 1px 1px #000;
+    font-weight: bold;
+    float: left;
+  }
+
+  .tyt {
+    float: left; 
   }
 
   .tic {
@@ -167,6 +178,28 @@ input:focus{
 
   .wut {
     color: #999;
+    max-width: 500px;
+    overflow-wrap: break-word;
+    display: block !important;
+  }
+
+  .pic {
+  }
+
+  .adr {
+    font-family: monospace;
+    background: #b8e4ab;
+    border-radius: 3px;
+    padding: 3px !important;
+    margin: 0px;
+  }
+
+  .qr {  
+    max-width: 200px;
+    margin: 0;
+    padding: 0;
+    display: block;
+    margin: auto;
   }
 
   .fill {
