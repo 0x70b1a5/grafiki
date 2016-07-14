@@ -17,6 +17,12 @@
  <div id="map">this a map</div>
 
  <script>
+   function escapeHtml(str) {
+     var div = document.createElement('div');
+     div.appendChild(document.createTextNode(str));
+     return div.innerHTML;
+   }
+   
    var map;
    var service;
    
@@ -30,12 +36,23 @@
 
    $(document).ready(function(){
    <% Bounty.all.each do |bounty| %> 
-     res_<%= bounty.id %> = $.get("/bounties/<%= bounty.id %>.json").then(function(b){ 
+     res_<%= bounty.id %> = 
+       $.get("/bounties/<%= bounty.id %>.json").then(function(ub){ 
+
+       b = {};
+       for (attr in ub) { 
+         if (attr == "lat" || attr == "lng" || attr == "amount") { 
+           b[attr] = Number(ub[attr]);
+           continue 
+         };
+         if (typeof(ub[attr]) == "string") {
+           b[attr] = escapeHtml(ub[attr]) 
+         }
+       };
 
        marker_<%= bounty.id %>  = new google.maps.Marker({
          position: { lat: b.lat, lng: b.lng },
-         map: map,
-         title: b.title,
+         map: map
        }); 
        marker_<%= bounty.id %>.setMap(map);
 

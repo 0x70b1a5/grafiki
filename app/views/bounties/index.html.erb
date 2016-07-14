@@ -76,6 +76,7 @@
 <div id="hed">browse bounties</div>
 
 <% @bounties.each do |bounty| %>
+<% next if bounty.artist %>
 <div class="nox">
   <div class="row">
     <div class="num">
