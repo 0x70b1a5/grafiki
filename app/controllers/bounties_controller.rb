@@ -1,6 +1,10 @@
 class BountiesController < ApplicationController
   def index
     @bounties = Bounty.all
+    @bounties.each do |b|
+      b.save_to_html
+      b.save
+    end
   end
 
   def show
@@ -18,10 +22,12 @@ class BountiesController < ApplicationController
 
   def edit
     @bounty = Bounty.find(params[:id])
+    @bounty.save_to_html
   end
 
   def create
     @bounty = Bounty.new(bounty_params)
+    @bounty.save_to_html
 
     if @bounty.save
       redirect_to @bounty
@@ -32,6 +38,7 @@ class BountiesController < ApplicationController
 
   def update
     @bounty = Bounty.find(params[:id])
+    @bounty.save_to_html
 
     if @bounty.update(bounty_params)
       redirect_to @bounty
@@ -43,15 +50,20 @@ class BountiesController < ApplicationController
   def vote
     @bounty = Bounty.find(params[:id])
     @bounty.votes.create
+    @bounty.save_to_html
     redirect_to(bounties_path)
   end
 
   def fill
+    # for updating a bounty to an artwork
     @bounty = Bounty.find(params[:id])
 
     if not @bounty[:artist]
+      # no artist field = no picture = not yet filled. render form
       render 'fill'
     elsif @bounty.update(artwork_fill_params)
+      # todo: /bounty/x shows main page centered on bounty
+      @bounty.save_to_html
       redirect_to @bounty
     else
       render 'fill'

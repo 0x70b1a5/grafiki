@@ -31,17 +31,27 @@
    $(document).ready(function(){
    <% Bounty.all.each do |bounty| %> 
      res_<%= bounty.id %> = $.get("/bounties/<%= bounty.id %>.json").then(function(b){ 
+
        marker_<%= bounty.id %>  = new google.maps.Marker({
          position: { lat: b.lat, lng: b.lng },
          map: map,
          title: b.title,
-         content: b.description
        }); 
        marker_<%= bounty.id %>.setMap(map);
+
        info_<%= bounty.id %> = new google.maps.InfoWindow({
          maxWidth: 400,
-         content: b.description
+         content: "<div class='b-a'>" + b.amount + "</div>" +
+           "<div class='b-t'>" + b.title + "</div>" + (function(){
+             return b.artist ? 
+                 "<div class='b-p'><img class='pic' src='" + b.pic + "'></div>"+
+                 "<div class='b-b'>" + b.address + "</div>"+
+                 "<div class='b-r'>" + b.artist + "</div>"
+             : ""})() +
+               "<div class='b-d'>" + b.description + "</div>" +
+               "<div class='b-n'>" + b.patron + "</div>"
        });
+
        marker_<%= bounty.id %>.addListener('click', function() {
          if (!marker_<%= bounty.id %>.open) {
            info_<%= bounty.id %>.open(map, marker_<%= bounty.id %>);
@@ -51,12 +61,14 @@
            marker_<%= bounty.id %>.open = false;
          }
        });
+
        marker_<%= bounty.id %>.addListener('keyup', function(e) {
          console.log('ping');
          if (e.keyCode == 27) {
            info_<%= bounty.id %>.close();
          }
        });
+
      });
    <% end %> 
    });
