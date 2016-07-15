@@ -4,17 +4,18 @@
 <% next if bounty.artist %>
 <div class="box">
   <div class="row">
-    <div class="num">
+    <div class="num row">
       <%= bounty.amount %> BTC
     </div>
 
+  <a href="bounties/<%= bounty.id %>/fill"><div class="row fill">fill</div></a>
     <div class="tyt">
       <%= bounty.title %>
     </div>
 
-    <div class="loc">
+<code>
       <%= bounty.lat %>, <%= bounty.lng %>
-    </div>
+</code>
 
     <div class="wut">
       <%= bounty.description %>
@@ -23,14 +24,13 @@
     <div class="wut">
       commissioned by <%= bounty.patron || 'anonymous' %>
     </div>
-  </div>
-
-  <a href="bounties/<%= bounty.id %>/fill"><div class="row fill">fill</div></a>
+  <%= button_to '+want', vote_bounty_path(bounty), method: :post, class: "row" %>
 
   <div class="row tic">
     <%= bounty.votes.count %>
   </div>
-  <%= button_to '+want', vote_bounty_path(bounty), method: :post, class: "row" %>
+
+  </div>
 
     <%= link_to 'edit', edit_bounty_path(bounty) %>
     <%= link_to 'kill', bounty_path(bounty),
