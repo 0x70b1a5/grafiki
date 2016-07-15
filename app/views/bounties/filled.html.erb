@@ -2,53 +2,33 @@
 
 <% @bounties.each do |bounty| %>
 <% next unless bounty.artist %>
-<div class="box" style="margin-bottom:0">
-  <div class="pic">
-    <img src="<%= bounty.pic %>">
-  </div>
-  <div class="row">
-    <div class="wut">
+<div class="row">
+<div class="sid">
+  <div class="num row fil"><%= bounty.amount %> BTC</div>
+  <div class="tic row"><%= bounty.votes.count %></div>
+  <%= button_to '+love', vote_bounty_path(bounty), method: :post, class: "row" %>
+
+  <div class="inf">
     by <%= bounty.artist %>
-    </div>
-    <div class="adr">
-      <img class="qr"
-        src="https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=<%=
-        bounty.address %>">
+
+    <img class="qr" src="https://chart.googleapis.com/chart?cht=qr&chs=100x100&chl=<%= bounty.address %>">
       <%= bounty.address %>
     </div>
-  </div>
-</div>
 
-<div class="box">
-  <div class="row">
-    <div class="num fil">
-      <%= bounty.amount %> BTC
-    </div>
-
-    <div class="tyt">
-      <%= bounty.title %>
-    </div>
-
-    <div class="loc">
-      <%= bounty.lat %>, <%= bounty.lng %>
-    </div>
-
-    <div class="row tic">
-      <%= bounty.votes.count %>
-    </div>
-   <%= button_to '+love', vote_bounty_path(bounty), method: :post, class: "row" %>
-    <div class="wut">
-      <%= bounty.description %>
-    </div>
-
-    <div class="wut">
-      commissioned by <%= bounty.patron || 'anonymous' %>
-    </div>
+    <%= bounty.description %>
+    commissioned by <%= bounty.patron || 'anonymous' %>
   </div>
 
-    <%= link_to 'edit', edit_bounty_path(bounty) %>
-    <%= link_to 'kill', bounty_path(bounty),
-      method: :delete, 
-      data: { confirm: 'u sure?' } %>
+<div class="tyt">
+  <p style="margin:0;padding:0"><img src="<%= bounty.pic %>"><p>
+
+  <%= bounty.title %>
+  <p style="margin:0;padding:0"><code><%= bounty.lat %>, <%= bounty.lng %></code></p>
 </div>
+
+</div>
+<%= link_to 'edit', edit_bounty_path(bounty) %>
+<%= link_to 'kill', bounty_path(bounty),
+method: :delete, 
+data: { confirm: 'u sure?' } %>
 <% end %>

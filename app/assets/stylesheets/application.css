@@ -108,8 +108,8 @@ html, body {
 }
 
 code {
-  background-color: #898888;
-  padding: 2px;
+  background-color: #444;
+  padding: 2px 6px;
   color: #fff;
   border-radius: 2px;
 }
@@ -142,10 +142,28 @@ input:focus{
     text-shadow: 1px 1px #000;
     font-weight: bold;
     float: left;
+    margin: 0;
+  }
+
+  .sid {
+    overflow-wrap: break-word;
+    max-width: 300px;
+    display: inline-block;
+    float: left;
+    color: #333;
+  }
+
+  .inf {
+    font-size: 0.8rem;
   }
 
   .tyt {
-    float: left; 
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .tyt code {
+    font-weight: normal;
   }
 
   .tic {
