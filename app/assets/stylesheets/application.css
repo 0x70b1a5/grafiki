@@ -146,6 +146,7 @@ input:focus{
   }
 
   .sid {
+    text-align:center;
     overflow-wrap: break-word;
     max-width: 300px;
     display: inline-block;
@@ -167,6 +168,7 @@ input:focus{
   }
 
   .tic {
+    float: right;
     padding: 10px;
     margin: 0;
   }
@@ -269,5 +271,6 @@ input:focus{
 
 
   form.button_to {
+    float: right;
     display: inline-block;
   }
