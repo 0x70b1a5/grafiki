@@ -35,6 +35,10 @@ html, body {
   pointer-events: none;
 }
 
+#invis-top-menu * {
+  pointer-events: all;
+}
+
 #hed {
   font-size: 2em;
   padding: 0 15px;
@@ -274,4 +278,14 @@ input:focus{
   form.button_to {
     float: right;
     display: inline-block;
+  }
+
+  .in-float.rod {
+    position: absolute;
+    right: 1em;
+    top: 5.4em;
+  }
+
+  .in-float.sat {
+    right: 6.21em;
   }

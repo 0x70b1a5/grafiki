@@ -12,6 +12,8 @@
    <a href="bounties/new_art"><div class="add-new-button in-float">^ upload artwork</div></a>
    <a href="art"><div class="add-new-button in-float">* browse artwork</div></a>
    <a href="about"><div id="about-button" class="in-float">what is grafiki?</div></a>
+   <div class="in-float rod" id="road">road</div>
+   <div class="in-float rod sat" id="sat">sat</div>
 
  </div>
 
@@ -34,7 +36,17 @@
        zoom: zum,
        center: cen
      });	
+     map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
    }
+
+   $( "#road" ).click(function() {
+     map.setOptions({ mapTypeId: google.maps.MapTypeId.ROADMAP });
+   });
+
+   $( "#sat" ).click(function() {
+     map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
+   });
+
 
    $(document).ready(function(){
    <% Bounty.all.each do |bounty| %> 
