@@ -10,7 +10,7 @@
    <a href="bounties/new"><div class="add-new-button in-float">+ post a bounty</div></a>
    <a href="bounties"><div class="add-new-button in-float">$ fill a bounty</div></a>
    <a href="bounties/new_art"><div class="add-new-button in-float">^ upload artwork</div></a>
-   <a href="art"><div class="add-new-button in-float">* browse artwork</div></a>
+   <a href="bounties/filled"><div class="add-new-button in-float">* browse artwork</div></a>
    <a href="about"><div id="about-button" class="in-float">what is grafiki?</div></a>
    <div class="in-float rod" id="road">road</div>
    <div class="in-float rod sat" id="sat">satellite</div>
@@ -78,22 +78,21 @@
        info_<%= bounty.id %> = new google.maps.InfoWindow({
          maxWidth: 400,
          content: 
-               "<div class='row tic' style='font-weight:bold'><%= bounty.votes.count %></div>" +
-               "<form class='button_to' style='clear:both' method='post' action='/bounties/" +
-                 b.id+"/vote'><input class='row' type='submit' value='+'></form>" +
-            (function(){
+           "<div class='row tic' style='font-weight:bold'><%= bounty.votes.count %></div>" +
+           (`<%= button_to '+', vote_bounty_path(bounty), method: :post, class: "row" %>`) +
+           (function(){
              return b.artist ? 
-                 "<div class='b-p'><img style='min-width:350px'"+
-                 " class='pic' src='" + b.pic + "'></div>"+
-                 "<div style='text-align:center'>" + 
-                 "<div class='b-t'>" + b.title + "</div>" +
-                 "<div class='b-r'> by " + b.artist + "</div>" +
-                 "<img style='display: inline-block;margin:auto'" +
-                 "src='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + 
-                 b.address + "'>" + "<div class='b-a'>" + b.amount + " BTC </div>" +
-                 "<code>" + b.address + "</code></div>" 
+               "<div class='b-p'><img style='min-width:350px'"+
+               " class='pic' src='" + b.pic + "'></div>"+
+               "<div style='text-align:center'>" + 
+               "<div class='b-t'>" + b.title + "</div>" +
+               "<div class='b-r'> by " + b.artist + "</div>" +
+               "<img style='display: inline-block;margin:auto'" +
+               "src='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + 
+               b.address + "'>" + "<div class='b-a'>" + b.amount + " BTC </div>" +
+               "<code>" + b.address + "</code></div>" 
              : "<div class='b-a'>" + b.amount + " BTC </div>" 
-             })() +
+            })() +
                "<div class='b-s'><p class='b-d'>" + b.description + "</p></div>" +
                "<p class='b-n'>commissioned by " + (b.patron || 'anonymous') + "</p>" 
        });
@@ -124,6 +123,7 @@
      map.setZoom(20);
    });
    <% end %>
+
    });
 
 

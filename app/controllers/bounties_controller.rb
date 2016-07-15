@@ -47,7 +47,7 @@ class BountiesController < ApplicationController
   def vote
     @bounty = Bounty.find(params[:id])
     @bounty.votes.create
-    redirect_to bounties_path
+    redirect_to :back
   end
 
   def fill

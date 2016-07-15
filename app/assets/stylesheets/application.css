@@ -278,6 +278,7 @@ input:focus{
   form.button_to {
     float: right;
     display: inline-block;
+    clear:both;
   }
 
   .in-float.rod {
