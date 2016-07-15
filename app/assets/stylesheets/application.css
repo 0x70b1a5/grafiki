@@ -114,10 +114,9 @@ html, body {
 }
 
 code {
-  background-color: #444;
   padding: 2px 6px;
-  color: #fff;
   border-radius: 2px;
+  border: 1px solid #000;
 }
 
 input:focus{
@@ -291,4 +290,35 @@ input:focus{
 
   .in-float.sat {
     right: 5.21rem;
+  }
+
+  .b-a {
+    font-weight: bold;
+    font-size: 2em;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 1em;
+  }
+
+  .b-p {
+    text-align:center;
+  }
+
+  .b-t {
+    font-size: 2em;
+  }
+
+  .b-n {
+    text-align: right;
+    color: #555;
+  }
+
+  .b-d {
+    text-align: left;
+  }
+
+  .b-s {
+    margin:0 3em;
+    text-align:center;
+    overflow-wrap:break-word;
   }

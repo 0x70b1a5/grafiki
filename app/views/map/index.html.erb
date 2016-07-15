@@ -77,15 +77,25 @@
 
        info_<%= bounty.id %> = new google.maps.InfoWindow({
          maxWidth: 400,
-         content: "<div class='b-a'>" + b.amount + "</div>" +
-           "<div class='b-t'>" + b.title + "</div>" + (function(){
+         content: 
+               "<div class='row tic' style='font-weight:bold'><%= bounty.votes.count %></div>" +
+               "<form class='button_to' style='clear:both' method='post' action='/bounties/" +
+                 b.id+"/vote'><input class='row' type='submit' value='+'></form>" +
+            (function(){
              return b.artist ? 
-                 "<div class='b-p'><img class='pic' src='" + b.pic + "'></div>"+
-                 "<div class='b-b'>" + b.address + "</div>"+
-                 "<div class='b-r'>" + b.artist + "</div>"
-             : ""})() +
-               "<div class='b-d'>" + b.description + "</div>" +
-               "<div class='b-n'>" + b.patron + "</div>"
+                 "<div class='b-p'><img style='min-width:350px'"+
+                 " class='pic' src='" + b.pic + "'></div>"+
+                 "<div style='text-align:center'>" + 
+                 "<div class='b-t'>" + b.title + "</div>" +
+                 "<div class='b-r'> by " + b.artist + "</div>" +
+                 "<img style='display: inline-block;margin:auto'" +
+                 "src='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + 
+                 b.address + "'>" + "<div class='b-a'>" + b.amount + " BTC </div>" +
+                 "<code>" + b.address + "</code></div>" 
+             : "<div class='b-a'>" + b.amount + " BTC </div>" 
+             })() +
+               "<div class='b-s'><p class='b-d'>" + b.description + "</p></div>" +
+               "<p class='b-n'>commissioned by " + (b.patron || 'anonymous') + "</p>" 
        });
 
        marker_<%= bounty.id %>.addListener('click', function() {
