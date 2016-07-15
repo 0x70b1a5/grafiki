@@ -28,6 +28,7 @@ html, body {
 }
 
 #invis-top-menu {
+  padding-top: 0.3rem;
   float: left;
   z-index: 1;
   margin: 5px;
@@ -282,10 +283,12 @@ input:focus{
 
   .in-float.rod {
     position: absolute;
-    right: 1em;
-    top: 5.4em;
+    right: 1rem;
+    top: 5.4rem;
+    padding: 0 1em;
+    font-size: 0.8rem;
   }
 
   .in-float.sat {
-    right: 6.21em;
+    right: 5.21rem;
   }

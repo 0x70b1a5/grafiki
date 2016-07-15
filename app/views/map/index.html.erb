@@ -13,7 +13,7 @@
    <a href="art"><div class="add-new-button in-float">* browse artwork</div></a>
    <a href="about"><div id="about-button" class="in-float">what is grafiki?</div></a>
    <div class="in-float rod" id="road">road</div>
-   <div class="in-float rod sat" id="sat">sat</div>
+   <div class="in-float rod sat" id="sat">satellite</div>
 
  </div>
 
@@ -66,7 +66,12 @@
 
        marker_<%= bounty.id %>  = new google.maps.Marker({
          position: { lat: b.lat, lng: b.lng },
-         map: map
+         map: map,
+         <% if bounty.artist %>
+         label: "a"
+         <% else %>
+         label: "$"
+         <% end %>
        }); 
        marker_<%= bounty.id %>.setMap(map);
 
