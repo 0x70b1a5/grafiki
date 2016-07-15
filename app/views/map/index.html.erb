@@ -28,10 +28,11 @@
    var service;
    
    function initMap() {
-     var tt = {lat: 40.7625, lng: -73.974167};
+     var cen = {lat: 40.7625, lng: -73.974167};
+     var zum = 3;
      map = new google.maps.Map(document.getElementById('map'), {
-       zoom: 3,
-       center: tt
+       zoom: zum,
+       center: cen
      });	
    }
 
@@ -89,9 +90,16 @@
 
      });
    <% end %> 
+   <% if params[:id] %>
+   console.log('it is working');
+   $.get("/bounties/<%= params[:id] %>.json").then(function(ub){  
+     map.setCenter({lat: ub.lat, lng: ub.lng});
+     map.setZoom(20);
+   });
+   <% end %>
    });
 
 
- </script>
+</script>
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>

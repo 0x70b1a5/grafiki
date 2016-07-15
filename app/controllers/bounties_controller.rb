@@ -11,7 +11,7 @@ class BountiesController < ApplicationController
     @bounty = Bounty.find(params[:id])
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to root_path(id: params[:id]) }
       format.json { render :json => @bounty.to_json }
     end
   end

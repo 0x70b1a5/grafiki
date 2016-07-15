@@ -1,12 +1,4 @@
-<p>
-  <strong>Title:</strong>
-  <%= @bounty.title %>
-</p>
- 
-<p>
-  <strong>Location:</strong>
-  <%= @bounty.lat %>, <%= @bounty.lng %>
-</p>
+<%= @bounty.lat %> <%= @bounty.lng %>
 
 <%= link_to 'edit', edit_bounty_path(@bounty) %> | 
 <%= link_to 'back', bounties_path %>
