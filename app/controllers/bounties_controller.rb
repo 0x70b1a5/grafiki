@@ -58,7 +58,6 @@ class BountiesController < ApplicationController
       # no artist field = no picture = not yet filled. render form
       render 'fill'
     elsif @bounty.update(artwork_fill_params)
-      # todo: /bounty/x shows main page centered on bounty
       redirect_to @bounty
     else
       render 'fill'

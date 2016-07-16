@@ -42,14 +42,20 @@ html, body {
 
 #hed {
   font-size: 2em;
-  padding: 0 15px;
+  font-weight: bold;
+  padding: 0 2rem;
   margin-right: 40px;
 }
 
-#searchbar {
+.searchbar {
   width: 400px;
   padding-right: 0;
+  margin-left:
 }
+
+input#pac-input:focus {
+  background:none;
+} 
 
 .in-float {
   height: 2em;

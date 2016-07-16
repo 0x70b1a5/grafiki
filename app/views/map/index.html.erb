@@ -1,10 +1,7 @@
  <div id="invis-top-menu">
    <div id="hed" class="in-float">grafiki</div>
-   <div id="searchbar" class="in-float">
-     <form id="search-form" action="">
-       <input placeholder="Search for art, bounties, or places..." type="text" id="search-text-input"></input>
-       <button action"submit" value="search" id="search-button" class="in-float">search</button>
-     </form>
+   <div class="in-float" style="margin-left:3em">
+     <input id="pac-input" class="searchbar" type="text" placeholder="Find bounties near...">
    </div>
 
    <a href="bounties/new"><div class="add-new-button in-float">+ post a bounty</div></a>
@@ -29,6 +26,9 @@
    var map;
    var service;
    
+   /*
+   * SET UP THE HUGE MAPS:
+   */
    function initMap() {
      var cen = {lat: 40.7625, lng: -73.974167};
      var zum = 3;
@@ -37,18 +37,79 @@
        center: cen
      });	
      map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
+
+// Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      
    }
+
+
+   /* 
+   * AFTER TEH MAPS, LOOP BOUNTIES AND DRAW THEM:
+   */
+   $(document).ready(function(){
+     $( "#pac-input" ).css( "class", "searchbar" );
+     $( "#pac-input" ).focus();
 
    $( "#road" ).click(function() {
      map.setOptions({ mapTypeId: google.maps.MapTypeId.ROADMAP });
    });
-
+ 
    $( "#sat" ).click(function() {
      map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
    });
 
-
-   $(document).ready(function(){
    <% Bounty.all.each do |bounty| %> 
      res_<%= bounty.id %> = 
        $.get("/bounties/<%= bounty.id %>.json").then(function(ub){ 
@@ -75,6 +136,11 @@
        }); 
        marker_<%= bounty.id %>.setMap(map);
 
+       /* 
+       * GIVE EACH BOUNTY A NICE INFO WINDOW:
+       * (YES, RAW PLAINTEXT FROM JS WAS REALLY THE BEST I COULD DO.
+       * LET'S SEE YOU RENDER DATA FROM ASYNC DB QUERIES WITH JS IN RAILS)
+       */
        info_<%= bounty.id %> = new google.maps.InfoWindow({
          maxWidth: 400,
          content: 
@@ -97,6 +163,9 @@
                "<p class='b-n'>commissioned by " + (b.patron || 'anonymous') + "</p>" 
        });
 
+       /* WHEN THEY CLICK THE MARKER, OPEN THE WINDOW.
+       * WHEN THEY CLICK IT AGAIN OR HIT ESC, CLOSE IT
+       */
        marker_<%= bounty.id %>.addListener('click', function() {
          if (!marker_<%= bounty.id %>.open) {
            info_<%= bounty.id %>.open(map, marker_<%= bounty.id %>);
@@ -107,9 +176,9 @@
          }
        });
 
-       marker_<%= bounty.id %>.addListener('keyup', function(e) {
-         console.log('ping');
-         if (e.keyCode == 27) {
+       $(document).on('keyup', function(e) {
+         if (e.keyCode == 27 && info_<%=bounty.id%>.open) {
+           console.log('esc');
            info_<%= bounty.id %>.close();
          }
        });
