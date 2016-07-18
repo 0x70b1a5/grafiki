@@ -30,7 +30,7 @@ class BountiesController < ApplicationController
     if @bounty.save
       redirect_to @bounty
     else
-      render 'new'
+      redirect_to root_path
     end
   end
 
@@ -64,6 +64,16 @@ class BountiesController < ApplicationController
     end
   end
 
+  def upload
+    @bounty = Bounty.new(upload_params)
+
+    if @bounty.save
+      redirect_to @bounty
+    else
+      render 'upload'
+    end
+  end
+
   def destroy
     @bounty = Bounty.find(params[:id])
     @bounty.destroy
@@ -73,11 +83,16 @@ class BountiesController < ApplicationController
 
   private
     def bounty_params
-      params.require(:bounty).permit(:title,:lat,:lng,:amount,:description,
-        :patron,:artist,:pic,:address)
+      params.require(:bounty).permit(:title,:lat,:lng,
+        :amount,:description,:patron)
     end
 
     def artwork_fill_params
       params.require(:bounty).permit(:artist,:pic,:address)
+    end
+
+    def upload_params
+      params.require(:bounty).permit(:title,:lat,:lng,
+        :description,:artist,:pic,:address)
     end
 end

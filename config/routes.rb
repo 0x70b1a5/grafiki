@@ -1,14 +1,19 @@
 Rails.application.routes.draw do
+  get 'users/new'
+  post 'users/create'
+
   resources :bounties do
     member do
       post 'vote'
       post 'fill'
-      get 'fill'
+      get  'fill'
     end
 
     collection do
       get 'filled'
       get 'search'
+      get  'upload'
+      post 'upload'
     end
   end
 

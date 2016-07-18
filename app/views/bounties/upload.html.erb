@@ -33,27 +33,25 @@
 
   <div class="box">
   <div class="in-float">
-    <%= f.label :amount %>
-    <%= f.number_field :amount, :class => 'text_field', :step => 0.000001, placeholder: 'artist reward (btc)' %>
+  <%= f.label :artist_name %>
+  <%= f.text_field :artist, placeholder: 'your name and/or tag' %>
   </div>
   </div>
 
   <div class="box">
   <div class="in-float">
-    <%= f.label :email %>
-    <%= f.text_field :email, placeholder: 'your email (required)',
-      style: "min-width: 400px" %>
+  <%= f.label :image_url %>
+  <%= f.text_field :pic, placeholder: 'http://external.url/of/image.png' %>
   </div>
   </div>
 
   <div class="box">
   <div class="in-float">
-    <%= f.label :patron %>
-    <%= f.text_field :patron, placeholder: 'your name (optional)',
-      style: "min-width: 400px" %>
+  <%= f.label :bitcoin_address %>
+  <%= f.text_field :address, placeholder: 'your bitcoin address' %>
   </div>
   </div>
 
-  <div class="in-float box"><%= f.submit %></div>
+  <%= button_to 'upload art', upload_bounty_path(@bounty), method: :post %>
 
 <% end %>

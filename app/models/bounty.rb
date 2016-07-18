@@ -1,6 +1,7 @@
 class Bounty < ApplicationRecord
 
   has_many :votes, dependent: :destroy
+  #has_one :user
   validates :title, presence: true, length: { maximum: 128 },
     on: [:create, :update]
   validates :lat, presence: true, 
@@ -17,16 +18,17 @@ class Bounty < ApplicationRecord
     on: [:create, :update]
   validates :patron, length: { maximum: 64 },
     on: [:create, :update]
+  validates :email, 
 
   validates :artist, length: { maximum: 64 },
-    on: :fill
+    on: [:fill, :upload]
   validates :address, format: { with: /\A(1|3)[a-zA-Z1-9]{26,33}\z/,
     message: "invalid bitcoin address" },
     length: { minimum: 26 },
-    on: :fill
+    on: [:fill, :upload]
   validates :pic, format: { with: /\A#{URI::ABS_URI}\z/,
     message: "invalid picture url" },
     length: { minimum: 10 },
-    on: :fill
+    on: [:fill, :upload]
 
 end
