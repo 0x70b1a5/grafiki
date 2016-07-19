@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   attr_accessor :password
-  attr_accessible :username, :email, :password, :password_confirmation
 
-  EMAIL_REGEX = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,10}\z/i
+  has_many :bounties, dependent: :destroy
+
+  EMAIL_REGEX = /.+@.+\..+/i
 
   validates :username, :presence => true, :uniqueness => true, 
     :length => { :in => 3..20 }
@@ -22,5 +23,15 @@ class User < ApplicationRecord
   end
   def clear_password
     self.password = nil
+  end
+
+  def self.authenticate(email,password)
+    user = User.where(email: email).first
+    hash = BCrypt::Engine.hash_secret(password, user.salt)
+    if user && user.encrypted_password == hash
+      user
+    else
+      nil 
+    end
   end
 end
