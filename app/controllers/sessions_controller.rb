@@ -3,15 +3,15 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.authenticate(params[:email],params[:password]
+    @user = User.authenticate(params[:email],params[:password])
 
-    if @uesr
+    if @user
       flash[:notice] = "login successful"
       session[:userid] = @user.id
       redirect_to root_path
     else
       flash[:alert] = "could not login"
-      reditect_to login_path
+      redirect_to login_path
     end
   end
 

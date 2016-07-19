@@ -1,7 +1,6 @@
 class Bounty < ApplicationRecord
 
   has_many :votes, dependent: :destroy
-  belongs_to :user
 
   validates :title, presence: true, length: { maximum: 128 },
     on: [:create, :update]
@@ -19,7 +18,6 @@ class Bounty < ApplicationRecord
     on: [:create, :update]
   validates :patron, length: { maximum: 64 },
     on: [:create, :update]
-  validates :email, 
 
   validates :artist, length: { maximum: 64 },
     on: [:fill, :upload]

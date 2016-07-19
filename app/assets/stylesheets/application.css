@@ -273,6 +273,15 @@ input:focus{
     right: 1em;
   }
 
+  #signup-button {
+    position: absolute;
+    right: 11rem;
+    text-decoration: none;
+    background: #223;
+    color: #eee;
+    font-weight: bold;
+  }
+
   .add-new-button {
     float:left;
     clear:both;
