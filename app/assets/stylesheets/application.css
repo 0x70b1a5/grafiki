@@ -283,6 +283,7 @@ input:focus{
   #about-button {
     position: absolute;
     right: 1em;
+    width: 6.7rem;
   }
 
   #signup-button {

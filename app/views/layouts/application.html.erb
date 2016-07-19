@@ -20,14 +20,15 @@
    <a href="bounties"><div class="nav-button in-float">$ fill a bounty</div></a>
    <a href="upload"><div class="nav-button in-float">^ upload artwork</div></a>
    <a href="bounties/filled"><div class="nav-button in-float">* browse artwork</div></a>
-   <a href="about"><div id="about-button" class="in-float">what is grafiki?</div></a>
    <% unless user_signed_in? %>
    <%= link_to "register", new_user_registration_path, id: "signup-button", class: "in-float" %>
    <%= link_to "login", new_user_session_path, id: "login-button", class: "in-float" %>
+   <a href="about"><div id="about-button" class="in-float">what is grafiki?</div></a>
    <% end %>
    <% if user_signed_in? %>
-     <div class="windy">signed in as <%= current_user.email %></div>
-     <%= link_to "sign out", destroy_user_session_path, method: :delete %>
+     <div id="signup-button" class="in-float"><%= current_user.email %></div>
+     <%= link_to "sign out", destroy_user_session_path, method: :delete, class: "in-float",
+       id: "about-button", style: "text-decoration: none" %>
    <% end %>
    <div class="in-float rod" id="road">road</div>
    <div class="in-float rod sat" id="sat">satellite</div>
