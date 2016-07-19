@@ -18,6 +18,16 @@ html, body {
   padding: 0;
   font-family: Roboto, sans-serif; 
   background-color: transparent;
+  overflow: hidden;
+  text-align: center;
+}
+
+#page {
+  display: inline-block;
+  text-align: left;
+  position: absolute;
+  top: 7rem;
+  left: 15rem;
 }
 
 #map {
@@ -27,7 +37,9 @@ html, body {
   z-index: -1;
 }
 
-#invis-top-menu {
+#nav-menu {
+  position: absolute;
+  top: 0;
   padding-top: 0.3rem;
   float: left;
   z-index: 1;
@@ -36,7 +48,7 @@ html, body {
   pointer-events: none;
 }
 
-#invis-top-menu * {
+#nav-menu * {
   pointer-events: all;
 }
 
@@ -62,7 +74,7 @@ input#pac-input:focus {
   background-color: #fff;
   color: #000;
   float: left;
-  box-shadow: 1px 1px 1px #AAA;
+  box-shadow: 1px 1px 1px #000;
   margin: 0 5px;
   padding: 1em;
 }
@@ -282,7 +294,13 @@ input:focus{
     font-weight: bold;
   }
 
-  .add-new-button {
+  #login-button {
+    position: absolute;
+    right: 18rem;
+    text-decoration: none;
+  }
+
+  .nav-button {
     float:left;
     clear:both;
     margin-top: 1em;
