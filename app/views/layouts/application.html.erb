@@ -16,10 +16,10 @@
      <input id="pac-input" class="searchbar" type="text" placeholder="Find bounties near...">
    </div>
 
-   <a href="bounties/new"><div class="nav-button in-float">+ post a bounty</div></a>
-   <a href="bounties"><div class="nav-button in-float">$ fill a bounty</div></a>
-   <a href="upload"><div class="nav-button in-float">^ upload artwork</div></a>
-   <a href="bounties/filled"><div class="nav-button in-float">* browse artwork</div></a>
+   <a href="bounties/new"><div class="nav-button in-float"><span id="i">+</span> post a bounty</div></a>
+   <a href="bounties"><div class="nav-button in-float"><span id="i">$</span> fill a bounty</div></a>
+   <a href="upload"><div class="nav-button in-float"><span id="i">^</span> upload artwork</div></a>
+   <a href="bounties/filled"><div class="nav-button in-float"><span id="i">*</span> browse artwork</div></a>
    <% unless user_signed_in? %>
    <%= link_to "register", new_user_registration_path, id: "signup-button", class: "in-float" %>
    <%= link_to "login", new_user_session_path, id: "login-button", class: "in-float" %>
@@ -35,6 +35,9 @@
    <div class="in-float rod sat" id="sat">satellite</div>
 
  </div>
+    <% flash.each do |name,msg| %>
+    <%= content_tag :div, msg, class: "flash "+name %>
+    <% end -%>
 
     <%= yield %>
 

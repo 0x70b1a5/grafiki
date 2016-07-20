@@ -47,11 +47,14 @@ class BountiesController < ApplicationController
   end
 
   def vote
-    redirect_to :login unless user_signed_in?
-
-    @bounty = Bounty.find(params[:id])
-    @bounty.votes.create
-    redirect_to :back
+    if user_signed_in?
+      @bounty = Bounty.find(params[:id])
+      @bounty.votes.create
+      redirect_to :back
+    else
+      redirect_to :login
+      flash[:notice] = "please login"
+    end
   end
 
   def fill

@@ -58,6 +58,8 @@ html, body {
   padding: 0 2rem;
   margin-right: 40px;
   min-width: 6rem;
+  color: #eee;
+  background: #223;
 }
 
 .searchbar {
@@ -68,6 +70,11 @@ html, body {
 input#pac-input:focus {
   background:none;
 } 
+
+#i {
+  float: left;
+  font-weight: bold;
+}
 
 .in-float {
   height: 2em;
@@ -309,6 +316,15 @@ input:focus{
     min-width: 8rem;
   }
 
+  .flash {
+    position: absolute;
+    z-index: 5;
+    background: #eef;
+    left: 50%;
+    top: 1rem;
+    padding: 1rem;
+    border: 3px solid #000
+  }
 
   form.button_to {
     float: right;
