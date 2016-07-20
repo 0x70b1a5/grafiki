@@ -6,4 +6,5 @@ class User < ApplicationRecord
          :omniauthable
 
   has_many :bounties
+  has_many :votes, through: :bounties
 end

@@ -18,7 +18,7 @@
 
    <a href="bounties/new"><div class="nav-button in-float"><span id="i">+</span> post a bounty</div></a>
    <a href="bounties"><div class="nav-button in-float"><span id="i">$</span> fill a bounty</div></a>
-   <a href="upload"><div class="nav-button in-float"><span id="i">^</span> upload artwork</div></a>
+   <a href="bounties/upload"><div class="nav-button in-float"><span id="i">^</span> upload artwork</div></a>
    <a href="bounties/filled"><div class="nav-button in-float"><span id="i">*</span> browse artwork</div></a>
    <% unless user_signed_in? %>
    <%= link_to "register", new_user_registration_path, id: "signup-button", class: "in-float" %>
@@ -45,5 +45,12 @@
 
     <%= yield %>
 
+    <script type="text/javascript">
+      $(document).ready(function(){
+        setTimeout(function(){
+          $('.flash').remove();
+        }, 5000);
+      });
+    </script>
   </body>
 </html>

@@ -330,6 +330,14 @@ input:focus{
     border: 3px solid #000
   }
 
+  .error {
+    background: #c55;
+  }
+
+  .alert {
+    background: #ff5;
+  }
+
   form.button_to {
     float: right;
     display: inline-block;

@@ -4,7 +4,7 @@ class BountiesController < ApplicationController
   end
 
   def filled
-    @bounties = Bounty.all
+    @bounties = Bounty.all # we filter for artwork at the template level
   end
 
   def show
@@ -17,20 +17,23 @@ class BountiesController < ApplicationController
   end
 
   def new
-    redirect_to :login unless user_signed_in?
     @bounty = Bounty.new
   end
 
   def edit
     @bounty = Bounty.find(params[:id])
-    if @bounty.in? current_user.bounties
-      puts 'ok'
-    else
+    if not (current_user and @bounty.in? current_user.bounties)
       flash[:error] = "you do not own this bounty"
+      redirect_to :bounties
     end
   end
 
   def create
+    unless user_signed_in?
+      flash[:error] = "you must log in\nto create a bounty"
+      redirect_to :login
+    end
+
     @bounty = current_user.bounties.create(bounty_params)
 
     if @bounty.save
@@ -42,7 +45,10 @@ class BountiesController < ApplicationController
 
   def update
     @bounty = Bounty.find(params[:id])
-    redirect_to :login unless user_signed_in? and @bounty.user == current_user
+    if not user_signed_in? and @bounty.user == current_user
+      flash[:error] = "you do not own this bounty"
+      redirect_to :login 
+    end
 
     if @bounty.update(bounty_params)
       redirect_to @bounty
@@ -54,8 +60,13 @@ class BountiesController < ApplicationController
   def vote
     if user_signed_in?
       @bounty = Bounty.find(params[:id])
-      @bounty.votes.create
-      redirect_to :back
+      if not current_user.in? @bounty.votes
+        @bounty.votes.create(user: current_user)
+        redirect_to :back
+      else
+        flash[:error] = "you cannot vote twice"
+        redirect_to root_path
+      end
     else
       redirect_to :login
       flash[:notice] = "please login"
@@ -77,6 +88,7 @@ class BountiesController < ApplicationController
   end
 
   def upload
+    #TODO this entire form
     redirect_to :login unless user_signed_in?
     @bounty = Bounty.new(upload_params)
 
