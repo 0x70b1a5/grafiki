@@ -23,6 +23,11 @@ class BountiesController < ApplicationController
 
   def edit
     @bounty = Bounty.find(params[:id])
+    if @bounty.in? current_user.bounties
+      puts 'ok'
+    else
+      flash[:error] = "you do not own this bounty"
+    end
   end
 
   def create

@@ -316,12 +316,16 @@ input:focus{
     min-width: 8rem;
   }
 
-  .flash {
+  #flashes {
     position: absolute;
-    z-index: 5;
-    background: #eef;
-    left: 50%;
+    text-align: center;
     top: 1rem;
+    z-index: 5;
+    left: 50%;
+  }
+
+  .flash {
+    background: #eef;
     padding: 1rem;
     border: 3px solid #000
   }
