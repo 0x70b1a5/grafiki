@@ -17,6 +17,7 @@ class BountiesController < ApplicationController
   end
 
   def new
+    redirect_to :login unless user_signed_in?
     @bounty = Bounty.new
   end
 
@@ -25,7 +26,7 @@ class BountiesController < ApplicationController
   end
 
   def create
-    @bounty = Bounty.new(bounty_params)
+    @bounty = current_user.bounties.create(bounty_params)
 
     if @bounty.save
       redirect_to @bounty
@@ -36,6 +37,7 @@ class BountiesController < ApplicationController
 
   def update
     @bounty = Bounty.find(params[:id])
+    redirect_to :login unless user_signed_in? and @bounty.user == current_user
 
     if @bounty.update(bounty_params)
       redirect_to @bounty
@@ -45,6 +47,8 @@ class BountiesController < ApplicationController
   end
 
   def vote
+    redirect_to :login unless user_signed_in?
+
     @bounty = Bounty.find(params[:id])
     @bounty.votes.create
     redirect_to :back
@@ -65,6 +69,7 @@ class BountiesController < ApplicationController
   end
 
   def upload
+    redirect_to :login unless user_signed_in?
     @bounty = Bounty.new(upload_params)
 
     if @bounty.save
@@ -76,6 +81,8 @@ class BountiesController < ApplicationController
 
   def destroy
     @bounty = Bounty.find(params[:id])
+    redirect_to :login unless user_signed_in? and @bounty.user == current_user
+
     @bounty.destroy
 
     redirect_to bounties_path

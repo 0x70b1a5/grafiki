@@ -26,9 +26,10 @@
    <a href="about"><div id="about-button" class="in-float">what is grafiki?</div></a>
    <% end %>
    <% if user_signed_in? %>
-     <div id="signup-button" class="in-float"><%= current_user.email %></div>
+     <div id="signup-button" class="in-float"
+       style="right:7rem"><%= current_user.email %></div>
      <%= link_to "sign out", destroy_user_session_path, method: :delete, class: "in-float",
-       id: "about-button", style: "text-decoration: none" %>
+       id: "about-button", style: "text-decoration: none; width:initial" %>
    <% end %>
    <div class="in-float rod" id="road">road</div>
    <div class="in-float rod sat" id="sat">satellite</div>
