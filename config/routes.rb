@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'escrows/new'
+
   devise_for :users
   get 'login' => "sessions#new"
   post 'login' => "sessions#create"
