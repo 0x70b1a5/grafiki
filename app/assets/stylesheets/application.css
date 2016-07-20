@@ -57,6 +57,7 @@ html, body {
   font-weight: bold;
   padding: 0 2rem;
   margin-right: 40px;
+  min-width: 6rem;
 }
 
 .searchbar {
@@ -76,7 +77,7 @@ input#pac-input:focus {
   float: left;
   box-shadow: 1px 1px 1px #000;
   margin: 0 5px;
-  padding: 1em;
+  padding: 0 1em;
 }
 
 .in-float label {
@@ -304,7 +305,8 @@ input:focus{
   .nav-button {
     float:left;
     clear:both;
-    margin-top: 1em;
+    margin-top: 1rem;
+    min-width: 8rem;
   }
 
 
@@ -317,7 +319,7 @@ input:focus{
   .in-float.rod {
     position: absolute;
     right: 1rem;
-    top: 5.4rem;
+    top: 3.4rem;
     padding: 0 1em;
     font-size: 0.8rem;
   }
