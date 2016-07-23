@@ -1,6 +1,7 @@
 class Bounty < ApplicationRecord
 
   has_many :votes, dependent: :destroy
+  has_many :escrows
   belongs_to :user
 
   validates :title, presence: true, length: { maximum: 128 },

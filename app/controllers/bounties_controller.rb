@@ -37,6 +37,7 @@ class BountiesController < ApplicationController
     @bounty = current_user.bounties.create(bounty_params)
 
     if @bounty.save
+      @bounty.escrows.create({:amount=>params[:amount]})
       redirect_to @bounty
     else
       redirect_to root_path
