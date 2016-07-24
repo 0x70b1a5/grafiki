@@ -37,7 +37,13 @@ class BountiesController < ApplicationController
     @bounty = current_user.bounties.create(bounty_params)
 
     if @bounty.save
-      @bounty.escrows.create({:amount=>params[:amount]})
+      @bounty.escrows.create(
+        {
+          :amount=>params[:bounty][:amount],
+          :status=>0
+        }
+      )
+      @bounty.save!
       redirect_to @bounty
     else
       redirect_to root_path
@@ -102,7 +108,9 @@ class BountiesController < ApplicationController
 
   def destroy
     @bounty = Bounty.find(params[:id])
-    redirect_to :login unless user_signed_in? and @bounty.user == current_user
+    unless user_signed_in? and @bounty.user == current_user
+      redirect_to :login 
+    end
 
     @bounty.destroy
 

@@ -6,7 +6,6 @@ class EscrowsController < ApplicationController
   def create
     unless user_signed_in?
       flash[:error] = "please log in"
-      redirect_to :login
     end
 
     @escrow = Escrow.create(new_escrow_params)
@@ -23,6 +22,6 @@ class EscrowsController < ApplicationController
 
   private
     def new_escrow_params
-      params.require(:escrow).permit(:amount)
+      params.require(:escrow).permit(:amount,:status)
     end
 end
