@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722054641) do
+ActiveRecord::Schema.define(version: 20160726225849) do
 
   create_table "bounties", force: :cascade do |t|
     t.float    "lat"
@@ -30,12 +30,12 @@ ActiveRecord::Schema.define(version: 20160722054641) do
   end
 
   create_table "escrows", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.float    "amount"
     t.string   "currency"
     t.integer  "artist_id"
-    t.integer  "status"
+    t.integer  "status",     default: 0
     t.integer  "bounty_id"
   end
 
