@@ -50,7 +50,7 @@
   <input name="stripeEmail" id="stripeEmail" style="display: none" type="text">
   <input name="stripeTokenType" id="stripeTokenType" style="display: none" type="text">
 
-  <button id="customButton">Purchase</button>
+  <button id="customButton">post bounty</button>
 
 <% end %>
 
@@ -58,7 +58,8 @@
 
 <script>
   function getAmt(){
-   return Number($( "#bounty_amount" ).val()) * 100
+   // convert to cents (100) + fee (10)
+   return Number($( "#bounty_amount" ).val()) * 110 
   };
 
   var handler = StripeCheckout.configure({
@@ -77,7 +78,7 @@
   $('#customButton').on('click', function(e) {
     // Open Checkout with further options:
     handler.open({
-      name: 'Demo Site',
+      name: 'grafiki',
       description: '2 widgets',
       amount: getAmt()
     });

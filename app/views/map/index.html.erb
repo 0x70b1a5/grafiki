@@ -144,7 +144,8 @@
              : "<div class='b-a'>$" + b.amount + " </div>" 
             })() +
                "<div class='b-s'><p class='b-d'>" + b.description + "</p></div>" +
-               "<p class='b-n'>commissioned by " + (b.patron || 'anonymous') + "</p>" 
+               "<p class='b-n'>commissioned by " + (b.patron || 'anonymous') + "</p>" +
+               (`<%= button_to 'fill', fill_bounty_path(bounty), method: :post, class: "row" %>`) 
        });
 
        /* WHEN THEY CLICK THE MARKER, OPEN THE WINDOW.

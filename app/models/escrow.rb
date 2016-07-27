@@ -1,4 +1,5 @@
 class Escrow < ApplicationRecord
+  has_many :users
   belongs_to :bounty
 
   validates :amount, numericality: { greater_than: 0 }

@@ -1,3 +1,4 @@
+<div id="page">
 <%= form_for @bounty do |f| %>
   <% if @bounty.errors.any? %>
     <%= pluralize(@bounty.errors.count, "error") %> must be fixed.
@@ -7,11 +8,32 @@
       <% end %>
     </ul>
   <% end %>
-  <%= f.label :artist_name %>
+  <div class="box">
+  <div class="in-float">
+  <label for="bounty_artist_name">artist name</label>
   <%= f.text_field :artist, placeholder: 'your name and/or tag' %>
-  <%= f.label :image_url %>
+  </div>
+  </div>
+
+  <div class="box">
+  <div class="in-float">
+  <label for="bounty_pic">image url</label>
   <%= f.text_field :pic, placeholder: 'http://external.url/of/image.png' %>
-  <%= f.label :bitcoin_address %>
-  <%= f.text_field :address, placeholder: 'your bitcoin address' %>
-<%= button_to 'fill bounty', fill_bounty_path(@bounty), method: :post %>
+  </div>
+  </div>
+
+  <div class="box">
+  <div class="in-float">
+  <label for="bounty_bitcoin_address">bitcoin address</label>
+  <%= f.text_field :address, placeholder: 'your bitcoin address (required)' %>
+  </div>
+  </div>
+
+  <div class="box">
+  <div class="in-float">
+  <%= button_to 'fill bounty', fill_bounty_path, method: :post %>
+  </div>
+  </div>
+
 <% end %>
+</div>
