@@ -46,6 +46,47 @@
   </div>
   </div>
 
-  <div class="in-float box"><%= f.submit %></div>
+  <input name="stripeToken" id="stripeToken" style="display: none" type="text">
+  <input name="stripeEmail" id="stripeEmail" style="display: none" type="text">
+  <input name="stripeTokenType" id="stripeTokenType" style="display: none" type="text">
+
+  <button id="customButton">Purchase</button>
 
 <% end %>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+  function getAmt(){
+   return Number($( "#bounty_amount" ).val()) * 100
+  };
+
+  var handler = StripeCheckout.configure({
+    key: 'pk_test_S27ParIaigJWMsagC3SAFiFG',
+    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    locale: 'auto',
+    bitcoin: true,
+    token: function(token) {
+      $( "#stripeEmail" ).val( token.email );
+      $( "#stripeToken" ).val( token.id );
+      $( "#stripeTokenType" ).val( token.type );
+      $( "#new_bounty" ).submit()
+    }
+  });
+
+  $('#customButton').on('click', function(e) {
+    // Open Checkout with further options:
+    handler.open({
+      name: 'Demo Site',
+      description: '2 widgets',
+      amount: getAmt()
+    });
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation:
+  $(window).on('popstate', function() {
+    handler.close();
+  });
+</script>
+

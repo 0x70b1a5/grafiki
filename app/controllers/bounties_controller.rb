@@ -37,14 +37,15 @@ class BountiesController < ApplicationController
     @bounty = current_user.bounties.create(bounty_params)
 
     if @bounty.save
-      @bounty.escrows.create(
-        {
-          :amount=>params[:bounty][:amount],
-          :status=>0
-        }
-      )
-      @bounty.save!
-      redirect_to @bounty
+      @bounty.escrows.create({
+        :amount=>params[:bounty][:amount],
+        :owner_token =>params[:stripeToken],
+        :owner_email =>params[:stripeEmail]
+      })
+      if @bounty.save then redirect_to @bounty
+      else
+        flash[:error] = "escrow could not be created"
+      end
     else
       redirect_to root_path
     end
@@ -119,16 +120,25 @@ class BountiesController < ApplicationController
 
   private
     def bounty_params
+      stripe_params
       params.require(:bounty).permit(:title,:lat,:lng,
         :amount,:description,:patron)
     end
 
     def artwork_fill_params
+      stripe_params
       params.require(:bounty).permit(:artist,:pic,:address)
     end
 
     def upload_params
+      stripe_params
       params.require(:bounty).permit(:title,:lat,:lng,
         :description,:artist,:pic,:address)
+    end
+
+    def stripe_params
+      params.require(:stripeToken)
+      params.require(:stripeTokenType)
+      params.require(:stripeEmail)
     end
 end

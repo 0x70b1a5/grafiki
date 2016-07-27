@@ -22,6 +22,6 @@ class EscrowsController < ApplicationController
 
   private
     def new_escrow_params
-      params.require(:escrow).permit(:amount,:status)
+      params.require(:escrow).permit(:amount,:token)
     end
 end

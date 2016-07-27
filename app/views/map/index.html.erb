@@ -139,9 +139,9 @@
                "<div class='b-r'> by " + b.artist + "</div>" +
                "<img style='display: inline-block;margin:auto'" +
                "src='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + 
-               b.address + "'>" + "<div class='b-a'>" + b.amount + " BTC </div>" +
+               b.address + "'>" + "<div class='b-a'>$" + b.amount + "</div>" +
                "<code>" + b.address + "</code></div>" 
-             : "<div class='b-a'>" + b.amount + " BTC </div>" 
+             : "<div class='b-a'>$" + b.amount + " </div>" 
             })() +
                "<div class='b-s'><p class='b-d'>" + b.description + "</p></div>" +
                "<p class='b-n'>commissioned by " + (b.patron || 'anonymous') + "</p>" 
