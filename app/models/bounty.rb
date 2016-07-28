@@ -25,7 +25,7 @@ class Bounty < ApplicationRecord
     on: [:fill, :upload]
   validates :address, format: { with: /\A(1|3)[a-zA-Z1-9]{26,33}\z/,
     message: "invalid bitcoin address" },
-    length: { minimum: 26 },
+    length: { minimum: 26, maximum: 33 },
     on: [:fill, :upload]
   validates :pic, format: { with: /\A#{URI::ABS_URI}\z/,
     message: "invalid picture url" },

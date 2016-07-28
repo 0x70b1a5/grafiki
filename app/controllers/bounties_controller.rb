@@ -42,7 +42,8 @@ class BountiesController < ApplicationController
         :owner_token =>params[:stripeToken],
         :owner_email =>params[:stripeEmail]
       })
-      if @bounty.save then redirect_to @bounty
+      if @bounty.save 
+        redirect_to @bounty
       else
         flash[:error] = "escrow could not be created"
       end
@@ -83,14 +84,21 @@ class BountiesController < ApplicationController
 
   def fill
     # for updating a bounty to an artwork
-    @bounty = Bounty.find(params[:id])
+    redirect_to :login unless user_signed_in?
 
-    if not @bounty[:artist]
+    @bounty = Bounty.find(params[:id])
+    @escrow = @bounty.escrows.first
+    @candidate = Candidate.new
+
+    if not @bounty[:artist] # GET
       # no artist field = no picture = not yet filled. render form
       render 'fill'
-    elsif @bounty.update(artwork_fill_params)
+    elsif @escrow.candidates.create(candidate_params) # POST
+      # CHECK: does this code ever actually run?
+      flash[:notice] = "submission received"
       redirect_to @bounty
     else
+      flash[:error] = "error filling bounty"
       render 'fill'
     end
   end
@@ -126,12 +134,10 @@ class BountiesController < ApplicationController
     end
 
     def artwork_fill_params
-      stripe_params
       params.require(:bounty).permit(:artist,:pic,:address)
     end
 
     def upload_params
-      stripe_params
       params.require(:bounty).permit(:title,:lat,:lng,
         :description,:artist,:pic,:address)
     end
@@ -140,5 +146,9 @@ class BountiesController < ApplicationController
       params.require(:stripeToken)
       params.require(:stripeTokenType)
       params.require(:stripeEmail)
+    end
+
+    def candidate_params
+      params.require(:candidate).permit(:email,:address,:pic,:name)
     end
 end

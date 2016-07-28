@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :candidates
+
   get 'escrows/new'
 
   devise_for :users

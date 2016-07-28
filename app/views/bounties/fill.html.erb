@@ -1,39 +1,52 @@
+<style>
+  input[type=text] {
+    min-width: 400px;
+  }
+</style>
 <div id="page">
-<%= form_for @bounty do |f| %>
-  <% if @bounty.errors.any? %>
-    <%= pluralize(@bounty.errors.count, "error") %> must be fixed.
+<%= form_for @candidate do |f| %>
+  <% if @candidate.errors.any? %>
+    <%= pluralize(@candidate.errors.count, "error") %> must be fixed.
     <ul>
-      <% @bounty.errors.full_messages.each do |m| %>
+      <% @candidate.errors.full_messages.each do |m| %>
         <li><%= m %></li>
       <% end %>
     </ul>
   <% end %>
   <div class="box">
   <div class="in-float">
-  <label for="bounty_artist_name">artist name</label>
-  <%= f.text_field :artist, placeholder: 'your name and/or tag' %>
+  <label for="candidate_artist_name">artist name</label>
+  <%= f.text_field :name, placeholder: 'your name and/or tag' %>
   </div>
   </div>
 
   <div class="box">
   <div class="in-float">
-  <label for="bounty_pic">image url</label>
+  <label for="candidate_email">email</label>
+  <%= f.text_field :email, placeholder: 'contact email address' %>
+  </div>
+  </div>
+
+  <div class="box">
+  <div class="in-float">
+  <label for="candidate_pic">image url</label>
   <%= f.text_field :pic, placeholder: 'http://external.url/of/image.png' %>
   </div>
   </div>
 
   <div class="box">
   <div class="in-float">
-  <label for="bounty_bitcoin_address">bitcoin address</label>
+  <label for="candidate_bitcoin_address">bitcoin address</label>
   <%= f.text_field :address, placeholder: 'your bitcoin address (required)' %>
   </div>
   </div>
+
+  <input type="hidden" name="escrow_id" value="<%= @escrow.id %>">
 
   <div class="box">
   <div class="in-float">
   <%= button_to 'fill bounty', fill_bounty_path, method: :post %>
   </div>
   </div>
-
 <% end %>
 </div>
