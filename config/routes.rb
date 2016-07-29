@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       post 'vote'
       post 'fill'
       get  'fill'
+      get  'award'
+      post 'award'
     end
 
     collection do

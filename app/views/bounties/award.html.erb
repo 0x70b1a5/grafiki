@@ -1,0 +1,19 @@
+<% @candidates.each do |c| %>
+<% c.each do |cc| %>
+<div>
+  <img src="<%= cc.pic %>">
+</div>
+<div>
+  <%= cc.name %> | <%= cc.email %> 
+</div>
+<div>
+  <%= form_for @bounty do |f| %>
+  <%= f.hidden_field :name, value: cc.name %>
+  <%= f.hidden_field :pic, value: cc.pic %>
+  <%= f.hidden_field :address, value: cc.address %>
+  <input type="hidden" name="award" value="1">
+  <%= button_to 'award bounty', method: :post, action: :award %>
+  <% end %>
+</div>
+<% end %>
+<% end %>

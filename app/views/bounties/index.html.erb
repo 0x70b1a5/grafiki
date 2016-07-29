@@ -1,5 +1,4 @@
-<div id="hed">bounties</div>
-
+<div id="page">
 <% @bounties.each do |bounty| %>
 <% next if bounty.artist %>
 <div class="box">
@@ -38,3 +37,4 @@
       data: { confirm: 'u sure?' } %>
 </div>
 <% end %>
+</div>

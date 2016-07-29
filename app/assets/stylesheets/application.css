@@ -28,6 +28,8 @@ html, body {
   position: absolute;
   top: 7rem;
   left: 15rem;
+  height: 90%;
+  overflow: scroll;
 }
 
 #map {

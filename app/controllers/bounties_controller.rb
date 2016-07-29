@@ -52,17 +52,48 @@ class BountiesController < ApplicationController
     end
   end
 
+  def award
+    if params[:id] #GET
+    @bounty = Bounty.find(params[:id])
+    unless @bounty.user == current_user
+      flash[:error] = "you do not own this bounty"
+      redirect_to root_path
+    end
+
+    @escrows = @bounty.escrows
+    @candidates = @escrows.map {|e| e.candidates}.to_a
+
+    else#POST
+    if @bounty.update(artwork_fill_params) and @bounty.save!
+      flash[:notice] = "success!"
+    else
+      flash[:error] = "could not update bounty"
+      redirect_to @bounty
+    end
+    end
+  end
+
   def update
     @bounty = Bounty.find(params[:id])
-    if not user_signed_in? and @bounty.user == current_user
+    unless (user_signed_in? and @bounty.user == current_user)
       flash[:error] = "you do not own this bounty"
       redirect_to :login 
     end
 
-    if @bounty.update(bounty_params)
-      redirect_to @bounty
-    else 
-      render 'edit'
+    if params[:award]
+      if @bounty.update(artwork_fill_params) and @bounty.save!
+        flash[:notice] = "success!"
+        redirect_to @bounty
+      else
+        flash[:error] = "could not award candidate"
+        redirect_to @bounty
+      end
+    else
+      if @bounty.update(bounty_params)
+        redirect_to @bounty
+      else 
+        render 'edit'
+      end
     end
   end
 
@@ -117,7 +148,7 @@ class BountiesController < ApplicationController
 
   def destroy
     @bounty = Bounty.find(params[:id])
-    unless user_signed_in? and @bounty.user == current_user
+    unless (user_signed_in? and @bounty.user == current_user)
       redirect_to :login 
     end
 

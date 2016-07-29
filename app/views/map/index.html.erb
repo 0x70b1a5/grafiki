@@ -22,7 +22,10 @@
      });	
      map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
 
-// Create the search box and link it to the UI element.
+       /*
+       *  SET UP SEARCH BOX
+       */
+       // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
 
@@ -141,11 +144,12 @@
                "src='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + 
                b.address + "'>" + "<div class='b-a'>$" + b.amount + "</div>" +
                "<code>" + b.address + "</code></div>" 
-             : "<div class='b-a'>$" + b.amount + " </div>" 
+             : "<div class='b-a'>$" + b.amount + " </div>" +
+               (`<%= button_to 'fill', fill_bounty_path(bounty), method: :post, class: "row" %>`) 
             })() +
                "<div class='b-s'><p class='b-d'>" + b.description + "</p></div>" +
-               "<p class='b-n'>commissioned by " + (b.patron || 'anonymous') + "</p>" +
-               (`<%= button_to 'fill', fill_bounty_path(bounty), method: :post, class: "row" %>`) 
+               "<p class='b-n'>commissioned by " + 
+               (b.patron || 'anonymous') + "</p>"
        });
 
        /* WHEN THEY CLICK THE MARKER, OPEN THE WINDOW.
