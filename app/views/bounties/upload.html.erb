@@ -1,3 +1,5 @@
+<%= content_for :title do %> | upload<% end %>
+<div id="page">
 <%= form_for @bounty do |f| %>
   <% if @bounty.errors.any? %>
     <%= pluralize(@bounty.errors.count, "error") %> must be fixed. 
@@ -11,7 +13,7 @@
   <div class="box">
   <div class="in-float">
     <%= f.label :title %>
-    <%= f.text_field :title, placeholder: 'name your bounty' %>
+    <%= f.text_field :title, placeholder: 'name your artwork' %>
   </div>
   </div>
 
@@ -19,7 +21,7 @@
   <div class="in-float" id="b-f-d">
     <%= f.label :description %>
     <%= f.text_area :description, 
-      placeholder: 'a summary of the art you want, and details about where you want it.' %>
+      placeholder: 'a summary of the contents and story or your artwork' %>
   </div>
   </div>
 
@@ -52,6 +54,10 @@
   </div>
   </div>
 
-  <%= button_to 'upload art', upload_bounty_path(@bounty), method: :post %>
+  <div class="box">
+  <div class="in-float" style="background: #334">
+  <%= button_to 'upload art', upload_bounties_path(@bounty), method: :post %>
+  </div>
+  </div>
 
 <% end %>

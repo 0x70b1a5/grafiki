@@ -29,7 +29,7 @@ html, body {
   top: 7rem;
   left: 15rem;
   height: 90%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 #map {
@@ -112,8 +112,12 @@ input#pac-input:focus {
 }
 
 .box input[type=submit] {
-  background: #fff;
+  background: none;
   font-weight: bold;
+}
+
+.box .in-float input[type=submit]{
+  background:#334; color:#fff;
 }
 
 #search-text-input {

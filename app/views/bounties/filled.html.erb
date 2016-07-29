@@ -1,5 +1,5 @@
-<div id="hed">artwork</div>
-
+<% content_for :title do %> | artwork<% end %>
+<div id="page">
 <% @bounties.each do |bounty| %>
 <% next unless bounty.artist %>
 <div class="row">
@@ -32,3 +32,4 @@
 method: :delete, 
 data: { confirm: 'u sure?' } %>
 <% end %>
+</div>

@@ -11,7 +11,7 @@
 
   <body>
  <div id="nav-menu">
-   <div id="hed" class="in-float">grafiki</div>
+   <a href="/"><div id="hed" class="in-float">grafiki<%= yield :title %></div></a>
    <div class="in-float" style="margin-left:3em">
      <input id="pac-input" class="searchbar" type="text" placeholder="Find bounties near...">
    </div>
@@ -33,6 +33,25 @@
    <% end %>
    <div class="in-float rod" id="road">road</div>
    <div class="in-float rod sat" id="sat">satellite</div>
+
+ </div>
+    <% if flash %>
+    <div id="flashes">
+    <% flash.each do |name,msg| %>
+    <%= content_tag :div, msg, class: "flash "+name %>
+    <% end -%>
+    </div>
+    <%end%>
+
+    <%= yield %>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        setTimeout(function(){
+          $('.flash').remove();
+        }, 5000);
+      });
+    </script>
 
 <script src="https://checkout.stripe.com/checkout.js"></script>
 
@@ -75,25 +94,6 @@
   });
 </script>
 
-
- </div>
-    <% if flash %>
-    <div id="flashes">
-    <% flash.each do |name,msg| %>
-    <%= content_tag :div, msg, class: "flash "+name %>
-    <% end -%>
-    </div>
-    <%end%>
-
-    <%= yield %>
-
-    <script type="text/javascript">
-      $(document).ready(function(){
-        setTimeout(function(){
-          $('.flash').remove();
-        }, 5000);
-      });
-    </script>
 
   </body>
 </html>

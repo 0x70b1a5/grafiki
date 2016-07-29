@@ -48,11 +48,12 @@ class BountiesController < ApplicationController
         flash[:error] = "escrow could not be created"
       end
     else
-      redirect_to root_path
+      flash[:error] = "invalid bounty"
+      redirect_to create_bounties_path
     end
   end
 
-  def award
+  def award# does this code ever actually run?
     if params[:id] #GET
     @bounty = Bounty.find(params[:id])
     unless @bounty.user == current_user
@@ -137,11 +138,19 @@ class BountiesController < ApplicationController
   def upload
     #TODO this entire form
     redirect_to :login unless user_signed_in?
-    @bounty = Bounty.new(upload_params)
 
-    if @bounty.save
-      redirect_to @bounty
-    else
+    if params[:bounty] # POST
+      @bounty = Bounty.new(upload_params)
+
+      if @bounty.save
+        flash[:notice] = "artwork uploaded"
+        redirect_to @bounty
+      else
+        flash[:notice] = "problem uploading artwork"
+        render 'upload'
+      end
+    else # GET
+      @bounty = Bounty.new
       render 'upload'
     end
   end
