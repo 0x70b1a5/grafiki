@@ -4,11 +4,11 @@
   <img src="<%= cc.pic %>">
 </div>
 <div>
-  <%= cc.name %> | <%= cc.email %> 
+  <%= cc.artist %> | <%= cc.email %> 
 </div>
 <div>
   <%= form_for @bounty do |f| %>
-  <%= f.hidden_field :name, value: cc.name %>
+  <%= f.hidden_field :artist, value: cc.artist %>
   <%= f.hidden_field :pic, value: cc.pic %>
   <%= f.hidden_field :address, value: cc.address %>
   <input type="hidden" name="award" value="1">
