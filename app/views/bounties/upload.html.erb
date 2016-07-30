@@ -1,5 +1,4 @@
 <%= content_for :title do %> | upload<% end %>
-<div id="page">
 <%= form_for @bounty do |f| %>
   <% if @bounty.errors.any? %>
     <%= pluralize(@bounty.errors.count, "error") %> must be fixed. 

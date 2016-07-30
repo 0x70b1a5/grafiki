@@ -31,7 +31,7 @@ class BountiesController < ApplicationController
   def create
     unless user_signed_in?
       flash[:error] = "you must log in\nto create a bounty"
-      redirect_to :login
+      redirect_to "/users/sign_in"
     end
 
     @bounty = current_user.bounties.create(bounty_params)
@@ -78,7 +78,7 @@ class BountiesController < ApplicationController
     @bounty = Bounty.find(params[:id])
     unless (user_signed_in? and @bounty.user == current_user)
       flash[:error] = "you do not own this bounty"
-      redirect_to :login 
+      redirect_to "/users/sign_in" 
     end
 
     if params[:award]
@@ -93,7 +93,7 @@ class BountiesController < ApplicationController
       if @bounty.update(bounty_params)
         redirect_to @bounty
       else 
-        render 'edit'
+        redirect_to edit_bounties_path
       end
     end
   end
@@ -109,14 +109,14 @@ class BountiesController < ApplicationController
         redirect_to root_path
       end
     else
-      redirect_to :login
+      redirect_to "/users/sign_in"
       flash[:notice] = "please login"
     end
   end
 
   def fill
     # for updating a bounty to an artwork
-    redirect_to :login unless user_signed_in?
+    redirect_to "/users/sign_in" unless user_signed_in?
 
     @bounty = Bounty.find(params[:id])
     @escrow = @bounty.escrows.first
@@ -124,20 +124,18 @@ class BountiesController < ApplicationController
 
     if not @bounty[:artist] # GET
       # no artist field = no picture = not yet filled. render form
-      render 'fill'
     elsif @escrow.candidates.create(candidate_params) # POST
       # CHECK: does this code ever actually run?
       flash[:notice] = "submission received"
       redirect_to @bounty
     else
       flash[:error] = "error filling bounty"
-      render 'fill'
     end
   end
 
   def upload
     #TODO this entire form
-    redirect_to :login unless user_signed_in?
+    redirect_to '/users/sign_in' unless user_signed_in?
 
     if params[:bounty] # POST
       @bounty = Bounty.new(upload_params)
@@ -147,18 +145,17 @@ class BountiesController < ApplicationController
         redirect_to @bounty
       else
         flash[:notice] = "problem uploading artwork"
-        render 'upload'
+        redirect_to bounties_upload_path
       end
     else # GET
       @bounty = Bounty.new
-      render 'upload'
     end
   end
 
   def destroy
     @bounty = Bounty.find(params[:id])
     unless (user_signed_in? and @bounty.user == current_user)
-      redirect_to :login 
+      redirect_to "/users/sign_in" 
     end
 
     @bounty.destroy

@@ -26,8 +26,8 @@ html, body {
   display: inline-block;
   text-align: left;
   position: absolute;
-  top: 7rem;
-  left: 15rem;
+  top: 5rem;
+  left: 12rem;
   height: 90%;
   overflow: auto;
 }
@@ -331,9 +331,9 @@ input:focus{
   }
 
   .flash {
-    background: #eef;
+    background: #eee;
     padding: 1rem;
-    border: 3px solid #000
+    box-shadow: 1px 1px 1px #000;
   }
 
   .error {
@@ -344,7 +344,7 @@ input:focus{
     background: #ff5;
   }
 
-  form.button_to {
+  #buttonto {
     float: right;
     display: inline-block;
     clear:both;

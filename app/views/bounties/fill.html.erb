@@ -4,7 +4,6 @@
     min-width: 400px;
   }
 </style>
-<div id="page">
 <%= form_for @candidate do |f| %>
   <% if @candidate.errors.any? %>
     <%= pluralize(@candidate.errors.count, "error") %> must be fixed.
@@ -50,4 +49,3 @@
   </div>
   </div>
 <% end %>
-</div>

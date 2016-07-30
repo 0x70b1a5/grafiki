@@ -1,41 +1,27 @@
 <%= content_for :title do %> | browse<% end %>
-<div id="page">
 <% @bounties.each do |bounty| %>
 <% next if bounty.artist %>
 <div class="box">
   <div class="row">
-    <div class="num row">
-      <%= bounty.amount %> BTC
-    </div>
-
-  <a href="bounties/<%= bounty.id %>/fill"><div class="row fill">fill</div></a>
-    <div class="tyt">
-      <%= bounty.title %>
-    </div>
-
-<code>
-      <%= bounty.lat %>, <%= bounty.lng %>
-</code>
-
-    <div class="wut">
-      <%= bounty.description %>
-    </div>
-
-    <div class="wut">
-      commissioned by <%= bounty.patron || 'anonymous' %>
-    </div>
-  <%= button_to '+want', vote_bounty_path(bounty), method: :post, class: "row" %>
-
-  <div class="row tic">
-    <%= bounty.votes.count %>
+    <div class="num row"><%= bounty.amount %> BTC</div>
+    <a href="bounties/<%= bounty.id %>/fill"><div class="row fill">fill</div></a>
+    <div class="tyt"><%= bounty.title %></div>
+    <code><%= bounty.lat %>, <%= bounty.lng %></code>
+    <div class="wut"><%= bounty.description %></div>
+    <div class="wut">commissioned by <%= bounty.patron || 'anonymous' %></div>
+  <% if bounty.user == current_user %>
+  <div class="row"><%= link_to 'edit', edit_bounty_path(bounty),
+    style: "text-decoration:none;color:#000" %></div>
+  <div class="row"><%= link_to 'delete', bounty_path(bounty),
+    method: :delete, 
+    data: { confirm: 'u sure?' }, 
+    style: "text-decoration:none;color:#000" %></div>
+  <% else %>
+  <div class="row"><%= bounty.votes.count %></div>
+  <div class="row"><%= button_to '+want', vote_bounty_path(bounty), method: :post %></div>
+  <div class="row"><%= button_to 'fill', fill_bounty_path(bounty), method: :post %></div>
+  <% end %>
   </div>
 
-  </div>
-
-    <%= link_to 'edit', edit_bounty_path(bounty) %>
-    <%= link_to 'kill', bounty_path(bounty),
-      method: :delete, 
-      data: { confirm: 'u sure?' } %>
 </div>
 <% end %>
-</div>

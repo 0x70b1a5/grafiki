@@ -11,15 +11,15 @@
 
   <body>
  <div id="nav-menu">
-   <a href="/"><div id="hed" class="in-float">grafiki<%= yield :title %></div></a>
+   <%= link_to root_path do %><div id="hed" class="in-float">grafiki<%= yield :title %></div><% end %>
    <div class="in-float" style="margin-left:3em">
      <input id="pac-input" class="searchbar" type="text" placeholder="Find bounties near...">
    </div>
 
-   <a href="/bounties/new"><div class="nav-button in-float"><span id="i">+</span> post a bounty</div></a>
-   <a href="/bounties"><div class="nav-button in-float"><span id="i">$</span> fill a bounty</div></a>
-   <a href="/bounties/upload"><div class="nav-button in-float"><span id="i">^</span> upload artwork</div></a>
-   <a href="/bounties/filled"><div class="nav-button in-float"><span id="i">*</span> browse artwork</div></a>
+   <%= link_to new_bounty_path do %><div class="nav-button in-float"><span id="i">+</span> post a bounty</div><% end %>
+   <%= link_to bounties_path do %><div class="nav-button in-float"><span id="i">$</span> fill a bounty</div><% end %>
+   <%= link_to upload_bounties_path do %><div class="nav-button in-float"><span id="i">^</span> upload artwork</div><% end %>
+   <%= link_to filled_bounties_path do %><div class="nav-button in-float"><span id="i">*</span> browse artwork</div><% end %>
    <% unless user_signed_in? %>
    <%= link_to "register", new_user_registration_path, id: "signup-button", class: "in-float" %>
    <%= link_to "login", new_user_session_path, id: "login-button", class: "in-float" %>
@@ -43,7 +43,8 @@
     </div>
     <%end%>
 
-    <%= yield %>
+    <%= yield :map %>
+    <div id="page"><%= yield %></div>
 
     <script type="text/javascript">
       $(document).ready(function(){

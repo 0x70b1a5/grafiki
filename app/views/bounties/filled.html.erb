@@ -1,35 +1,33 @@
 <% content_for :title do %> | artwork<% end %>
-<div id="page">
 <% @bounties.each do |bounty| %>
 <% next unless bounty.artist %>
+<div class="box">
 <div class="row">
 <div class="sid">
   <div class="num row fil"><%= bounty.amount %> BTC</div>
   <div class="tic row"><%= bounty.votes.count %></div>
-  <%= button_to '+love', vote_bounty_path(bounty), method: :post, class: "row" %>
+  <%= button_to '+love', vote_bounty_path(bounty), method: :post, class: "row", id:"buttonto" %>
 
   <div class="inf">
-
     <img class="qr" src="https://chart.googleapis.com/chart?cht=qr&chs=100x100&chl=<%= bounty.address %>">
       <%= bounty.address %>
-    </div>
+  </div>
 
     <p style="text-align:left"><%= bounty.description %></p>
     commissioned by <%= bounty.patron || 'anonymous' %>
-  </div>
-
+</div>
 <div class="tyt">
   <p style="margin:0;padding:0"><img src="<%= bounty.pic %>"><p>
-
   <p style="margin-bottom:0"><%= bounty.title %></p>
   <p style="font-size:0.8em;font-weight:normal;margin:0">by <%= bounty.artist %></p>
   <p style="margin-bottom:0"><code><%= bounty.lat %>, <%= bounty.lng %></code></p>
 </div>
-
-</div>
-<%= link_to 'edit', edit_bounty_path(bounty) %>
-<%= link_to 'kill', bounty_path(bounty),
-method: :delete, 
-data: { confirm: 'u sure?' } %>
+<% if bounty.user == current_user %>
+<div class="in-float"><%= link_to 'edit', edit_bounty_path(bounty) %></div>
+<div class="in-float"><%= link_to 'delete', bounty_path(bounty),
+    method: :delete, 
+    data: { confirm: 'u sure?' } %></div>
 <% end %>
 </div>
+</div>
+<% end %>
