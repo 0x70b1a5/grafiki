@@ -146,7 +146,7 @@
                b.address + "'>" + "<div class='b-a'>$" + b.amount + "</div>" +
                "<code>" + b.address + "</code></div>" 
              : "<div class='b-a'>$" + b.amount + " </div>" +
-               (`<%= button_to 'fill', fill_bounty_path(bounty), method: :post, class: "row", id: "buttonto" %>`) 
+               (`<% if bounty.user != current_user %><%= button_to 'fill', fill_bounty_path(bounty), method: :post, class: "row", id: "buttonto" %><% end %>`) 
             })() +
                "<div class='b-s'><p class='b-d'>" + b.description + "</p></div>" +
                "<p class='b-n'>commissioned by " + 

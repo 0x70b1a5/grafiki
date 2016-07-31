@@ -49,7 +49,7 @@ class BountiesController < ApplicationController
       end
     else
       flash[:error] = "invalid bounty"
-      redirect_to create_bounties_path
+      redirect_to new_bounty_path
     end
   end
 
@@ -165,7 +165,7 @@ class BountiesController < ApplicationController
 
   private
     def bounty_params
-      stripe_params
+      stripe_params unless params[:upload]
       params.require(:bounty).permit(:title,:lat,:lng,
         :amount,:description,:patron)
     end
