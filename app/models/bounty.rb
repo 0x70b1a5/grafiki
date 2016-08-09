@@ -16,7 +16,7 @@ class Bounty < ApplicationRecord
     on: [:create]
   validates :amount, numericality: { greater_than_or_equal_to: 0 },
     on: [:create]
-  validates :description, presence: true, length: { maximum: 1024 },
+  validates :description, length: { maximum: 1024 },
     on: [:create]
   validates :patron, length: { maximum: 64 },
     on: [:create]

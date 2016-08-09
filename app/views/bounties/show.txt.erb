@@ -1,0 +1,17 @@
+<div class='row tic' style='font-weight:bold'><%= @bounty.votes.count %></div>
+<%= button_to '+', vote_bounty_path(@bounty), method: :post, class: "row", id: "buttonto" %>
+<div class='b-p'><img style='min-width:350px' class='pic' src='<%= @bounty.pic %>'></div>
+<div style='text-align:center'> 
+<div class='b-t'> <%= @bounty.title %> </div>
+<div class='b-r'> by <%= @bounty.artist %> </div>
+<img style='display: inline-block;margin:auto' src='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'>
+<div class='b-a'>$ <%= @bounty.amount %></div>
+<code> <%= @bounty.address %></code></div>
+<div class='b-a'>$ <%= @bounty.amount %></div>
+<% if @bounty.user != current_user %>
+  <%= button_to 'fill', 
+      fill_bounty_path(bounty), 
+      method: :post, class: "row", id: "buttonto" %>
+<% end %>
+<div class='b-s'><p class='b-d'><%= @bounty.description || 'no description given' %></p></div>
+<p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %></p>

@@ -1,6 +1,9 @@
 class BountiesController < ApplicationController
   def index
     @bounties = Bounty.all
+    respond_to do |format|
+      format.json { render :json => @bounties.to_json }
+    end
   end
 
   def filled
@@ -13,6 +16,7 @@ class BountiesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to root_path(id: params[:id]) }
       format.json { render :json => @bounty.to_json }
+      format.txt { render :txt => @bounty.to_json }
     end
   end
 

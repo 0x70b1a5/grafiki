@@ -1,7 +1,6 @@
 <% content_for :map do %>
  <div id="map">this a map</div>
 
- <%= javascript_include_tag "markerclusterer.js" %>
  <script>
    function escapeHtml(str) {
      var div = document.createElement('div');
@@ -80,124 +79,114 @@
           });
           map.fitBounds(bounds);
         });
-      
- function showMarkers() {
-   window.markers = [];
 
-   <% Bounty.all.each do |bounty| %> 
-     res_<%= bounty.id %> = 
-       $.get("/bounties/<%= bounty.id %>.json").then(function(ub){ 
+/*
+ - server side clusterer
+    - runs every idle
+    - gets coords of current view corners
+    - clusters markers, returns clusterflags 
+ - infowindows:
+    - interior is a div, guid
+    - on open, set innerhtml via ajax?
+*/
+
+ function drawMarkers(){
+   if (window.markers){
+     window.markers.forEach(function(marker){ marker.setMap(null); });
+   }
+   window.markers = [];
+   db_response = $.get("/bounties.json").then(function(bounties){ 
+     bounties.forEach(function(raw){
 
        // stringify bounty info from database
        b = {};
-       for (attr in ub) { 
-         if (attr == "lat" || attr == "lng" || attr == "amount") { 
-           b[attr] = Number(ub[attr]);
+       for (attr in raw) { 
+         if (attr=="lat" || attr=="lng" || attr=="amount" || attr=="id") { 
+           b[attr] = Number(raw[attr]);
            continue 
          };
-         if (typeof(ub[attr]) == "string") {
-           b[attr] = escapeHtml(ub[attr]) 
+         if (typeof(raw[attr]) == "string") {
+           b[attr] = escapeHtml(raw[attr]) 
          }
-       };
+       }; 
 
-       marker_<%= bounty.id %>  = new google.maps.Marker({
+       // do not draw this marker if it is outside the view bounds!
+       if (!window.bounds.contains(new google.maps.LatLng(b.lat, b.lng))){
+         console.log ('skipping '+b.id+": "+b.lat+" "+b.lng);
+         return;
+       }
+
+       // construct basic marker
+       var label = (function(){ return b.artist ? "a" : "$" })();
+       var marker = new google.maps.Marker({
          position: { lat: b.lat, lng: b.lng },
          map: map,
-         <% if bounty.artist %>
-         label: "a"
-         <% else %>
-         label: "$"
-         <% end %>
+         label: label
        }); 
-       marker_<%= bounty.id %>.setMap(map);
-       markers.push(marker_<%=bounty.id%>);
 
-       /* 
-       * GIVE EACH BOUNTY A NICE INFO WINDOW:
-       * (YES, RAW PLAINTEXT FROM JS WAS REALLY THE BEST I COULD DO.
-       * LET'S SEE YOU RENDER DATA FROM ASYNC DB QUERIES WITH JS IN RAILS)
-       */
-       info_<%= bounty.id %> = new google.maps.InfoWindow({
+       marker.setMap(map); // add it to the main map (this draws the marker)
+
+       /* set up the info window shell w/guid */
+       info = new google.maps.InfoWindow({
          maxWidth: 400,
-         content: 
-           "<div class='row tic' style='font-weight:bold'><%= bounty.votes.count %></div>" +
-           (`<%= button_to '+', vote_bounty_path(bounty), method: :post, class: "row", id: "buttonto" %>`) +
-           (function(){
-             return b.artist ? 
-               "<div class='b-p'><img style='min-width:350px'"+
-               " class='pic' src='" + b.pic + "'></div>"+
-               "<div style='text-align:center'>" + 
-               "<div class='b-t'>" + b.title + "</div>" +
-               "<div class='b-r'> by " + b.artist + "</div>" +
-               "<img style='display: inline-block;margin:auto'" +
-               "src='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + 
-               b.address + "'>" + "<div class='b-a'>$" + b.amount + "</div>" +
-               "<code>" + b.address + "</code></div>" 
-             : "<div class='b-a'>$" + b.amount + " </div>" +
-               (`<% if bounty.user != current_user %><%= button_to 'fill', 
-                 fill_bounty_path(bounty), method: :post, class: "row", id: "buttonto" %><% end %>`) 
-            })() +
-               "<div class='b-s'><p class='b-d'>" + b.description + "</p></div>" +
-               "<p class='b-n'>commissioned by " + 
-               (b.patron || 'anonymous') + "</p>"
+         content: "<div id='marker"+b.id+"'></div>"
        });
 
-       /* WHEN THEY CLICK THE MARKER, OPEN THE WINDOW.
-       * WHEN THEY CLICK IT AGAIN OR HIT ESC, CLOSE IT
-       */
-       marker_<%= bounty.id %>.addListener('click', function() {
-         if (!marker_<%= bounty.id %>.open) {
-           info_<%= bounty.id %>.open(map, marker_<%= bounty.id %>);
-           marker_<%= bounty.id %>.open = true;
+       /* WHEN THEY CLICK THE MARKER, OPEN THE INFO WINDOW.
+       * MAKE AJAX REQUEST TO GET CONTENTS.
+       * WHEN THEY CLICK MARKER AGAIN OR HIT ESC, CLOSE INFO WINDOW */
+       marker.addListener('click', function() {
+         if (!marker.open) {
+           info.open(map, marker);
+           marker.open = true;
+           var content = $.get("/bounties/"+b.id+".txt").then(function(rendered){ return rendered });
+           $( "#marker"+b.id ).text( content );
          } else {
-           info_<%= bounty.id %>.close();
-           marker_<%= bounty.id %>.open = false;
+           info.close();
+           marker.open = false;
          }
        });
 
-       $(document).on('keyup', function(e) {
-         if (e.keyCode == 27 && info_<%=bounty.id%>.open) {
-           info_<%= bounty.id %>.close();
-         }
-       });
+       markers.push(marker);
 
+       /*$(document).on('keyup', function(e) {
+         if (e.keyCode == 27 && info.open) {
+           info.close();
+         }
+       });*/
      });
-   <% end %> 
+   });
+ }
 
-   <% if params[:id] %>
+ <% if params[:id] %>
    $.get("/bounties/<%= params[:id] %>.json").then(function(ub){  
      map.setCenter({lat: ub.lat, lng: ub.lng});
      map.setZoom(20);
    });
-   <% end %>
-  }
+ <% end %>
+      
+ google.maps.event.addListener(map, 'bounds_changed', function() {
+   window.bounds = map.getBounds();
+ });
 
-     google.maps.event.addListener(map, 'idle', showMarkers)
-     function initialize() {
-     var markerCluster = new MarkerClusterer(map, window.markers, {imagePath: '/assets/images/cluster/m'});
-     }
-     google.maps.event.addDomListener(window, 'load', initialize);
+ google.maps.event.addListener(map, 'idle', function() {
+   drawMarkers();
+ });
 
-   }
-
-   /* custom buttons for satellite and road views */
-   $(document).ready(function(){
-     $( "#pac-input" ).css( "class", "searchbar" );
-     $( "#pac-input" ).focus();
-
+ /* custom buttons for satellite and road views */
+ $(document).ready(function(){
+   $( "#pac-input" ).css( "class", "searchbar" );
+   $( "#pac-input" ).focus();
    $( "#road" ).click(function() {
      map.setOptions({ mapTypeId: google.maps.MapTypeId.ROADMAP });
    });
- 
    $( "#sat" ).click(function() {
      map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
    });
+ });
 
+}
+ </script>
 
-   });
-
-
-</script>
-
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>
 <% end %>
