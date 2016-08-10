@@ -120,7 +120,6 @@
        var label = (function(){ return b.artist ? "a" : "$" })();
        var marker = new google.maps.Marker({
          position: { lat: b.lat, lng: b.lng },
-         map: map,
          label: label
        }); 
 
@@ -173,25 +172,57 @@
 
      for (var i=0;i<5;i++){
        for (var j=0;j<5;j++){
-         markers.push(new google.maps.Marker({
-           position: { lat:sw.lat()+i*horizStep, lng: sw.lng()+j*vertiStep },
-           map: map
-         }));
+         var swlat = sw.lat()+i*horizStep,
+             swlng = sw.lng()+j*vertiStep,
+             nelat = sw.lat()+(i+1)*horizStep,
+             nelng = sw.lng()+(j+1)*vertiStep;
+
+         var miniSW = new google.maps.LatLng(
+             { lat: swlat, 
+               lng: swlng }),
+             miniNE = new google.maps.LatLng(
+             { lat: nelat, 
+               lng: nelng });
+
+         var miniBounds = new google.maps.LatLngBounds(miniSW, miniNE);
+
+         var cluster = [];
+         for (var k=0;k<markers.length;k++){
+           if (markers[k] && miniBounds.contains(markers[k].getPosition())) {
+             cluster.push(markers[k]); 
+             if (cluster.length > 1) delete markers[k];
+           }
+         };
+
+         if (cluster.length <= 1) continue; // don't mark an empty square!
+
+         var clustermark = new google.maps.Marker({
+           // place clustermarker in center of grid with label # of bounties
+           position: {
+             lat:sw.lat()+i*horizStep+horizStep/2,
+             lng:sw.lng()+j*vertiStep+vertiStep/2
+           },
+           map: map,
+           label: String(cluster.length)
+         });
+
+         clustermark.addListener('click', function(e){
+           map.setCenter({
+             lat: e.latLng.lat(),
+             lng: e.latLng.lng()
+           });
+           map.setZoom(map.getZoom()+2);
+         });
+
+         markers.push(clustermark);
        };
      };
 
-     // pass through queued markers & cluster as needed 
-     markers.forEach(function(marker){
-       /*
-         - iterate thru grid squares
-         - tally # of markers
-         - remove olds from the marker queue
-         - replace w/ single cluster marker w/ # label
-       */
-     });
-
      // draw all markers
-     markers.forEach(function(marker){ marker.setMap(map) });
+     markers.forEach(function(marker){ 
+       if (!marker) { return }; // undefined markers left by delete above
+       marker.setMap(map);
+     });
    });
  }
 
