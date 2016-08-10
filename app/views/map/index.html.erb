@@ -156,10 +156,42 @@
          }
        });
 
-       marker.setMap(map); // add it to the main map (this draws the marker)
-
+       // queue marker object for rendering
        markers.push(marker);
+     }); // markers finished.
+
+     // break map into grid squares
+     var bounds = (function(){
+       return window.bounds ? window.bounds : map.getBounds();
+     })(),
+         ne = bounds.getNorthEast(),
+         sw = bounds.getSouthWest();
+
+     // 5*5=25 squares
+     var horizStep = (ne.lat() - sw.lat())/5,
+         vertiStep = (ne.lng() - sw.lng())/5;
+
+     for (var i=0;i<5;i++){
+       for (var j=0;j<5;j++){
+         markers.push(new google.maps.Marker({
+           position: { lat:sw.lat()+i*horizStep, lng: sw.lng()+j*vertiStep },
+           map: map
+         }));
+       };
+     };
+
+     // pass through queued markers & cluster as needed 
+     markers.forEach(function(marker){
+       /*
+         - iterate thru grid squares
+         - tally # of markers
+         - remove olds from the marker queue
+         - replace w/ single cluster marker w/ # label
+       */
      });
+
+     // draw all markers
+     markers.forEach(function(marker){ marker.setMap(map) });
    });
  }
 
