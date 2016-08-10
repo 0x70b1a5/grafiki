@@ -99,7 +99,7 @@
      bounties.forEach(function(raw){
 
        // stringify bounty info from database
-       b = {};
+       var b = {};
        for (attr in raw) { 
          if (attr=="lat" || attr=="lng" || attr=="amount" || attr=="id") { 
            b[attr] = Number(raw[attr]);
@@ -124,10 +124,8 @@
          label: label
        }); 
 
-       marker.setMap(map); // add it to the main map (this draws the marker)
-
        /* set up the info window shell w/guid */
-       info = new google.maps.InfoWindow({
+       var info = new google.maps.InfoWindow({
          maxWidth: 400,
          content: "<div id='marker"+b.id+"'></div>"
        });
@@ -139,21 +137,28 @@
          if (!marker.open) {
            info.open(map, marker);
            marker.open = true;
-           var content = $.get("/bounties/"+b.id+".txt").then(function(rendered){ return rendered });
-           $( "#marker"+b.id ).text( content );
+           var content ;
+           $.get("/bounties/"+b.id+".txt").then(function(rendered){ 
+             content = rendered;
+             $( "#marker"+b.id ).html( content );
+           });
          } else {
            info.close();
            marker.open = false;
          }
        });
 
-       markers.push(marker);
-
-       /*$(document).on('keyup', function(e) {
+       // also close if they hit esc
+       $(document).on('keyup', function(e) {
          if (e.keyCode == 27 && info.open) {
            info.close();
+           marker.open = false;
          }
-       });*/
+       });
+
+       marker.setMap(map); // add it to the main map (this draws the marker)
+
+       markers.push(marker);
      });
    });
  }
