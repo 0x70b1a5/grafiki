@@ -1,14 +1,15 @@
-<div class='row tic' style='font-weight:bold'><%= @bounty.votes.count %></div>
-<%= button_to '+', vote_bounty_path(@bounty), method: :post, class: "row", id: "buttonto" %>
 <% if @bounty.pic %>
-  <div class='b-p'><img style='min-width:350px' class='pic' src='<%= @bounty.pic %>'></div>
+  <div class='b-p'><img style='min-width:350px; max-width:400px' class='pic' src='<%= @bounty.pic %>'></div>
   <div style='text-align:center'> 
-    <div class='b-t'> <%= @bounty.title %> </div>
+<div class='row tic' id='infovotes' style='font-weight:bold'><%= @bounty.votes.count %></div>
+<%= button_to '+', vote_bounty_path(@bounty), method: :post, class: "row tic", id: "buttonto" %>
+    <div class='b-t'> 
+<%= @bounty.title %> </div>
     <div class='b-r'> by <%= @bounty.artist %> </div>
-    <img style='display: inline-block;margin:auto' src='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'>
     <div class='b-a'>$ <%= @bounty.amount %></div>
-    <code> <%= @bounty.address %></code>
+    <code> <a href='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'><%= @bounty.address %></a></code>
   </div>
+<div class='b-s'><p class='b-d'>
 <% else %>
   <div style='text-align:center'> 
     <div class='b-a'>$ <%= @bounty.amount %></div>
@@ -18,6 +19,7 @@
       fill_bounty_path(@bounty), 
       method: :post, class: "row", id: "buttonto" %>
   <% end %>
-<% end %>
-<div class='b-s'><p class='b-d'><b><%= @bounty.title %></b>: <%= @bounty.description || 'no description given' %></p></div>
+<div class='b-s'><p class='b-d'><b><%= @bounty.title %></b>:
+ <% end %>
+<%= @bounty.description || 'no description given.' %><% if @bounty.artist == "unknown" %><p><em>did you make this? do you know who did? <a href="mailto:team@grafiki.com">email us</a>.</em></p><%end%></p></div>
 <p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %></p>
