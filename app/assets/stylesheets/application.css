@@ -299,7 +299,7 @@ input:focus{
     min-height: 150px;
   }
 
-  #about-button {
+  #signout-button {
     position: absolute;
     right: 1em;
     width: 6.7rem;
@@ -307,7 +307,7 @@ input:focus{
 
   #signup-button {
     position: absolute;
-    right: 11rem;
+    right: 1rem;
     text-decoration: none;
     background: #223;
     color: #eee;
@@ -316,7 +316,7 @@ input:focus{
 
   #login-button {
     position: absolute;
-    right: 18rem;
+    right: 7.5rem;
     text-decoration: none;
   }
 
@@ -332,7 +332,7 @@ input:focus{
     text-align: center;
     top: 1rem;
     z-index: 5;
-    left: 50%;
+    left: 40%;
   }
 
   .flash {
@@ -347,6 +347,15 @@ input:focus{
 
   .alert {
     background: #ff5;
+  }
+
+  .load {
+    font-size: 2em;
+    font-family: Roboto; 
+    font-weight: bold;
+    color: #fff;
+    background: #223;
+    box-shadow: 1px 1px 1px #dde;
   }
 
   #buttonto {

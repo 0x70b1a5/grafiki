@@ -15,8 +15,8 @@
    * SET UP THE HUGE MAPS:
    */
    function initMap() {
-     var cen = {lat: 40.7625, lng: -73.974167};
-     var zum = 3;
+     var cen = {lat: 40.7625, lng: -103.974167};
+     var zum = 5;
      map = new google.maps.Map(document.getElementById('map'), {
        zoom: zum,
        center: cen
@@ -92,7 +92,7 @@
 
  function drawMarkers(){
    // first, let the user know we are loading.
-   $( "#hed" ).text( "loading..." );
+   $( "#flashes" ).html(`<div class="flash load">loading bounties... </div>`);
 
    // clear old markers from the map
    if (window.markers){
@@ -103,7 +103,6 @@
    // iterate over full db query
    db_response = $.get("/bounties.json").then(function(bounties){ 
      bounties.forEach(function(raw){
-
        // stringify bounty info from database
        var b = {};
        for (attr in raw) { 
@@ -236,7 +235,7 @@
      });
 
      // remove loading message
-     $( "#hed" ).text("grafiki");
+     $( "#flashes" ).html("");
    });
  }
 
