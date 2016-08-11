@@ -91,10 +91,16 @@
 */
 
  function drawMarkers(){
+   // first, let the user know we are loading.
+   $( "#hed" ).text( "loading..." );
+
+   // clear old markers from the map
    if (window.markers){
      window.markers.forEach(function(marker){ marker.setMap(null); });
    }
    window.markers = [];
+
+   // iterate over full db query
    db_response = $.get("/bounties.json").then(function(bounties){ 
      bounties.forEach(function(raw){
 
@@ -170,12 +176,12 @@
          ne = bounds.getNorthEast(),
          sw = bounds.getSouthWest();
 
-     // 5*5=25 squares
-     var horizStep = (ne.lat() - sw.lat())/5,
-         vertiStep = (ne.lng() - sw.lng())/5;
+     // 10*10 = 100 subsquares
+     var horizStep = (ne.lat() - sw.lat())/10,
+         vertiStep = (ne.lng() - sw.lng())/10;
 
-     for (var i=0;i<5;i++){
-       for (var j=0;j<5;j++){
+     for (var i=0;i<10;i++){
+       for (var j=0;j<10;j++){
          var swlat = sw.lat()+i*horizStep,
              swlng = sw.lng()+j*vertiStep,
              nelat = sw.lat()+(i+1)*horizStep,
@@ -228,6 +234,9 @@
        if (!marker) { return }; // undefined markers left by delete above
        marker.setMap(map);
      });
+
+     // remove loading message
+     $( "#hed" ).text("grafiki");
    });
  }
 

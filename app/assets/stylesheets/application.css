@@ -64,6 +64,11 @@ html, body {
   background: #223;
 }
 
+#pac-box {
+  position:absolute;
+  left: 14rem;
+}
+
 .searchbar {
   width: 400px;
   padding-right: 0;
