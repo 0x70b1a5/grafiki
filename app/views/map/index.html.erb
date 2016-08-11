@@ -117,10 +117,11 @@
        }
 
        // construct basic marker
-       var label = (function(){ return b.artist ? "a" : "$" })();
        var marker = new google.maps.Marker({
          position: { lat: b.lat, lng: b.lng },
-         label: label
+         icon: "http://www.googlemapsmarkers.com/v1/"+
+           (function(){ return b.artist ? "a" : "$" })()+"/"+
+           (function(){ return b.artist ? "0099FF" : "009900" })()
        }); 
 
        /* set up the info window shell w/guid */
@@ -136,6 +137,7 @@
          if (!marker.open) {
            info.open(map, marker);
            marker.open = true;
+           window.infosOpen = true;
            var content ;
            $.get("/bounties/"+b.id+".txt").then(function(rendered){ 
              content = rendered;
@@ -144,6 +146,7 @@
          } else {
            info.close();
            marker.open = false;
+           window.infosOpen = false;
          }
        });
 
@@ -152,6 +155,7 @@
          if (e.keyCode == 27 && info.open) {
            info.close();
            marker.open = false;
+           window.infosOpen = false;
          }
        });
 
@@ -203,7 +207,8 @@
              lng:sw.lng()+j*vertiStep+vertiStep/2
            },
            map: map,
-           label: String(cluster.length)
+           icon: "http://www.googlemapsmarkers.com/v1/"+
+                  String(cluster.length)+"/FFFF00"
          });
 
          clustermark.addListener('click', function(e){
@@ -238,7 +243,9 @@
  });
 
  google.maps.event.addListener(map, 'idle', function() {
-   drawMarkers();
+   if (!window.infosOpen){
+     drawMarkers();
+   }
  });
 
  /* custom buttons for satellite and road views */
