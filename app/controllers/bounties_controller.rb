@@ -1,7 +1,9 @@
 class BountiesController < ApplicationController
   def index
     @bounties = Bounty.all
+
     respond_to do |format|
+      format.html 
       format.json { render :json => @bounties.to_json }
     end
   end

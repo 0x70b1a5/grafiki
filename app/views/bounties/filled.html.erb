@@ -1,8 +1,15 @@
 <% content_for :title do %> | artwork<% end %>
-<% @bounties.each do |bounty| %>
+<% @bounties.each_with_index do |bounty,ind| %>
+<% break if ind > 100 %><%# TODO: PAGINATE REMAINING ARTWORKS %>
 <% next unless bounty.artist %>
 <div class="box">
 <div class="row">
+<div class="tyt">
+  <p style="margin:0;padding:0"><img src="<%= bounty.pic %>"><p>
+  <p style="margin-bottom:0"><%= bounty.title %></p>
+  <p style="font-size:0.8em;font-weight:normal;margin:0">by <%= bounty.artist %></p>
+  <p style="margin-bottom:0"><code><%= bounty.lat %>, <%= bounty.lng %></code></p>
+</div>
 <div class="sid">
   <div class="num row fil"><%= bounty.amount %> BTC</div>
   <div class="tic row"><%= bounty.votes.count %></div>
@@ -15,12 +22,6 @@
 
     <p style="text-align:left"><%= bounty.description %></p>
     commissioned by <%= bounty.patron || 'anonymous' %>
-</div>
-<div class="tyt">
-  <p style="margin:0;padding:0"><img src="<%= bounty.pic %>"><p>
-  <p style="margin-bottom:0"><%= bounty.title %></p>
-  <p style="font-size:0.8em;font-weight:normal;margin:0">by <%= bounty.artist %></p>
-  <p style="margin-bottom:0"><code><%= bounty.lat %>, <%= bounty.lng %></code></p>
 </div>
 <% if bounty.user == current_user %>
 <div class="in-float"><%= link_to 'edit', edit_bounty_path(bounty) %></div>

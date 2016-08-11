@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'pages/about'
+
   resources :candidates
 
   get 'escrows/new'
