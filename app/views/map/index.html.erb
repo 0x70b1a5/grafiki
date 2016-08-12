@@ -120,7 +120,6 @@
 
        // do not draw this marker if it is outside the view bounds!
        if (!window.bounds.contains(new google.maps.LatLng(b.lat, b.lng))){
-         console.log ('skipping '+b.id+": "+b.lat+" "+b.lng);
          return;
        }
 
@@ -169,7 +168,8 @@
 
        // queue marker object for rendering
        markers.push(marker);
-     }); // markers finished.
+     }); // markers finished building.
+     // cluster markers:
 
      // break map into grid squares
      var bounds = (function(){
