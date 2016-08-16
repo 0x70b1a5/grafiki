@@ -21,5 +21,5 @@
   <% end %>
 <div class='b-s'><p class='b-d'><b><%= @bounty.title %></b>:
  <% end %>
-<%= @bounty.description || 'no description given.' %><% if @bounty.artist == "unknown" %><p><em>did you make this? do you know who did? <a href="mailto:team@grafiki.com">email us</a>.</em></p><%end%></p></div>
+<%= @bounty.description || 'no description given.' %><% if @bounty.artist == "unknown" %><p><em>did you make this? do you know who did? <a href="mailto:go@grafiki.com">email us</a>.</em></p><%end%></p></div>
 <p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %></p>
