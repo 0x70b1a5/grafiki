@@ -1,6 +1,10 @@
 class BountiesController < ApplicationController
   def index
-    @bounties = Bounty.all.limit(200)
+    #if params[:latlng]
+    #  @bounties = Bounty.where(is_within params[:latlng])
+    #else
+    @bounties = Bounty.all
+    #end
 
     respond_to do |format|
       format.html 
