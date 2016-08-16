@@ -1,6 +1,6 @@
 class BountiesController < ApplicationController
   def index
-    @bounties = Bounty.all
+    @bounties = Bounty.all.limit(200)
 
     respond_to do |format|
       format.html 
