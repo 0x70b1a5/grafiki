@@ -1,5 +1,5 @@
 <% if @bounty.pic %>
-  <div class='b-p'><img style='min-width:350px; max-width:400px' class='pic' src='<%= @bounty.pic %>'></div>
+  <div class='b-p'><img class='pic' src='<%= @bounty.pic %>'></div>
   <div style='text-align:center'> 
 <div class='row tic' id='infovotes' style='font-weight:bold'><%= @bounty.votes.count %></div>
 <%= button_to '+', vote_bounty_path(@bounty), method: :post, class: "row tic", id: "buttonto" %>
