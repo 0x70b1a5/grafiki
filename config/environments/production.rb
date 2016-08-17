@@ -56,6 +56,8 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "grafiki_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  # url for mailer
+  config.action_mailer.default_url_options = { :host => 'grafiki.org' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
