@@ -7,6 +7,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'rufus-scheduler'
 gem 'mailgun-ruby'
+gem 'mailgun_rails'
 
 # for payments
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
