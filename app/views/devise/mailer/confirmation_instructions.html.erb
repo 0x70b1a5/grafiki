@@ -1,5 +1,7 @@
-<p>Welcome <%= @email %>!</p>
-
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+    <h1>welcome to grafiki, <%= @user.email.split('@')[0] %></h1>
+    <p>
+      we are happy to have you with us.
+    </p>
+    <p>
+      login here: <a href='http://grafiki.org/users/sign_in'>grafiki.org/users/sign_in</a>
+    </p>
