@@ -63,6 +63,13 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  # following from https://stackoverflow.com/questions/37434383/seding-emails-with-devise-gem-and-mailgun-api
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+        api_key: 'key-9723fc515675dd318082f0a37d449826',
+        domain: 'mg.grafiki.org'
+  }
+ 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
