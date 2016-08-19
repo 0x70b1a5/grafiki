@@ -1,25 +1,21 @@
 <%= content_for :title do %> | sign in<% end %>
-<div class="in-float" style="height:auto;margin-top:2em">
+<div class="in-float" style="height:auto;margin-top:1em">
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="signupfield">
-    email<br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+    <p>email</p>
+    <p><%= f.email_field :email, autofocus: true %></p>
 
-  <div class="signupfield">
-    password<br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+    <p>password</p>
+    <p><%= f.password_field :password, autocomplete: "off" %></p>
 
   <% if devise_mapping.rememberable? -%>
-    <div class="signupfield">
-      <%= f.check_box :remember_me %>
-      remember me
-    </div>
+      <p><%= f.check_box :remember_me %>
+      remember me</p>
   <div class="actions">
-    <%= f.submit "sign in" %>
+    <p><%= f.submit "sign in" %></p>
   </div>
   <% end -%>
+  </div>
 
 <% end %>
 
@@ -27,8 +23,12 @@
 </div>
 <style>
 .signupfield {
-  background: #223; 
   text-align: center; 
-  color: #fff; 
 }
+
+.signupfield input {
+  box-shadow: 1px 1px 1px #999;
+}
+
+p { margin: 0.25rem }
 </style>
