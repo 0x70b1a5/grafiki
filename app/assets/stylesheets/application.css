@@ -30,13 +30,14 @@ html, body {
   left: 12rem;
   height: 90%;
   overflow: auto;
+  z-index:2;
 }
 
 #map {
   height: 100%;
   width: 100%;
   position: absolute;
-  z-index: -1;
+  z-index:1;
 }
 
 #nav-menu {
@@ -44,10 +45,10 @@ html, body {
   top: 0;
   padding-top: 0.3rem;
   float: left;
-  z-index: 1;
   margin: 5px;
   width: 100%;
   pointer-events: none;
+  z-index: 2;
 }
 
 #nav-menu * {
@@ -69,6 +70,7 @@ html, body {
   position:absolute;
   left: 14rem;
   top: 0.7rem;
+  z-index: 2;
 }
 
 .searchbar {

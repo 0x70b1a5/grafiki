@@ -98,14 +98,14 @@
 <% if b.exists? %>
   <div id="bgimg" style="background: url(<%= b.first['pic'] %>) center center no-repeat; background-size: cover;"></div>
 <% end %>
+<div id="opac" style="
+  background: radial-gradient(black,grey); 
+  height: 100vh; 
+  width: 150vw; 
+  opacity: 0.4;
+  position: absolute;
+  top: 0;"></div>
 
 
   </body>
-<style>
-#bgimg {
-  width: 100vw;
-  height: 100vh;
-}
-</style>
-
 </html>
