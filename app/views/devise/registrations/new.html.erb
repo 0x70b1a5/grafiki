@@ -1,28 +1,28 @@
-<h2>Sign up</h2>
+<%= content_for :title do %> | register<% end %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="signinfield">
-    <%= f.label :email %><br />
+  <div class="signupfield">
+    email<br />
     <%= f.email_field :email, autofocus: true %>
   </div>
 
-  <div class="signinfield">
-    <%= f.label :password %>
+  <div class="signupfield">
+    password
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>
 
-  <div class="signinfield">
-    <%= f.label :password_confirmation %><br />
+  <div class="signupfield">
+    confirm password<br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "sign up" %>
   </div>
 <% end %>
 
