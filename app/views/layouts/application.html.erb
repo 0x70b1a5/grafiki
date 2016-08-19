@@ -96,7 +96,7 @@
 
 <% b=Bounty.where({:id=>(Bounty.all.length*rand).to_i}) %>
 <% if b.exists? %>
-  <div id="bgimg" style="background: url(<%= b.first['pic'] %>) center center no-repeat;"></div>
+  <div id="bgimg" style="background: url(<%= b.first['pic'] %>) center center no-repeat; background-size: cover;"></div>
 <% end %>
 
 
@@ -105,7 +105,6 @@
 #bgimg {
   width: 100vw;
   height: 100vh;
-  background-size: cover;
 }
 </style>
 
