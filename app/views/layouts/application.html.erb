@@ -41,7 +41,13 @@
 
     <%= yield :map %>
     <div id="page"><%= yield %></div>
-    <div style="z-index:5" id="botflashes"></div>
+    <div style="
+    position: absolute;
+    text-align: center;
+    top: 5rem;
+    z-index: 5;
+    left: 40%;
+  " id="botflashes"></div>
 
     <script type="text/javascript">
       $(document).ready(function(){
