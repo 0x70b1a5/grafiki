@@ -1,3 +1,7 @@
+<% content_for :satbutts do %>
+ <div class="in-float rod" id="road">road</div>
+ <div class="in-float rod sat" id="sat">satellite</div>
+<% end %>
 <% content_for :map do %>
  <div class="in-float" id="pac-box">
    <input id="pac-input" class="searchbar" type="text" placeholder="Find bounties near...">
@@ -94,7 +98,7 @@
 
  function drawMarkers(){
    // first, let the user know we are loading.
-   $( "#flashes" ).html(`<div class="flash load">loading bounties... </div>`);
+   $( "#botflashes" ).html(`<div class="flash load">loading bounties... </div>`);
 
    // clear old markers from the map
    if (window.markers){
@@ -237,7 +241,7 @@
      });
 
      // remove loading message
-     $( "#flashes" ).html("");
+     $( "#botflashes" ).html("");
    });
  }
 

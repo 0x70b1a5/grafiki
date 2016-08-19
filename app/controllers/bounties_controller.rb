@@ -27,6 +27,11 @@ class BountiesController < ApplicationController
   end
 
   def new
+    unless user_signed_in?
+      flash[:notice] = "to create a bounty, please sign in"
+      redirect_to "/users/sign_in"
+    end
+
     @bounty = Bounty.new
   end
 

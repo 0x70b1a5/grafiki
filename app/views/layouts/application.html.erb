@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Grafiki</title>
+    <title>grafiki</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -29,9 +29,7 @@
      <%= link_to "sign out", destroy_user_session_path, method: :delete, class: "in-float",
        id: "signout-button", style: "text-decoration: none; width:initial" %>
    <% end %>
-   <div class="in-float rod" id="road">road</div>
-   <div class="in-float rod sat" id="sat">satellite</div>
-
+   <%= yield :satbutts %>
  </div>
     <% if flash %>
     <div id="flashes">
@@ -43,6 +41,7 @@
 
     <%= yield :map %>
     <div id="page"><%= yield %></div>
+    <div id="botflashes"></div>
 
     <script type="text/javascript">
       $(document).ready(function(){
