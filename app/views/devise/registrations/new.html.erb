@@ -1,5 +1,5 @@
 <%= content_for :title do %> | register<% end %>
-
+<div class="in-float" style="height:auto;margin-top:2em">
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
@@ -27,3 +27,4 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
