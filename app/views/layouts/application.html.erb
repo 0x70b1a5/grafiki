@@ -7,9 +7,19 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+      /* for bg images */
+
+    </style>
   </head>
 
   <body>
+
+<% b=Bounty.where({:id=>(Bounty.all.length*rand).to_i}) %>
+<% if b.exists? %>
+  <div id="bgimg" style="background: url(<%= b.first['pic'] %>);"></div>
+<% end %>
+
  <div id="nav-menu">
    <%= link_to root_path do %><div id="hed" class="in-float">grafiki<%= yield :title %></div><% end %>
 

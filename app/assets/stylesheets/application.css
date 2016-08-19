@@ -32,6 +32,10 @@ html, body {
   overflow: auto;
 }
 
+#bgimg {
+
+}
+
 #map {
   height: 100%;
   width: 100%;
@@ -74,6 +78,12 @@ html, body {
 .searchbar {
   width: 400px;
   padding-right: 0;
+}
+
+.signupfield {
+  background: #223; 
+  text-align: center; 
+  color: #fff; 
 }
 
 input#pac-input:focus {
