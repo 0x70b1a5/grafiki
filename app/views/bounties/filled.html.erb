@@ -23,7 +23,7 @@
     <p style="text-align:left"><%= bounty.description %></p>
     commissioned by <%= bounty.patron || 'anonymous' %>
 </div>
-<% if bounty.user == current_user %>
+<% if current_user != nil && bounty.user == current_user %>
 <div class="in-float"><%= link_to 'edit', edit_bounty_path(bounty) %></div>
 <div class="in-float"><%= link_to 'delete', bounty_path(bounty),
     method: :delete, 
