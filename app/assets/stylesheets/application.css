@@ -80,12 +80,6 @@ html, body {
   padding-right: 0;
 }
 
-.signupfield {
-  background: #223; 
-  text-align: center; 
-  color: #fff; 
-}
-
 input#pac-input:focus {
   background:none;
 } 
