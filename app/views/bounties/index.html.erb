@@ -1,27 +1,17 @@
 <%= content_for :title do %> | browse<% end %>
-<% @bounties.each do |bounty| %>
+<% @bounties.each_with_index do |bounty,ind| %>
+<% break if ind > 100 %><%# TODO: PAGINATE REMAINING ARTWORKS %>
 <% next if bounty.artist %>
-<div class="box">
-  <div class="row">
-    <div class="num row"><%= bounty.amount %> BTC</div>
-    <a href="bounties/<%= bounty.id %>/fill"><div class="row fill">fill</div></a>
-    <div class="tyt"><%= bounty.title %></div>
-    <code><%= bounty.lat %>, <%= bounty.lng %></code>
-    <div class="wut"><%= bounty.description %></div>
-    <div class="wut">commissioned by <%= bounty.patron || 'anonymous' %></div>
-  <% if bounty.user == current_user %>
-  <div class="row"><%= link_to 'edit', edit_bounty_path(bounty),
-    style: "text-decoration:none;color:#000" %></div>
-  <div class="row"><%= link_to 'delete', bounty_path(bounty),
-    method: :delete, 
-    data: { confirm: 'u sure?' }, 
-    style: "text-decoration:none;color:#000" %></div>
-  <% else %>
-  <div class="row"><%= bounty.votes.count %></div>
-  <div class="row"><%= button_to '+want', vote_bounty_path(bounty), method: :post %></div>
-  <div class="row"><%= button_to 'fill', fill_bounty_path(bounty), method: :post %></div>
-  <% end %>
-  </div>
-
+<div class="in-float" style="height:auto">
+<div id="bounty<%=bounty.id%>"></div>
 </div>
 <% end %>
+<script>
+$( document ).ready(function(){
+  Array(100).fill().forEach(function(val,i){
+    $.get ( '/bounties/'+i+'.txt' ).then(function(rendered){
+      $( "#bounty"+i ).html( rendered );
+    });
+  });
+});
+</script>
