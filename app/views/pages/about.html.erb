@@ -1,6 +1,10 @@
 <% content_for :title do %> | about<% end %>
-<style> a {color:#00A} </style>
-<div class="box" style="margin-right: 75px">
+<div style="  
+  margin: 0;
+  margin-right: 75px;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 1px 1px 1px #000;">
 <h1> what is grafiki? </h1>
 <p>grafiki is a gratuity platform for public art.</p>
 
@@ -26,3 +30,5 @@
 <ol><li>like urban exploration, grafiki lets you <%= link_to root_path do %>adventure through your local area<% end %> to discover art you didn't know was there. every place has its beautiful secrets. now, they're yours.</li>
     <li>finally, communities can pool their resources to <%= link_to new_bounty_path do %>commission a piece<% end %> that is both meaningful and professional.</li></ol>
 </div>
+</div>
+<style> h1 { margin-top: 0 } a {color:#00A} </style>
