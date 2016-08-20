@@ -19,6 +19,7 @@
    <%= link_to upload_bounties_path do %><div class="nav-button in-float"><span id="i">^</span> upload artwork</div><% end %>
    <%= link_to filled_bounties_path do %><div class="nav-button in-float"><span id="i">*</span> browse artwork</div><% end %>
    <%= link_to pages_about_path do%><div id="ab" class="nav-button in-float"><span id="i">?</span> about grafiki</div><%end%>
+   <a id="credshell"><div id="cred" class="nav-button in-float">view background art on map</div></a>
    <% unless user_signed_in? %>
    <%= link_to "register", new_user_registration_path, id: "signup-button", class: "in-float" %>
    <%= link_to "login", new_user_session_path, id: "login-button", class: "in-float" %>
@@ -107,6 +108,14 @@
     height: 100vh; 
     width: 100vw; 
   "></div>
+
+  <%# link to the bounty in the navbar %>
+
+  <script>
+    $(document).ready(function(){$( "#credshell" ).attr( 
+      "href","/bounties/<%= b.first.id %>"
+    )});
+  </script>
 <% end %>
 <div id="opac" style="
   background: radial-gradient(black,grey); 

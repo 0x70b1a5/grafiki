@@ -57,9 +57,9 @@ html, body {
 
 #hed {
   font-family: Roboto;
-  font-size: 2em;
+  font-size: 2rem;
   /*font-weight: bold;*/
-  padding: 0 2rem;
+  padding: 1rem 2rem;
   margin-right: 40px;
   min-width: 6rem;
   color: #eee;
@@ -88,14 +88,14 @@ input#pac-input:focus {
 }
 
 .in-float {
-  height: 2em;
-  line-height: 2em;
+  height: 2rem;
+  line-height: 2rem;
   background-color: #fff;
   color: #000;
   float: left;
   box-shadow: 1px 1px 1px #000;
   margin: 0 5px;
-  padding: 0 1em;
+  padding: 0 1rem;
 }
 
 .in-float label {
@@ -305,6 +305,12 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   #ab {
+    background: #223;
+    color: #fff;
+  }
+
+  #cred {
+    font-size: 0.6em;
     background: #223;
     color: #fff;
   }
