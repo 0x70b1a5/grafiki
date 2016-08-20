@@ -66,6 +66,21 @@ html, body {
   background: #223;
 }
 
+#bgimg {
+  background-size: cover;
+  height: 100vh; 
+  width: 100vw; 
+}
+
+#opac {
+  background: radial-gradient(black,grey); 
+  height: 100vh; 
+  width: 100vw; 
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+}
+
 #pac-box {
   position:absolute;
   left: 14rem;

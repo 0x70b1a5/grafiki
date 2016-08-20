@@ -105,47 +105,16 @@
 <% if b.exists? %>
   <div id="bgimg" style="
     background: url(<%= b.first['pic'] %>) center center no-repeat;
-    background-size: cover;
-    height: 100vh; 
-    width: 100vw; 
   "></div>
 
   <%# link to the bounty in the navbar %>
-
   <script>
     $(document).ready(function(){$( "#credshell" ).attr( 
       "href","/bounties/<%= b.first.id %>"
     )});
   </script>
 <% end %>
-<div id="opac" style="
-  background: radial-gradient(black,grey); 
-  height: 100vh; 
-  width: 100vw; 
-  opacity: 0.4;
-  position: absolute;
-  top: 0;"></div>
 
-<style>
-/* until i figure out why css works in dev but not prod,
-   gotta put some of the z-ind & bg stuff here */
-
-#page, #nav-menu {
-  z-index:2;
-}
-
-#page {
-  top: 5.6rem;
-}
-/* sigh */
-#cred {
-font-size: 0.6em;
-background: #223;
-color: #fff;
-}
-/* i'm pretty sure i have to compile the assets again */
-.in-float { padding: 0 1rem; }
-</style>
 
   </body>
 </html>
