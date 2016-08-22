@@ -466,8 +466,9 @@ a { color: #00a; }
 
   .b-n {
     margin-top:0.5rem;
-    text-align: right;
-    color: #555;
+    font-size:0.7em;
+    color:#888;
+    text-align:center;
   }
 
   .b-d {

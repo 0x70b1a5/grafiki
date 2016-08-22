@@ -23,4 +23,4 @@
 <div class='b-s'><p class='b-d'><b><%= @bounty.title %></b>:
  <% end %>
 <%= @bounty.description || 'no description given.' %>
-<p style="font-size:0.75em;color:#888;text-align:center" class='b-n'>[<%= link_to @bounty do %>link to this <% if @bounty.pic %>artwork<%else%>bounty<%end%><% end %>] | commissioned by <%= @bounty.patron || 'anonymous' %></p>
+<p class='b-n'><%= link_to @bounty do %>link here<% end %> | commissioned by <%= @bounty.patron || 'anonymous' %></p>
