@@ -25,9 +25,31 @@
      var cen = {lat: 37.8321882116, lng: -122.221084724}
      map = new google.maps.Map(document.getElementById('map'), {
        zoom: 9,
-       center: cen
+       center: cen,
+       styles: [
+         {
+           stylers: [
+             { invert_lightness: true },
+             { saturation: -90 }
+           ]
+         },
+         {
+           featureType: 'poi.park',
+           elementType: 'labels',
+           stylers: [
+             { visibility: 'off' }
+           ]
+         },
+         {
+           featureType: 'landscape.natural.terrain',
+           elementType: 'geometry',
+           stylers: [
+             { visibility: 'off' }
+           ]
+         }
+       ]
      });	
-     map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
+     /*map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });*/
 
        /*
        *  SET UP SEARCH BOX
