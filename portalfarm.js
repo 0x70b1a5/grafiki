@@ -1,15 +1,19 @@
 /*
  * thing what gets portal info from a metro area
  *
- */
+ *
 
 
 // grab all GUIDs from current view
-//portalkeys=[];$.map(portals,function(k,v){portalkeys.push(v)});
+portalkeys=[];$.map(portals,function(k,v){portalkeys.push(v)});
 
 // first req then get:
-//portalDetail.request(key);
-//portalDetail.get(key);
+portalDetail.request(key);
+portalDetail.get(key);
+
+
+-- real code time --
+*/
 
 addToDownText = function( dict ){
   downtext.push([
@@ -18,6 +22,7 @@ addToDownText = function( dict ){
     ['title',dict['title']]
   ])
 }
+
 
 hr = function(guid, data, success) {
 
@@ -41,24 +46,28 @@ hr = function(guid, data, success) {
 
 }
 
+
 getportdat = function(guid) {
   window.postAjax('getPortalDetails', {guid:guid},
-      function(data,textStatus,jqXHR) { hr(guid, data, true); },
-      function() { hr(guid, undefined, false); }
-    );
+    function(data,textStatus,jqXHR) { hr(guid, data, true); },
+    function() { hr(guid, undefined, false); }
+  );
 }
 
-// zoom for All Portals: 15
-/*
- * map moving: map.setCenter(
- *   { lat: lat, lng: lng },
- *   zoomLevel )
- */
 
-/* html for dl:
-
-<textarea id="textbox">Type something here</textarea> <button id="create">Create file</button> <a download="info.txt" id="downloadlink" style="display: none">Download</a>
-*/
+autoget = function( coordArr ) {
+  cordArr.forEach(function(coords){
+    map.setView( coords, 15 );
+    $.map(portals,function(k,v){getportdat(v)});
+  })
+}
 
 
-// oneliner to retrieve all data in view: $.map(portals,function(k,v){getportdat(v)})
+/* zoom for All Portals: 15
+ html for dl:
+
+<textarea id="textbox" style='display:hidden'>Type something here</textarea> <a download="info.txt" id="downloadlink" style="position:absolute; top: 1em; z-index:100">Download</a>
+
+$("#textbox").text( downtext ); // do this after retrieving portal data then dl it via inserting html above
+
+ oneliner to retrieve all data in view: $.map(portals,function(k,v){getportdat(v)})
