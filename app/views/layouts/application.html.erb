@@ -23,8 +23,8 @@
    <%= link_to pages_about_path do%><div id="ab" class="nav-button in-float"><span id="i">?</span> about grafiki</div><%end%>
    <a id="credshell"><div id="cred" class="nav-button in-float">view background art on map</div></a>
    <% unless user_signed_in? %>
-   <%= link_to "register", new_user_registration_path, id: "signup-button", class: "in-float" %>
-   <%= link_to "login", new_user_session_path, id: "login-button", class: "in-float" %>
+   <%= link_to new_user_registration_path do %><div id="signup-button" class="nav-button in-float">register</div><% end %>
+   <%= link_to new_user_session_path do %><div id="login-button" class="nav-button in-float">login</div><% end %>
    <% end %>
    <% if user_signed_in? %>
      <div id="signup-button" class="in-float"

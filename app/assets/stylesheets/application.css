@@ -95,6 +95,10 @@ this is how to do mobile, by screen resolution:
   z-index: 2;
 }
 
+@media (max-width: 1200px) {
+  #pac-box {display: none;}
+} 
+
 .searchbar {
   width: 400px;
   padding-right: 0;
@@ -351,13 +355,16 @@ a { color: #00a; }
     text-decoration: none;
     background: #223;
     color: #eee;
-    /*font-weight: bold;*/
+    margin: 0;
+    min-width: inherit;
   }
 
   #login-button {
     position: absolute;
     right: 7.5rem;
     text-decoration: none;
+    margin: 0;
+    min-width: inherit;
   }
 
   .nav-button {
