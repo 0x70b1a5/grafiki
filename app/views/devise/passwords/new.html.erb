@@ -1,6 +1,6 @@
 <%= content_for :title do %> | reset<% end %>
 
-<div class="in-float" style="height:auto">
+<div class="in-float" style="display:table">
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
 
@@ -14,19 +14,7 @@
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+  <div class='links'>
+    <%= render "devise/shared/links" %>
+  </div>
 </div>
-
-<style>
-.signupfield {
-  text-align: center; 
-}
-
-.signupfield input {
-  box-shadow: 1px 1px 1px #999;
-}
-
-p { margin: 0.25rem }
-
-a { color: #000 }
-</style>
