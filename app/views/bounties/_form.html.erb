@@ -1,11 +1,15 @@
 <%= form_for @bounty do |f| %>
   <% if @bounty.errors.any? %>
+  <div class="box">
+  <div class="in-float">
     <%= pluralize(@bounty.errors.count, "error") %> must be fixed. 
     <ul> 
       <% @bounty.errors.full_messages.each do |m| %>
         <li><%= m %></li>
       <% end %>
     </ul>
+  </div>
+  </div>
   <% end %>
 
   <div class="box">
