@@ -407,10 +407,9 @@ a { color: #00a; }
   .load {
     font-size: 2em;
     font-family: Roboto; 
-    font-weight: bold;
     color: #fff;
     background: #223;
-    box-shadow: 1px 1px 1px #dde;
+    box-shadow: 1px 1px 1px #000;
   }
 
   #buttonto {

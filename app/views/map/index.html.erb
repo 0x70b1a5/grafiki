@@ -30,11 +30,33 @@
          {
            stylers: [
              { invert_lightness: true },
-             { saturation: -90 }
+             { saturation: -100 },
+             { lightness:  -30 }
            ]
          },
          {
            featureType: 'poi.park',
+           elementType: 'labels',
+           stylers: [
+             { visibility: 'off' }
+           ]
+         },
+         {
+           featureType: 'all',
+           elementType: 'labels.text.stroke',
+           stylers: [
+             { lightness: 45 }
+           ]
+         },
+         {
+           featureType: 'all',
+           elementType: 'labels.text.fill',
+           stylers: [
+             { lightness:  -100 }
+           ]
+         },
+         {
+           featureType: 'road',
            elementType: 'labels',
            stylers: [
              { visibility: 'off' }
@@ -153,7 +175,8 @@
          position: { lat: b.lat, lng: b.lng },
          icon: "http://www.googlemapsmarkers.com/v1/"+
            (function(){ return b.artist ? "a" : "$" })()+"/"+
-           (function(){ return b.artist ? "0099FF" : "009900" })()
+           (function(){ return b.artist ? "402040/FFFFFF/000000" : 
+                                          "108010/000000/FFFFFF" })()
        }); 
 
        /* set up the info window shell w/guid */
@@ -241,7 +264,7 @@
            },
            map: map,
            icon: "http://www.googlemapsmarkers.com/v1/"+
-                  String(cluster.length)+"/FFFF00"
+                  String(cluster.length)+"/333355/DDDDDD/000000"
          });
 
          clustermark.addListener('click', function(e){
