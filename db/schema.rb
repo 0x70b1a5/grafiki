@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729072309) do
+ActiveRecord::Schema.define(version: 20160904175026) do
 
   create_table "bounties", force: :cascade do |t|
     t.float    "lat"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20160729072309) do
     t.string   "title"
     t.text     "description"
     t.float    "amount"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "score"
     t.string   "patron"
     t.string   "artist"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160729072309) do
     t.string   "address"
     t.string   "email"
     t.integer  "user_id"
+    t.boolean  "hidden",      default: false
   end
 
   create_table "candidates", force: :cascade do |t|

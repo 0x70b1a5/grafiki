@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       get 'search'
       get  'upload'
       post 'upload'
+      get 'pending'
+      post 'pending'
     end
   end
 

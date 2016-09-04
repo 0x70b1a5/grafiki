@@ -19,10 +19,16 @@ class BountiesController < ApplicationController
   def show
     @bounty = Bounty.find(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to root_path(id: params[:id]) }
-      format.json { render :json => @bounty.to_json }
-      format.txt { render :txt => @bounty.to_json }
+    # don't show if pending review
+    if @bounty.hidden
+      flash[:notice] = "this marker is pending review"
+      redirect_to root_path
+    else 
+      respond_to do |format|
+        format.html { redirect_to root_path(id: params[:id]) }
+        format.json { render :json => @bounty.to_json }
+        format.txt { render :txt => @bounty.to_json }
+      end
     end
   end
 
@@ -49,43 +55,56 @@ class BountiesController < ApplicationController
       redirect_to "/users/sign_in"
     end
 
-    @bounty = current_user.bounties.create(bounty_params)
+    if params[:upload]
+      @bounty = current_user.bounties.create(upload_params)
+      @bounty.amount = 0
+      @bounty.hidden = true
 
-    if @bounty.save
-      @bounty.escrows.create({
-        :amount=>params[:bounty][:amount],
-        :owner_token =>params[:stripeToken],
-        :owner_email =>params[:stripeEmail]
-      })
-      if @bounty.save 
+      if @bounty.save
         redirect_to @bounty
       else
-        flash[:error] = "escrow could not be created"
+        flash[:error] = "problem creating artwork"
+        redirect_to upload_bounties_path
       end
     else
-      flash[:error] = "invalid bounty"
-      redirect_to new_bounty_path
+      @bounty = current_user.bounties.create(bounty_params)
+
+      if @bounty.save
+        @bounty.escrows.create({
+          :amount=>params[:bounty][:amount],
+          :owner_token =>params[:stripeToken],
+          :owner_email =>params[:stripeEmail]
+        })
+        if @bounty.save 
+          redirect_to @bounty
+        else
+          flash[:error] = "escrow could not be created"
+        end
+      else
+        flash[:error] = "invalid bounty"
+        redirect_to :back
+      end
     end
   end
 
   def award# does this code ever actually run?
     if params[:id] #GET
-    @bounty = Bounty.find(params[:id])
-    unless @bounty.user == current_user
-      flash[:error] = "you do not own this bounty"
-      redirect_to root_path
-    end
+      @bounty = Bounty.find(params[:id])
+      unless @bounty.user == current_user
+        flash[:error] = "you do not own this bounty"
+        redirect_to root_path
+      end
 
-    @escrows = @bounty.escrows
-    @candidates = @escrows.map {|e| e.candidates}.to_a
+      @escrows = @bounty.escrows
+      @candidates = @escrows.map {|e| e.candidates}.to_a
 
     else#POST
-    if @bounty.update(artwork_fill_params) and @bounty.save!
-      flash[:notice] = "success!"
-    else
-      flash[:error] = "could not update bounty"
+      if @bounty.update(artwork_fill_params) and @bounty.save
+        flash[:notice] = "bounty awarded!"
+      else
+        flash[:error] = "could not update bounty"
+      end
       redirect_to @bounty
-    end
     end
   end
 
@@ -97,12 +116,22 @@ class BountiesController < ApplicationController
     end
 
     if params[:award]
-      if @bounty.update(artwork_fill_params) and @bounty.save!
+      if @bounty.update(artwork_fill_params) and @bounty.save
         flash[:notice] = "success!"
         redirect_to @bounty
       else
         flash[:error] = "could not award candidate"
         redirect_to @bounty
+      end
+    elsif params[:approve]
+      if @bounty.update(pending_params) and @bounty.save
+        @bounty.hidden = false
+        @bounty.save
+        flash[:notice] = "artwork approved"
+        redirect_to @bounty
+      else
+        flash[:error] = "problem approving artwork"
+        redirect_to root_path
       end
     else
       if @bounty.update(bounty_params)
@@ -149,11 +178,10 @@ class BountiesController < ApplicationController
   end
 
   def upload
-    #TODO this entire form
     redirect_to '/users/sign_in' unless user_signed_in?
 
     if params[:bounty] # POST
-      @bounty = Bounty.new(upload_params)
+      @bounty = Bounty.create(upload_params)
 
       if @bounty.save
         flash[:notice] = "artwork uploaded"
@@ -164,6 +192,14 @@ class BountiesController < ApplicationController
       end
     else # GET
       @bounty = Bounty.new
+    end
+  end
+
+  def pending
+    if not (user_signed_in? and current_user.id == 1)
+      redirect_to root_path
+    else
+      @bounties = Bounty.where({:hidden => true})
     end
   end
 
@@ -180,13 +216,18 @@ class BountiesController < ApplicationController
 
   private
     def bounty_params
-      stripe_params unless params[:upload]
+      stripe_params 
       params.require(:bounty).permit(:title,:lat,:lng,
         :amount,:description,:patron)
     end
 
     def artwork_fill_params
       params.require(:bounty).permit(:artist,:pic,:address)
+    end
+
+    def pending_params
+      params.require(:bounty).permit(:title,:lat,:lng,
+        :id,:description,:artist,:pic,:address)
     end
 
     def upload_params

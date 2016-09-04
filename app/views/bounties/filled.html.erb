@@ -1,7 +1,8 @@
 <% content_for :title do %> | artwork<% end %>
 <% @bounties.each_with_index do |bounty,ind| %>
 <% break if ind > 100 %><%# TODO: PAGINATE REMAINING ARTWORKS %>
-<% next unless bounty.artist %>
+<% next if not bounty.artist %>
+<% next if bounty.hidden %>
 <div class="in-float" style="height:auto;margin-top:5px;min-width:28rem">
 <div id="art<%=bounty.id%>"></div>
 </div>

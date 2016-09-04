@@ -1,0 +1,13 @@
+<% content_for :title do %> | pending<% end %>
+<% @bounties.each_with_index do |bounty,ind| %>
+<div class="aif in-float" style="height:auto;margin-top:5px;min-width:28rem">
+<div style="word-break:break-word" id="art<%=bounty.id%>">
+<%= form_for bounty do |f| %>
+  <%= bounty.to_json %>
+  <%= f.hidden_field :id %>
+  <input type="hidden" name="approve" value="approve">
+  <%= button_to 'approve', method: :post, action: :pending %>
+<% end %>
+</div>
+</div>
+<% end %>

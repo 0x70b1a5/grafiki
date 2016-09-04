@@ -45,14 +45,14 @@
            featureType: 'all',
            elementType: 'labels.text.stroke',
            stylers: [
-             { lightness: 45 }
+             { lightness: 0 }
            ]
          },
          {
            featureType: 'all',
            elementType: 'labels.text.fill',
            stylers: [
-             { lightness:  -100 }
+             { lightness: 40 }
            ]
          },
          {
@@ -71,7 +71,6 @@
          }
        ]
      });	
-     /*map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });*/
 
        /*
        *  SET UP SEARCH BOX
@@ -166,9 +165,12 @@
        }; 
 
        // do not draw this marker if it is outside the view bounds!
-       if (!window.bounds.contains(new google.maps.LatLng(b.lat, b.lng))){
-         return;
-       }
+       if (!window.bounds.contains(new google.maps.LatLng(b.lat, b.lng))) {
+         return 
+       };
+
+       // do not draw this marker if it is pending review!
+       if (b.hidden) { return };
 
        // construct basic marker
        var marker = new google.maps.Marker({

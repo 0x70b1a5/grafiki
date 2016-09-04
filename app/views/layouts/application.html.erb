@@ -22,11 +22,10 @@
    <%= link_to filled_bounties_path do %><div class="nav-button in-float"><span id="i">*</span> browse artwork</div><% end %>
    <%= link_to pages_about_path do%><div id="ab" class="nav-button in-float"><span id="i">?</span> about grafiki</div><%end%>
    <a id="credshell"><div id="cred" class="nav-button in-float">view background art on map</div></a>
-   <% unless user_signed_in? %>
-   <%= link_to new_user_registration_path do %><div id="signup-button" class="nav-button in-float">register</div><% end %>
-   <%= link_to new_user_session_path do %><div id="login-button" class="nav-button in-float">login</div><% end %>
-   <% end %>
-   <% if user_signed_in? %>
+   <% if not user_signed_in? %>
+     <%= link_to new_user_registration_path do %><div id="signup-button" class="nav-button in-float">register</div><% end %>
+     <%= link_to new_user_session_path do %><div id="login-button" class="nav-button in-float">login</div><% end %>
+   <% else %>
      <div id="signup-button" class="in-float"
        style="right:7rem"><%= current_user.email %></div>
      <%= link_to "sign out", destroy_user_session_path, method: :delete, class: "in-float",
@@ -73,7 +72,7 @@
   };
 
   var handler = StripeCheckout.configure({
-    key: 'pk_test_S27ParIaigJWMsagC3SAFiFG',
+    key: 'pk_test_AX9upQId9CjDYnvw9P7U7Jpv',
     image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
     locale: 'auto',
     bitcoin: true,
