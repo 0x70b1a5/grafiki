@@ -16,11 +16,9 @@
     <div class='b-a'>$ <%= @bounty.amount %></div>
   </div>
   <% if @bounty.user != current_user %>
-    <%= button_to 'fill', 
-      fill_bounty_path(@bounty), 
-      method: :post, class: "row", id: "buttonto" %>
+    <%= button_to 'fill', fill_bounty_path(@bounty), method: :post, class: "row", id: "buttonto" %>
   <% end %>
 <div class='b-s'><p class='b-d'><b><%= @bounty.title %></b>:
- <% end %>
+<% end %>
 <%= @bounty.description || 'no description given.' %>
 <p class='b-n'><%= link_to @bounty do %>link here<% end %> | commissioned by <%= @bounty.patron || 'anonymous' %></p>

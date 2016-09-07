@@ -22,14 +22,17 @@ class Bounty < ApplicationRecord
     on: [:create]
 
   validates :artist, length: { maximum: 64 },
-    on: [:fill, :upload, :update]
+    on: [:fill, :upload, :update],
+    :if => :artist_changed?
   validates :address, format: { with: /\A(1|3)[a-zA-Z1-9]{26,33}\z/,
     message: "invalid bitcoin address" },
     length: { minimum: 26, maximum: 33 },
-    on: [:fill, :upload, :update]
+    on: [:fill, :upload, :update],
+    :if => :address_changed?
   validates :pic, format: { with: /\A#{URI::ABS_URI}\z/,
     message: "invalid picture url" },
     length: { minimum: 10 },
-    on: [:fill, :upload, :update]
+    on: [:fill, :upload, :update],
+    :if => :pic_changed?
 
 end

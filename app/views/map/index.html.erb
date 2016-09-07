@@ -177,8 +177,8 @@
          position: { lat: b.lat, lng: b.lng },
          icon: "http://www.googlemapsmarkers.com/v1/"+
            (function(){ return b.artist ? "a" : "$" })()+"/"+
-           (function(){ return b.artist ? "602060/FFFFFF/000000" : 
-                                          "108010/000000/FFFFFF" })()
+           (function(){ return b.artist ? "702070/FFFFFF/000000" : 
+                                          "108010/000000/103010" })()
        }); 
 
        /* set up the info window shell w/guid */
@@ -219,8 +219,12 @@
        // queue marker object for rendering
        markers.push(marker);
      }); // markers finished building.
-     // cluster markers:
 
+     //
+     // cluster markers above certain zoom level:
+     //
+     
+     if (map.getZoom() < 17) {
      // break map into grid squares
      var bounds = (function(){
        return window.bounds ? window.bounds : map.getBounds();
@@ -266,7 +270,7 @@
            },
            map: map,
            icon: "http://www.googlemapsmarkers.com/v1/"+
-                  String(cluster.length)+"/333355/DDDDDD/000000"
+                  String(cluster.length)+"/444466/EEEEFF/000000"
          });
 
          clustermark.addListener('click', function(e){
@@ -280,6 +284,7 @@
          markers.push(clustermark);
        };
      };
+     }; // end if-zoom cluster condition
 
      // draw all markers
      markers.forEach(function(marker){ 

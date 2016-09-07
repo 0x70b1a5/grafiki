@@ -51,7 +51,7 @@ class BountiesController < ApplicationController
 
   def create
     unless user_signed_in?
-      flash[:error] = "you must log in\nto create a bounty"
+      flash[:error] = "you must log in to create a bounty"
       redirect_to "/users/sign_in"
     end
 
@@ -69,7 +69,7 @@ class BountiesController < ApplicationController
     else
       @bounty = current_user.bounties.create(bounty_params)
 
-      if @bounty.save
+      if @bounty.save!
         @bounty.escrows.create({
           :amount=>params[:bounty][:amount],
           :owner_token =>params[:stripeToken],
@@ -163,17 +163,33 @@ class BountiesController < ApplicationController
     redirect_to "/users/sign_in" unless user_signed_in?
 
     @bounty = Bounty.find(params[:id])
-    @escrow = @bounty.escrows.first
-    @candidate = Candidate.new
-
-    if not @bounty[:artist] # GET
-      # no artist field = no picture = not yet filled. render form
-    elsif @escrow.candidates.create(candidate_params) # POST
-      # CHECK: does this code ever actually run?
-      flash[:notice] = "submission received"
-      redirect_to @bounty
+    @escrow = @bounty.escrows.new
+    if @escrow.save
+      @candidate = Candidate.new
     else
-      flash[:error] = "error filling bounty"
+      flash[:error] = "there was a problem creating the escrow"
+      redirect_to @bounty
+    end
+
+    if not params[:candidate] # GET
+      # render form
+    else # POST
+      if @escrow.candidates.new(candidate_params).save!
+        if @escrow.update!({
+           :amount => @bounty.amount,
+           :artist_email => params[:candidate][:email],
+           :owner_email => @bounty.email
+        })
+          flash[:notice] = "submission received"
+        else
+          @escrow.delete
+          flash[:error] = "error filling bounty"
+        end 
+      else
+        @escrow.delete
+        flash[:error] = "error filling bounty"
+      end
+      redirect_to @bounty
     end
   end
 
