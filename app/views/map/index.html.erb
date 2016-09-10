@@ -26,7 +26,7 @@
    function initMap() {
      var cen = {lat: 37.8321882116, lng: -122.221084724}
      map = new google.maps.Map(document.getElementById('map'), {
-       zoom: 9,
+       zoom: 10,
        center: cen,
        styles: [
          {
@@ -62,6 +62,13 @@
            elementType: 'labels',
            stylers: [
              { visibility: 'off' }
+           ]
+         },
+         {
+           featureType: 'water',
+           elementType: 'geometry',
+           stylers: [
+             { lightness: -90 }
            ]
          },
          {
@@ -184,10 +191,22 @@
        }); 
 
        /* set up the info window shell w/guid */
-       var info = new google.maps.InfoWindow({
-         maxWidth: 400,
-         content: "<div id='marker"+b.id+"'></div>"
-       });
+       var opts = {
+         maxWidth: 400
+         ,content: "<div class='ib' id='marker"+b.id+"'></div>"
+         ,closeBoxURL: ""
+         ,boxStyle: {
+           width: "400px"
+           ,color: "#fff"
+           ,background: "#010101"
+           ,border: "1px solid #686868"
+           ,"border-radius": "3px"
+           ,"font-size": "1rem"
+           ,"box-shadow": "1px 1px 3px #000"
+         }
+       };
+
+       var info = new InfoBox(opts);
 
        /* WHEN THEY CLICK THE MARKER, OPEN THE INFO WINDOW.
        * MAKE AJAX REQUEST TO GET CONTENTS.
@@ -331,5 +350,6 @@
 }
  </script>
 
- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>
+<script type="text/javascript" src="//rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox.js"></script>
 <% end %>

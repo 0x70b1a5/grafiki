@@ -1,16 +1,10 @@
-<% if @bounty.artist == "unknown" %><p style="font-size:0.75em;color:#888;text-align:center"><em>do you know who made this? <a href="mailto:go@grafiki.com">email us</a>.</em></p><%end%></p></div>
 <% if @bounty.pic %>
-  <div class='b-p'><img style='max-width:400px;max-height:400px' src='<%= @bounty.pic %>'></div>
+  <div class='b-p'><%= link_to @bounty.pic, target: "_blank" do %><img style='max-width:400px;max-height:400px;' src='<%= @bounty.pic %>'><% end %></div>
   <div style='text-align:center'> 
-<div class='row tic' id='infovotes' style='font-weight:bold'><%= @bounty.votes.count %></div>
-<%= button_to '+', vote_bounty_path(@bounty), method: :post, class: "row tic", id: "buttonto" %>
-    <div class='b-t'> 
-<%= @bounty.title %> </div>
-    <div class='b-r'> by <%= @bounty.artist %> </div>
-    <div class='b-a'>$ <%= @bounty.amount %></div>
-    <code> <a href='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'><%= @bounty.address %></a></code>
+    <div class='b-r'> <b><%= @bounty.title %></b> <span style="font-size:0.8rem">by <%= @bounty.artist %></span> | <%=@bounty.votes.count%><%= button_to '+vote', vote_bounty_path(@bounty), method: :post, style: "font-size: 0.8rem; background: none; color: #f06090" %></div>
+    <% if @bounty.amount > 0 %><div class='b-a'>bounty: $ <%= @bounty.amount %></div><% end %>
+    <code style="font-size: 0.8rem"> <a href='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'><%= @bounty.address %></a></code>
   </div>
-<div class='b-s'><p class='b-d'>
 <% else %>
   <div style='text-align:center'> 
     <div class='b-a'>$ <%= @bounty.amount %></div>
@@ -18,7 +12,8 @@
   <% if @bounty.user != current_user %>
     <%= button_to 'fill', fill_bounty_path(@bounty), method: :post, class: "row", id: "buttonto" %>
   <% end %>
-<div class='b-s'><p class='b-d'><b><%= @bounty.title %></b>:
 <% end %>
-<%= @bounty.description || 'no description given.' %>
-<p class='b-n'><%= link_to @bounty do %>link here<% end %> | commissioned by <%= @bounty.patron || 'anonymous' %></p>
+<div class='b-s'> <p><%= @bounty.description %></p>
+    
+<p class='b-n'><%= link_to @bounty do %>link here<% end %> | commissioned by <%= @bounty.patron || 'anonymous' %><br />
+<% if @bounty.artist == "unknown" %><em>do you know who made this? <a href="mailto:go@grafiki.com">email us</a>.</em><%end%></p></div>

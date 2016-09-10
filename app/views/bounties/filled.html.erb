@@ -3,7 +3,11 @@
 <% break if ind > 100 %><%# TODO: PAGINATE REMAINING ARTWORKS %>
 <% next if not bounty.artist %>
 <% next if bounty.hidden %>
-<div class="in-float" style="height:auto;margin-top:5px;min-width:28rem">
+<div class="infoBox in-float" style="
+  color: rgb(255, 255, 255);
+  background: rgb(1, 1, 1);
+  box-shadow: rgb(0, 0, 0) 1px 1px 3px;
+  cursor: default;line-height:1rem;height:auto;margin-top:5px;min-width:400px">
 <div id="art<%=bounty.id%>"></div>
 </div>
 <% end %>
