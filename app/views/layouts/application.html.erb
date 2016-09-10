@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>grafiki <%= yield :title %></title>
+    <title>grafiki<%= yield :title %></title>
     <meta name='viewport' content='width=550'>
     <%= csrf_meta_tags %>
 
@@ -21,7 +21,8 @@
    <%= link_to upload_bounties_path do %><div class="nav-button in-float"><span id="i">^</span> upload artwork</div><% end %>
    <%= link_to filled_bounties_path do %><div class="nav-button in-float"><span id="i">*</span> browse artwork</div><% end %>
    <%= link_to pages_about_path do%><div id="ab" class="nav-button in-float"><span id="i">?</span> about grafiki</div><%end%>
-   <a id="credshell"><div id="cred" class="nav-button in-float">view background art on map</div></a>
+   <a id="credshell"><div id="cred" class="nav-button in-float">view backdrop on map</div></a>
+   <%= yield :satbutts %>
    <% if not user_signed_in? %>
      <%= link_to new_user_registration_path do %><div id="signup-button" class="nav-button in-float">register</div><% end %>
      <%= link_to new_user_session_path do %><div id="login-button" class="nav-button in-float">login</div><% end %>
@@ -31,7 +32,6 @@
      <%= link_to "sign out", destroy_user_session_path, method: :delete, class: "in-float",
        id: "signout-button", style: "text-decoration: none; width:initial" %>
    <% end %>
-   <%= yield :satbutts %>
  </div>
     <% if flash %>
     <div id="flashes">

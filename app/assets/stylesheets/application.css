@@ -162,7 +162,7 @@ input#pac-input:focus {
 }
 
 .box .in-float input[type=submit]{
-  background:#334; color:#fff;
+  background:#223; color:#fff;
 }
 
 #search-text-input {
@@ -348,7 +348,7 @@ a { color: #00a; }
   }
 
   #cred {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     background: #223;
     color: #fff;
   }
@@ -449,15 +449,12 @@ a { color: #00a; }
   }
 
   .in-float.rod {
-    position: absolute;
-    right: 1rem;
-    top: 3.4rem;
-    padding: 0 1em;
-    font-size: 0.8rem;
+    font-size: 0.95rem;
+    background: #223;
+    color: #fff;
   }
 
   .in-float.sat {
-    right: 5.21rem;
   }
 
   .b-a {

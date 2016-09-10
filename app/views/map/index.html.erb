@@ -1,6 +1,8 @@
 <% content_for :satbutts do %>
- <div class="in-float rod" id="road">road</div>
- <div class="in-float rod sat" id="sat">satellite</div>
+ <div class="nav-button">
+   <div class="in-float rod" id="road">road</div>
+   <div class="in-float rod sat" id="sat">satellite</div>
+ </div>
 <% end %>
 <% content_for :map do %>
  <div class="in-float" id="pac-box" style="z-index:2">
@@ -177,7 +179,7 @@
          position: { lat: b.lat, lng: b.lng },
          icon: "http://www.googlemapsmarkers.com/v1/"+
            (function(){ return b.artist ? "a" : "$" })()+"/"+
-           (function(){ return b.artist ? "702070/FFFFFF/000000" : 
+           (function(){ return b.artist ? "702070/FFFFFF/301030" : 
                                           "108010/000000/103010" })()
        }); 
 
@@ -270,7 +272,7 @@
            },
            map: map,
            icon: "http://www.googlemapsmarkers.com/v1/"+
-                  String(cluster.length)+"/444466/EEEEFF/000000"
+                  String(cluster.length)+"/444466/EEEEFF/222244"
          });
 
          clustermark.addListener('click', function(e){
