@@ -1,7 +1,7 @@
 <% if @bounty.pic %>
   <div class='b-p'><%= link_to @bounty.pic, target: "_blank" do %><img style='max-width:400px;max-height:400px;' src='<%= @bounty.pic %>'><% end %></div>
   <div style='text-align:center'> 
-    <div class='b-r'> <b><%= @bounty.title %></b> <span style="font-size:0.8rem">by <%= @bounty.artist %></span> | <%=@bounty.votes.count%><%= button_to '+vote', vote_bounty_path(@bounty), method: :post, style: "font-size: 0.8rem; background: none; color: #f06090" %></div>
+    <div class='b-r'> <b><%= @bounty.title %></b> <span style="font-size:0.8rem">by <%= @bounty.artist %></span> | <%=@bounty.votes.count%><% if @bounty.user != current_user %><%= button_to '+vote', vote_bounty_path(@bounty), method: :post, style: "font-size: 0.8rem; background: none; color: #f06090" %><%end%></div>
     <% if @bounty.amount > 0 %><div class='b-a'>bounty: $ <%= @bounty.amount %></div><% end %>
     <code style="font-size: 0.8rem"> <a href='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'><%= @bounty.address %></a></code>
   </div>
