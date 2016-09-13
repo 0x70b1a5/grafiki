@@ -72,15 +72,11 @@ class BountiesController < ApplicationController
         begin
           # determine currency
           if params[:stripeTokenType] == "card" then cur = "usd" else cur = "source_bitcoin" end
-          # add fee
-          if @bounty.amount.to_f.round == @bounty.amount.to_i # amount is already in cents, or whole-dollar
-            amt = @bounty.amount.to_f * 1.11
-          else # amount is $x.xx 
-            amt = @bounty.amount.to_f * 111
-          end 
+          # add fee, convert to cents
+          amt = @bounty.amount.to_f * 111
 
           charge = Stripe::Charge.create(
-            :amount => amt,
+            :amount => amt.to_i,
             :currency => cur,
             :source => token,
             :description => "Example charge"
@@ -116,6 +112,8 @@ class BountiesController < ApplicationController
           # Something else happened, completely unrelated to Stripe
           flash[:error] = "sorry, there was an error processing your request.\n
             please email go@grafiki.org and we'll help you right away."
+          puts e
+          @bounty.delete
           redirect_to root_path
           return
         end
