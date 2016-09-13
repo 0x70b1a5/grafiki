@@ -59,47 +59,6 @@
       });
     </script>
 
-<script src="https://checkout.stripe.com/checkout.js"></script>
-
-<script>
-  /*
-  *  THE SCRIPT FROM STRIPE TO GATHER THE MONIES
-  *  FROM THE CREATIVE FOLK OF THE PLANET
-  */
-  function getAmt(){
-   // convert to cents (100) + fee (10)
-   return Number($( "#bounty_amount" ).val()) * 110 
-  };
-
-  var handler = StripeCheckout.configure({
-    key: 'pk_test_AX9upQId9CjDYnvw9P7U7Jpv',
-    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-    locale: 'auto',
-    bitcoin: true,
-    token: function(token) {
-      $( "#stripeEmail" ).val( token.email );
-      $( "#stripeToken" ).val( token.id );
-      $( "#stripeTokenType" ).val( token.type );
-      $( "#new_bounty" ).submit()
-    }
-  });
-
-  $('#customButton').on('click', function(e) {
-    // Open Checkout with further options:
-    handler.open({
-      name: 'grafiki',
-      description: '2 widgets',
-      amount: getAmt()
-    });
-    e.preventDefault();
-  });
-
-  // Close Checkout on page navigation:
-  $(window).on('popstate', function() {
-    handler.close();
-  });
-</script>
-
 
 <% b=Bounty.where({:id=>(Bounty.all.length*rand).to_i}) %>
 <% if b.exists? %>

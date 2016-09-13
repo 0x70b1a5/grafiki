@@ -1,10 +1,8 @@
 class BountiesController < ApplicationController
+  Stripe.api_key = "sk_live_RnAcOFZsGe36FGnJMRlhqsAb"
+
   def index
-    #if params[:latlng]
-    #  @bounties = Bounty.where(is_within params[:latlng])
-    #else
     @bounties = Bounty.all
-    #end
 
     respond_to do |format|
       format.html 
@@ -69,7 +67,59 @@ class BountiesController < ApplicationController
     else
       @bounty = current_user.bounties.create(bounty_params)
 
-      if @bounty.save!
+      if @bounty.save
+        token = params[:stripeToken]
+        begin
+          # determine currency
+          if params[:stripeTokenType] == "card" then cur = "usd" else cur = "source_bitcoin" end
+          # add fee
+          if @bounty.amount.to_f.round == @bounty.amount.to_i # amount is already in cents, or whole-dollar
+            amt = @bounty.amount.to_f * 1.11
+          else # amount is $x.xx 
+            amt = @bounty.amount.to_f * 111
+          end 
+
+          charge = Stripe::Charge.create(
+            :amount => amt,
+            :currency => cur,
+            :source => token,
+            :description => "Example charge"
+          )
+        rescue Stripe::CardError => e
+          # Since it's a decline, Stripe::CardError will be caught
+          body = e.json_body
+          err  = body[:error]
+
+          puts "Status is: #{e.http_status}"
+          puts "Type is: #{err[:type]}"
+          puts "Code is: #{err[:code]}"
+          # param is '' in this case
+          puts "Param is: #{err[:param]}"
+          puts "Message is: #{err[:message]}"
+          flash[:error] = "sorry, your card was declined"
+          redirect_to root_path
+          return
+        #TODO other handling
+        #rescue Stripe::RateLimitError => e
+          # Too many requests made to the API too quickly
+        #rescue Stripe::InvalidRequestError => e
+          # Invalid parameters were supplied to Stripe's API
+        #rescue Stripe::AuthenticationError => e
+          # Authentication with Stripe's API failed
+          # (maybe you changed API keys recently)
+        #rescue Stripe::APIConnectionError => e
+          # Network communication with Stripe failed
+        #rescue Stripe::StripeError => e
+          # Display a very generic error to the user, and maybe send
+          # yourself an email
+        rescue => e
+          # Something else happened, completely unrelated to Stripe
+          flash[:error] = "sorry, there was an error processing your request.\n
+            please email go@grafiki.org and we'll help you right away."
+          redirect_to root_path
+          return
+        end
+
         @bounty.escrows.create({
           :amount=>params[:bounty][:amount],
           :owner_token =>params[:stripeToken],

@@ -38,7 +38,7 @@
   <div class="box">
   <div class="in-float">
     <%= f.label :amount %>
-    <%= f.number_field :amount, :class => 'text_field', :step => 0.000001, placeholder: 'artist reward (btc)' %>
+    <%= f.number_field :amount, :class => 'text_field', :step => 0.000001, placeholder: 'artist reward (usd)' %>
   </div>
   </div>
 
@@ -50,14 +50,56 @@
   </div>
   </div>
 
-  <input name="stripeToken" id="stripeToken" style="display: none" type="text">
-  <input name="stripeEmail" id="stripeEmail" style="display: none" type="text">
-  <input name="stripeTokenType" id="stripeTokenType" style="display: none" type="text">
+  <input name="stripeToken" id="stripeToken" type="hidden">
+  <input name="stripeEmail" id="stripeEmail" type="hidden">
+  <input name="stripeTokenType" id="stripeTokenType" type="hidden">
 
   <div class="box">
   <div class="in-float" style="background:#334">
-  <button id="customButton" style="background:none;border:none;font-size:1em;font-family:Roboto;color:#fff">post bounty</button>
+    <button id="customButton" style="background:none;border:none;font-size:1em;font-family:Roboto;color:#fff">post bounty</button>
   </div>
   </div>
 
 <% end %>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+  /*
+  *  THE SCRIPT FROM STRIPE TO GATHER THE MONIES
+  *  FROM THE CREATIVE FOLK OF THE PLANET
+  */
+  function getUpchgAmtCents(){
+   // convert to cents (100) + fee (10)
+   return Number($( "#bounty_amount" ).val()) * 110 ;
+  };
+
+  var handler = StripeCheckout.configure({
+    key: 'pk_live_FJVEoceXbsJ0elIQaAkAit1u',
+    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    locale: 'auto',
+    bitcoin: true,
+    token: function(token) {
+      $( "#stripeEmail" ).val( token.email );
+      $( "#stripeToken" ).val( token.id );
+      $( "#stripeTokenType" ).val( token.type );
+      $( "#new_bounty" ).submit();
+    }
+  });
+
+  $('#customButton').on('click', function(e) {
+    // Open Checkout with further options:
+    handler.open({
+      name: 'grafiki',
+      description: '2 widgets',
+      amount: getUpchgAmtCents()
+    });
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation:
+  $(window).on('popstate', function() {
+    handler.close();
+  });
+</script>
+
