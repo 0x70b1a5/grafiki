@@ -20,7 +20,7 @@
   </div>
 
   <div class="box">
-  <div class="in-float" id="b-f-d">
+  <div class="in-float">
     <%= f.label :description %>
     <%= f.text_area :description, 
       placeholder: 'a summary of the art you want, and details about where you want it.' %>
@@ -30,8 +30,8 @@
   <div class="box">
   <div class="in-float">
     <%= f.label :location %>
-    <%= f.number_field :lat, :class => 'text_field', :step => 0.000001, placeholder: 'latitude' %>
-    <%= f.number_field :lng, :class => 'text_field', :step => 0.000001, placeholder: 'longitude' %>
+    <p><%= f.number_field :lat, :class => 'text_field', :step => 0.000001, placeholder: 'latitude' %></p>
+    <p><%= f.number_field :lng, :class => 'text_field', :step => 0.000001, placeholder: 'longitude' %></p>
   </div>
   </div>
 
@@ -45,8 +45,7 @@
   <div class="box">
   <div class="in-float">
     <%= f.label :patron %>
-    <%= f.text_field :patron, placeholder: 'your name (optional)',
-      style: "min-width: 400px" %>
+    <%= f.text_field :patron, placeholder: 'your name (optional)' %>
   </div>
   </div>
 
@@ -103,3 +102,4 @@
   });
 </script>
 
+<style> .in-float { height: auto } </style>

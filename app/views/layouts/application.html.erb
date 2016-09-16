@@ -9,6 +9,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="https://use.fontawesome.com/0abae758ff.js"></script>
   </head>
 
   <body>
@@ -16,19 +17,19 @@
  <div id="nav-menu">
    <%= link_to root_path do %><div id="hed" class="in-float">grafiki<%= yield :title %></div><% end %>
 
-   <%= link_to new_bounty_path do %><div class="nav-button in-float"><span id="i">+</span> post a bounty</div><% end %>
-   <%= link_to bounties_path do %><div class="nav-button in-float"><span id="i">$</span> fill a bounty</div><% end %>
-   <%= link_to upload_bounties_path do %><div class="nav-button in-float"><span id="i">^</span> upload artwork</div><% end %>
-   <%= link_to filled_bounties_path do %><div class="nav-button in-float"><span id="i">*</span> browse artwork</div><% end %>
-   <%= link_to pages_about_path do%><div id="ab" class="nav-button in-float"><span id="i">?</span> about grafiki</div><%end%>
-   <a id="credshell"><div id="cred" class="nav-button in-float">view backdrop on map</div></a>
+   <%= link_to new_bounty_path do %><div class="nav-button in-float"><i class="fa fa-plus" id="fl" aria-hidden="true"></i>post a bounty</div><% end %>
+   <%= link_to bounties_path do %><div class="nav-button in-float"><i class="fa fa-usd" id="fl" aria-hidden="true"></i> fill a bounty</div><% end %>
+   <%= link_to upload_bounties_path do %><div class="nav-button in-float"><i class="fa fa-plus-square" id="fl" aria-hidden="true"></i> post art</div><% end %>
+   <%= link_to filled_bounties_path do %><div class="nav-button in-float"><i class="fa fa-map-o" id="fl" aria-hidden="true"></i> browse art</div><% end %>
+   <%= link_to pages_about_path do%><div id="ab" class="nav-button in-float"><i class="fa fa-question" id="fl" aria-hidden="true"></i> about grafiki</div><%end%>
+   <% if request.url != root_url %><a id="credshell"><div id="cred" class="nav-button in-float">view backdrop on map</div></a><% end %>
    <%= yield :satbutts %>
    <% if not user_signed_in? %>
      <%= link_to new_user_registration_path do %><div id="signup-button" class="nav-button in-float">register</div><% end %>
      <%= link_to new_user_session_path do %><div id="login-button" class="nav-button in-float">login</div><% end %>
    <% else %>
      <div id="signup-button" class="in-float"
-       style="right:7rem"><%= current_user.email %></div>
+       style="right:7rem"><i class="fa fa-user" aria-hidden="true"></i></div>
      <%= link_to "sign out", destroy_user_session_path, method: :delete, class: "in-float",
        id: "signout-button", style: "text-decoration: none; width:initial" %>
    <% end %>

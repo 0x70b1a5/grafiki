@@ -54,7 +54,7 @@
            featureType: 'all',
            elementType: 'labels.text.fill',
            stylers: [
-             { lightness: 40 }
+             { lightness: 15 }
            ]
          },
          {
@@ -183,11 +183,21 @@
 
        // construct basic marker
        var marker = new google.maps.Marker({
-         position: { lat: b.lat, lng: b.lng },
-         icon: "http://www.googlemapsmarkers.com/v1/"+
-           (function(){ return b.artist ? "a" : "$" })()+"/"+
-           (function(){ return b.artist ? "702070/FFFFFF/301030" : 
-                                          "108010/000000/103010" })()
+         position: { lat: b.lat, lng: b.lng }
+        ,label: {
+          text: (function(){ return b.artist ? "a" : "$" })()
+         ,color: (function(){ return b.artist ? "#000" : "#000" })()
+         ,fontFamily: "Roboto"
+         ,fontSize: "18px"
+        }
+        ,icon: {
+           path: google.maps.SymbolPath.CIRCLE
+          ,fillColor:   (function(){ return b.artist ? "#558" : "#252" })() 
+          ,fillOpacity: 1
+          ,strokeColor: (function(){ return b.artist ? "#112" : "#121" })() 
+          ,strokeWeight: 1
+          ,scale: 15
+         }
        }); 
 
        /* set up the info window shell w/guid */
@@ -245,7 +255,7 @@
      // cluster markers above certain zoom level:
      //
      
-     if (map.getZoom() < 17) {
+     if (map.getZoom() < 15) {
      // break map into grid squares
      var bounds = (function(){
        return window.bounds ? window.bounds : map.getBounds();
@@ -253,12 +263,13 @@
          ne = bounds.getNorthEast(),
          sw = bounds.getSouthWest();
 
-     // 10*10 = 100 subsquares
-     var horizStep = (ne.lat() - sw.lat())/10,
-         vertiStep = (ne.lng() - sw.lng())/10;
+     // 5*5 = 25 subsquares
+     var sq = 5;
+     var horizStep = (ne.lat() - sw.lat())/sq;
+         vertiStep = (ne.lng() - sw.lng())/sq;
 
-     for (var i=0;i<10;i++){
-       for (var j=0;j<10;j++){
+     for (var i=0;i<sq;i++){
+       for (var j=0;j<sq;j++){
          var swlat = sw.lat()+i*horizStep,
              swlng = sw.lng()+j*vertiStep,
              nelat = sw.lat()+(i+1)*horizStep,
@@ -283,15 +294,28 @@
 
          if (cluster.length <= 1) continue; // don't mark an empty square!
 
+         var label = String(cluster.length);
          var clustermark = new google.maps.Marker({
            // place clustermarker in center of grid with label # of bounties
            position: {
              lat:sw.lat()+i*horizStep+horizStep/2,
              lng:sw.lng()+j*vertiStep+vertiStep/2
-           },
-           map: map,
-           icon: "http://www.googlemapsmarkers.com/v1/"+
-                  String(cluster.length)+"/444466/EEEEFF/222244"
+           }
+           ,label: {
+              text: label
+             ,color: "#889"
+             ,fontFamily: "Roboto,sans-serif,custom-label-"+label
+             ,fontSize: "18px"
+           }
+           ,map: map
+           ,icon: {
+              path: google.maps.SymbolPath.CIRCLE
+             ,fillColor: "#112"
+             ,fillOpacity: 1
+             ,strokeColor: "#001"
+             ,strokeWeight: 1
+             ,scale: 17
+            }
          });
 
          clustermark.addListener('click', function(e){
@@ -305,13 +329,26 @@
          markers.push(clustermark);
        };
      };
-     }; // end if-zoom cluster condition
+     } else { // map is highly zoomed
+       var nothing = null;
+     }
 
      // draw all markers
      markers.forEach(function(marker){ 
        if (!marker) { return }; // undefined markers left by delete above
        marker.setMap(map);
      });
+
+     // hack-tastic multicharacter marker labels
+     // https://stackoverflow.com/questions/32467212/google-maps-marker-label-with-multiple-characters#32468461
+   window.setTimeout(function(){
+     var labels = document.querySelectorAll("[style*='custom-label']")
+     for (var i = 0; i < labels.length; i++) {
+       // Retrieve the custom labels and rewrite the tag content
+       var matches = labels[i].getAttribute('style').match(/custom-label-([0-9]+)/);
+       labels[i].innerHTML = matches[1];
+     }
+   }, 100);
 
      // remove loading message
      $( "#botflashes" ).html("");
@@ -330,9 +367,10 @@
  });
 
  google.maps.event.addListener(map, 'idle', function() {
-   if (!window.infosOpen){
-     drawMarkers();
-   }
+   // wait 2 seconds after a move to draw bounties
+   window.setTimeout(function(){
+     if(!window.infosOpen) drawMarkers();
+   },2000);
  });
 
  /* custom buttons for satellite and road views */
