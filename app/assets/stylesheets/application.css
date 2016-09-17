@@ -65,7 +65,7 @@ html, body {
   margin-right: 40px;
   min-width: 6rem;
   color: #eee;
-  background: #223;
+  background: #224;
 }
 
 /* 
@@ -111,19 +111,17 @@ this is how to do mobile, by screen resolution:
 }
 }
 
-
-
-input#pac-input:focus {
+#pac-input{
   background:none;
 } 
 
 .in-float {
   height: 2rem;
   line-height: 2rem;
-  background-color: #fff;
+  background-color: #eef;
   color: #000;
   float: left;
-  box-shadow: 1px 1px 1px #000;
+  box-shadow: 1px 1px 1px #0ee;
   margin: 0 5px;
   padding: 0 1rem;
 }
@@ -155,7 +153,7 @@ input#pac-input:focus {
 }
 
 .box .in-float input[type=submit]{
-  background:#223; color:#fff;
+  background:#224; color:#eef;
 }
 
 #search-text-input {
@@ -212,7 +210,7 @@ a { color: #00a; }
 
   .num.fil {
     background: forestgreen;
-    color: #fff;
+    color: #eef;
     text-shadow: 1px 1px #000;
     font-weight: bold;
     float: left;
@@ -333,14 +331,14 @@ a { color: #00a; }
   }
 
   #ab {
-    background: #223;
-    color: #fff;
+    background: #224;
+    color: #eef;
   }
 
   #cred {
     font-size: 0.8rem;
-    background: #223;
-    color: #fff;
+    background: #224;
+    color: #eff;
   }
 
   #signout-button {
@@ -353,7 +351,7 @@ a { color: #00a; }
     position: absolute;
     right: 1rem;
     text-decoration: none;
-    background: #223;
+    background: #224;
     color: #eee;
     margin: 0;
     min-width: inherit;
@@ -394,7 +392,7 @@ a { color: #00a; }
   .flash {
     background: #eee;
     padding: 1rem;
-    box-shadow: 1px 1px 1px #000;
+    box-shadow: 1px 1px 1px #099;
   }
 
   .error {
@@ -408,9 +406,9 @@ a { color: #00a; }
   .load {
     font-size: 2em;
     font-family: Roboto; 
-    color: #fff;
-    background: #223;
-    box-shadow: 1px 1px 1px #000;
+    color: #eff;
+    background: #224;
+    box-shadow: 1px 1px 1px #099;
   }
 
   #buttonto {
@@ -441,13 +439,13 @@ a { color: #00a; }
 
   #infovotes {
     box-shadow: none;
-    color: #fff;
+    color: #eff;
   }
 
   .in-float.rod {
     font-size: 0.95rem;
-    background: #223;
-    color: #fff;
+    background: #224;
+    color: #eff;
   }
 
   .in-float.sat {
