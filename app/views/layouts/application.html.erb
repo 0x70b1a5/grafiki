@@ -29,7 +29,7 @@
      <%= link_to new_user_session_path do %><div id="login-button" class="nav-button in-float">login</div><% end %>
    <% else %>
      <div id="signup-button" class="in-float"
-       style="right:7rem"><i class="fa fa-user" aria-hidden="true"></i></div>
+       style="right:7rem"><%= current_user.email.split("@")[0] %></div>
      <%= link_to "sign out", destroy_user_session_path, method: :delete, class: "in-float",
        id: "signout-button", style: "text-decoration: none; width:initial" %>
    <% end %>

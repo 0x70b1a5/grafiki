@@ -1,7 +1,9 @@
 <% content_for :satbutts do %>
- <div class="nav-button">
-   <div class="in-float rod" id="road">road</div>
-   <div class="in-float rod sat" id="sat">satellite</div>
+ <div class="nav-button in-float" id="map-nav">
+   <div id="road">road</div>
+   <div id="sat">sat</div>
+   <div id="zumin"><i class="fa fa-search-plus" aria-hidden="true"></i></div>
+   <div id="zumout"><i class="fa fa-search-minus" aria-hidden="true"></i></div>
  </div>
 <% end %>
 <% content_for :map do %>
@@ -28,6 +30,7 @@
      map = new google.maps.Map(document.getElementById('map'), {
        zoom: 10,
        center: cen,
+       disableDefaultUI: true,
        styles: [
          {
            stylers: [
@@ -152,10 +155,6 @@
    // first, let the user know we are loading.
    $( "#botflashes" ).html(`<div class="flash load">loading bounties... </div>`);
 
-   // clear old markers from the map
-   if (window.markers){
-     window.markers.forEach(function(marker){ marker.setMap(null); });
-   }
    window.markers = [];
 
    // iterate over full db query
@@ -255,7 +254,7 @@
      // cluster markers above certain zoom level:
      //
      
-     if (map.getZoom() < 15) {
+     if (map.getZoom() < 17) {
      // break map into grid squares
      var bounds = (function(){
        return window.bounds ? window.bounds : map.getBounds();
@@ -263,8 +262,8 @@
          ne = bounds.getNorthEast(),
          sw = bounds.getSouthWest();
 
-     // 5*5 = 25 subsquares
-     var sq = 5;
+     // sq*sq subsquares
+     var sq = 10;
      var horizStep = (ne.lat() - sw.lat())/sq;
          vertiStep = (ne.lng() - sw.lng())/sq;
 
@@ -319,6 +318,7 @@
          });
 
          clustermark.addListener('click', function(e){
+           markers.forEach(function(m) { m.setMap(null) });
            map.setCenter({
              lat: e.latLng.lat(),
              lng: e.latLng.lng()
@@ -340,19 +340,27 @@
      });
 
      // hack-tastic multicharacter marker labels
-     // https://stackoverflow.com/questions/32467212/google-maps-marker-label-with-multiple-characters#32468461
-   window.setTimeout(function(){
-     var labels = document.querySelectorAll("[style*='custom-label']")
-     for (var i = 0; i < labels.length; i++) {
-       // Retrieve the custom labels and rewrite the tag content
-       var matches = labels[i].getAttribute('style').match(/custom-label-([0-9]+)/);
-       labels[i].innerHTML = matches[1];
-     }
-   }, 100);
+     window.setTimeout(function(){
+       var labels = document.querySelectorAll("[style*='custom-label']")
+       for (var i = 0; i < labels.length; i++) {
+         // Retrieve the custom labels and rewrite the tag content
+         var matches = labels[i].getAttribute('style').match(/custom-label-([0-9]+)/);
+         labels[i].innerHTML = matches[1];
+       }
+     }, 500); // TODO: solution that isn't time-based
 
-     // remove loading message
+     // remove loading message; restore map nav
      $( "#botflashes" ).html("");
    });
+ }
+
+ function clearMarkers() {
+   if (window.markers) {
+     var l = window.markers.length || 0;
+     for(var i=0;i<l;i++) {
+       if (markers[i]) window.markers[i].setMap(null);
+     }
+   } else { window.markers = []; }
  }
 
  <% if params[:id] %>
@@ -367,13 +375,11 @@
  });
 
  google.maps.event.addListener(map, 'idle', function() {
-   // wait 2 seconds after a move to draw bounties
-   window.setTimeout(function(){
-     if(!window.infosOpen) drawMarkers();
-   },2000);
+   clearMarkers();
+   drawMarkers();
  });
 
- /* custom buttons for satellite and road views */
+ // navigation buttons
  $(document).ready(function(){
    $( "#pac-input" ).css( "class", "searchbar" );
    //$( "#pac-input" ).focus();
@@ -382,6 +388,12 @@
    });
    $( "#sat" ).click(function() {
      map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
+   });
+   $( "#zumin" ).click(function() {
+     map.setZoom(map.getZoom()+2);
+   });
+   $( "#zumout" ).click(function() {
+     map.setZoom(map.getZoom()-2);
    });
  });
 
