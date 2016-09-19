@@ -19,12 +19,16 @@
      return div.innerHTML;
    }
    
+   Array.prototype.remove = function(from, to) {
+     var rest = this.slice((to || from) + 1 || this.length);
+     this.length = from < 0 ? this.length + from : from;
+     return this.push.apply(this, rest);
+   };
+
    var map;
    var service;
    
-   /*
-   * SET UP THE HUGE MAPS:
-   */
+   // SET UP THE HUGE MAPS:
    function initMap() {
      var cen = {lat: 37.8321882116, lng: -122.221084724}
      map = new google.maps.Map(document.getElementById('map'), {
