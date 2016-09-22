@@ -15,7 +15,7 @@
   <body>
 
  <div id="nav-menu">
-   <%= link_to root_path do %><div id="hed" class="in-float">grafiki<%= yield :title %></div><% end %>
+   <%= link_to root_path do %><div id="hed" class="in-float"><%= image_tag "textlogo.svg", style: "height:2rem" %><%= yield :title %></div><% end %>
 
    <%= link_to new_bounty_path do %><div class="nav-button in-float"><i class="fa fa-plus" id="fl" aria-hidden="true"></i>post a bounty</div><% end %>
    <%= link_to bounties_path do %><div class="nav-button in-float"><i class="fa fa-usd" id="fl" aria-hidden="true"></i> fill a bounty</div><% end %>
