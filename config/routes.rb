@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :candidates
 
   get 'escrows/new'
+  post 'escrows/new'
 
   devise_for :users
   get 'login' => "sessions#new"

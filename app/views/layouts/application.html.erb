@@ -60,22 +60,22 @@
       });
     </script>
 
+    <%# set a random bounty as the background image %>
+    <% b=Bounty.where({:id=>(Bounty.all.length*rand).to_i}) %>
+    <% if b.exists? %>
+      <div id="bgimg" style="
+        background: url(<%= b.first['pic'] %>) center center no-repeat;
+        background-size: cover;
+      "></div>
 
-<% b=Bounty.where({:id=>(Bounty.all.length*rand).to_i}) %>
-<% if b.exists? %>
-  <div id="bgimg" style="
-    background: url(<%= b.first['pic'] %>) center center no-repeat;
-    background-size: cover;
-  "></div>
+      <%# link to the bounty in the navbar %>
+      <script>
+        $(document).ready(function(){$( "#credshell" ).attr( 
+          "href","/bounties/<%= b.first.id %>"
+        )});
+      </script>
+    <% end %>
 
-  <%# link to the bounty in the navbar %>
-  <script>
-    $(document).ready(function(){$( "#credshell" ).attr( 
-      "href","/bounties/<%= b.first.id %>"
-    )});
-  </script>
-<% end %>
-
-
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57e96a6c22459337#async=1"></script>
   </body>
 </html>

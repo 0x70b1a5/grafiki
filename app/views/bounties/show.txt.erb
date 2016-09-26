@@ -3,7 +3,8 @@
   <div style='text-align:center'> 
     <div class='b-r'> <b><%= @bounty.title %></b> <span style="font-size:0.8rem">by <%= @bounty.artist %></span> | <%=@bounty.votes.count%><% if @bounty.user != current_user %><%= button_to '+vote', vote_bounty_path(@bounty), method: :post, style: "font-size: 0.8rem; background: none; color: #f06090" %><%end%></div>
     <% if @bounty.amount > 0 %><div class='b-a'>bounty: $ <%= @bounty.amount %></div><% end %>
-    <code style="font-size: 0.8rem"> <a href='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'><%= @bounty.address %></a></code>
+    <%= link_to "/escrows/new/bounty_id?=" + @bounty.id.to_s do %><div class="in-float">tip with card</div><% end %>
+    <p>tip with bitcoin: <code style="font-size: 0.8rem"> <a href='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'><%= @bounty.address %></a></code></p>
   </div>
 <% else %>
   <div style='text-align:center'> 
@@ -15,5 +16,17 @@
 <% end %>
 <div class='b-s'> <p><%= @bounty.description %></p>
     
-<p class='b-n'><%= link_to @bounty do %>link here<% end %> | commissioned by <%= @bounty.patron || 'anonymous' %><br />
-<% if @bounty.artist == "unknown" %><em>do you know who made this? <a href="mailto:go@grafiki.com">email us</a>.</em><%end%></p></div>
+<p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %><% if @bounty.artist == "unknown" %>
+<br><em>do you know who made this? <a href="mailto:go@grafiki.com">email us</a>.</em><%end%>
+<br>share: <span class="at_share_button_elements addthis_toolbox">
+  <a class="addthis_button_twitter"></a>
+  <a class="addthis_button_tumblr"></a>
+  <a class="addthis_button_pinterest_share" title="Pin it"></a>
+  <a class="addthis_button_facebook"></a>
+  <a class="addthis_button_reddit"></a>
+  <a class="addthis_button_email"></a>
+  <a class="addthis_counter addthis_bubble_style"></a>
+  <%= link_to @bounty do %> link <% end %> 
+</span>
+</p></div>
+<style> .at300b * { background: black; } </style>

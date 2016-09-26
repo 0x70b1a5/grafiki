@@ -1,6 +1,10 @@
 class EscrowsController < ApplicationController
   def new
     @escrow = Escrow.new
+
+    if params[:bounty_id]
+      @bounty = Bounty.find(params[:bounty_id])
+    end
   end
 
   def create
@@ -9,9 +13,16 @@ class EscrowsController < ApplicationController
       redirect_to root_path
     end
 
-    @escrow = Escrow.create(new_escrow_params)
+    if params[:art]
+      params[:escrow][:owner_token] = params[:stripeToken]
+      @escrow = Escrow.create(art_escrow_params)
+    else
+      @escrow = Escrow.create(new_escrow_params)
+    end
+
     if @escrow.save
       flash[:notice] = "payment created"
+      redirect_to @escrow.bounty
     else
       flash[:error] = "error creating payment"
     end
@@ -62,4 +73,9 @@ class EscrowsController < ApplicationController
       params.require(:escrow).permit(:user_id,:artist_email,
         :artist_token)
     end
+
+    def art_escrow_params
+      params.require(:escrow).permit(:owner_email,:amount,:owner_token,
+        :bounty_id)
+    end 
 end

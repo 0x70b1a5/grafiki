@@ -1,17 +1,4 @@
 <%= form_for @bounty do |f| %>
-  <% if @bounty.errors.any? %>
-  <div class="box">
-  <div class="in-float">
-    <%= pluralize(@bounty.errors.count, "error") %> must be fixed. 
-    <ul> 
-      <% @bounty.errors.full_messages.each do |m| %>
-        <li><%= m %></li>
-      <% end %>
-    </ul>
-  </div>
-  </div>
-  <% end %>
-
   <div class="box">
   <div class="in-float">
     <%= f.label :title %>
@@ -54,7 +41,7 @@
   <input name="stripeTokenType" id="stripeTokenType" type="hidden">
 
   <div class="box">
-  <div class="in-float" style="background:#334">
+  <div class="in-float" style="background:#224">
     <button id="customButton" style="background:none;border:none;font-size:1em;font-family:Roboto;color:#fff">post bounty</button>
   </div>
   </div>
@@ -75,7 +62,7 @@
 
   var handler = StripeCheckout.configure({
     key: 'pk_live_FJVEoceXbsJ0elIQaAkAit1u',
-    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    image: '/assets/spraycan.svg',
     locale: 'auto',
     bitcoin: true,
     token: function(token) {

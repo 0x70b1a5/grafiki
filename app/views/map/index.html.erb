@@ -233,6 +233,7 @@
            $.get("/bounties/"+b.id+".txt").then(function(rendered){ 
              content = rendered;
              $( "#marker"+b.id ).html( content );
+             addthis.toolbox('.addthis_toolbox'); // render share buttons
            });
          } else {
            info.close();

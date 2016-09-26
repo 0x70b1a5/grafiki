@@ -1,2 +1,76 @@
-<h1>Escrows#new</h1>
-<p>Find me in app/views/escrows/new.html.erb</p>
+<%= form_for @escrow do |f| %>
+  <div class="box">
+  <div class="in-float">
+    thank you for showing your appreciation for <%= @bounty.artist || "anonymous" %>!
+  </div>
+  </div>
+
+  <div class="box">
+  <div class="in-float">
+    <%= f.label :tip%>
+    <%= f.number_field :amount, :class => 'text_field', :step => 0.01, value: 4.99 %>
+  </div>
+  </div>
+
+  <div class="box">
+  <div class="in-float">
+    <%= f.label :your_email%>
+    <%= f.text_field :owner_email, placeholder: 'your email' %>
+  </div>
+  </div>
+
+  <input name="stripeToken" id="stripeToken" type="hidden">
+  <input name="stripeEmail" id="stripeEmail" type="hidden">
+  <input name="stripeTokenType" id="stripeTokenType" type="hidden">
+  <input name="escrow[bounty_id]" id="escrow[bounty_id]" type="hidden" value=<%=@bounty.id%>>
+  <input name="art" type="hidden" value=1>
+
+  <div class="box">
+  <div class="in-float" style="background:#224">
+    <button id="customButton" style="background:none;border:none;font-size:1em;font-family:Roboto;color:#fff">tip artist</button>
+  </div>
+  </div>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<% end %>
+
+<script>
+  /*
+  *  THE SCRIPT FROM STRIPE TO GATHER THE MONIES
+  *  FROM THE CREATIVE FOLK OF THE PLANET
+  */
+  function getUpchgAmtCents(){
+   // convert to cents (100) + fee (10)
+   return Number($( "#escrow_amount" ).val()) * 110 ;
+  };
+
+  var handler = StripeCheckout.configure({
+    key: 'pk_test_AX9upQId9CjDYnvw9P7U7Jpv',
+    image: '/assets/spraycan.svg',
+    locale: 'auto',
+    bitcoin: true,
+    token: function(token) {
+      $( "#stripeEmail" ).val( token.email );
+      $( "#stripeToken" ).val( token.id );
+      $( "#stripeTokenType" ).val( token.type );
+      $( "#new_escrow" ).submit();
+    }
+  });
+
+  $('#customButton').on('click', function(e) {
+    // Open Checkout with further options:
+    handler.open({
+      name: 'grafiki',
+      description: '2 widgets',
+      amount: getUpchgAmtCents()
+    });
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation:
+  $(window).on('popstate', function() {
+    handler.close();
+  });
+</script>
+
+<style> .in-float { height: auto } </style>
