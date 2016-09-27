@@ -1,32 +1,63 @@
 <% if @bounty.pic %>
-  <div class='b-p'><%= link_to @bounty.pic, target: "_blank" do %><img style='max-width:400px;max-height:400px;' src='<%= @bounty.pic %>'><% end %></div>
+  <div class='b-p'>
+    <%= link_to @bounty.pic, target: "_blank" do %>
+      <img style='max-width:400px;max-height:400px;' src='<%= @bounty.pic %>'>
+    <% end %>
+  </div>
   <div style='text-align:center'> 
-    <div class='b-r'> <b><%= @bounty.title %></b> <span style="font-size:0.8rem">by <%= @bounty.artist %></span> | <%=@bounty.votes.count%><% if @bounty.user != current_user %><%= button_to '+vote', vote_bounty_path(@bounty), method: :post, style: "font-size: 0.8rem; background: none; color: #f06090" %><%end%></div>
-    <% if @bounty.amount > 0 %><div class='b-a'>bounty: $ <%= @bounty.amount %></div><% end %>
-    <%= link_to "/escrows/new/bounty_id?=" + @bounty.id.to_s do %><div class="in-float">tip with card</div><% end %>
-    <p>tip with bitcoin: <code style="font-size: 0.8rem"> <a href='https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl<%= @bounty.address %>'><%= @bounty.address %></a></code></p>
+    <div class='b-r'> 
+      <b><%= @bounty.title %></b> <span style="font-size:0.8rem">by <%= @bounty.artist %></span> | <%=@bounty.votes.count%>
+      <% if @bounty.user != current_user %>
+        <%= button_to '+vote', 
+          vote_bounty_path(@bounty), 
+          method: :post, 
+          style: "font-size: 0.8rem; background: none; color: #f06090" %>
+      <%end%>
+    </div>
+    <% if @bounty.amount > 0 %>
+      <div class='b-a'>bounty: $ <%= @bounty.amount %></div>
+    <% end %>
+    <div style="display:flex; justify-content: center">
+      <%= link_to "/escrows/new/bounty_id?=" + @bounty.id.to_s do %>
+        <div class="in-float">tip with card</div>
+      <% end %>
+      <%= link_to "https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + @bounty.address do %>
+        <div class="in-float" id="ab">tip with bitcoin</div>
+      <% end %>
+    </div>
   </div>
 <% else %>
   <div style='text-align:center'> 
     <div class='b-a'>$ <%= @bounty.amount %></div>
   </div>
   <% if @bounty.user != current_user %>
-    <%= button_to 'fill', fill_bounty_path(@bounty), method: :post, class: "row", id: "buttonto" %>
+    <%= button_to 'fill', fill_bounty_path(@bounty), 
+      method: :post, class: "row", id: "buttonto" %>
   <% end %>
 <% end %>
-<div class='b-s'> <p><%= @bounty.description %></p>
-    
-<p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %><% if @bounty.artist == "unknown" %>
-<br><em>do you know who made this? <a href="mailto:go@grafiki.com">email us</a>.</em><%end%>
-<br>share: <span class="at_share_button_elements addthis_toolbox">
-  <a class="addthis_button_twitter"></a>
-  <a class="addthis_button_tumblr"></a>
-  <a class="addthis_button_pinterest_share" title="Pin it"></a>
-  <a class="addthis_button_facebook"></a>
-  <a class="addthis_button_reddit"></a>
-  <a class="addthis_button_email"></a>
-  <a class="addthis_counter addthis_bubble_style"></a>
-  <%= link_to @bounty do %> link <% end %> 
-</span>
-</p></div>
-<style> .at300b * { background: black; } </style>
+<div class='b-s'> 
+  <p><%= @bounty.description %></p>
+  <p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %>
+    <% if @bounty.artist == "unknown" %>
+      <br><em>we don't know who made this art yet. 
+      please <a href="mailto:go@grafiki.com">email us</a> if you do. 
+      you can also share this, to help it reach its rightful artist.</em>
+    <% end %>
+    <br>share: <span class="at_share_button_elements addthis_toolbox" addthis:title="see local art: <%=@bounty.title%> on grafiki" addthis:url="http://grafiki.org/bounties/<%= @bounty.id %>" >
+      <a class="addthis_button_twitter"></a>
+      <a class="addthis_button_tumblr"></a>
+      <a class="addthis_button_pinterest_share" title="Pin it"></a>
+      <a class="addthis_button_facebook"></a>
+      <a class="addthis_button_reddit"></a>
+      <a class="addthis_button_email"></a>
+      <a class="addthis_counter addthis_bubble_style"></a>
+      <%= link_to @bounty do %> link <% end %> 
+    </span>
+  </p>
+</div>
+<div>
+  <div id="disqus_thread"></div>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+<style> .at300b * { background: black; } </style> <%# addthis %>

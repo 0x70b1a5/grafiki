@@ -474,11 +474,11 @@ a { color: #00a; }
   }
 
   .b-n {
-    margin-top:0.5rem;
     font-size:0.7em;
     color:#888;
     text-align:center;
-    padding-bottom: 2px;
+    padding: 2px;
+    clear: both;
   }
 
   .b-d {

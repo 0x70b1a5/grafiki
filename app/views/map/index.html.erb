@@ -229,11 +229,11 @@
            info.open(map, marker);
            marker.open = true;
            window.infosOpen = true;
-           var content ;
            $.get("/bounties/"+b.id+".txt").then(function(rendered){ 
-             content = rendered;
-             $( "#marker"+b.id ).html( content );
+             var info_div = $( "#marker"+b.id );
+             info_div.html( rendered );
              addthis.toolbox('.addthis_toolbox'); // render share buttons
+             reset(String(b.id),'http://grafiki.org/bounties/'+b.id,b.title+' on grafiki', 'en');
            });
          } else {
            info.close();
@@ -244,6 +244,7 @@
 
        // also close if they hit esc
        $(document).on('keyup', function(e) {
+         e.preventDefault();
          if (e.keyCode == 27 && info.open) {
            info.close();
            marker.open = false;
@@ -258,7 +259,6 @@
      //
      // cluster markers above certain zoom level:
      //
-     
      if (map.getZoom() < 17) {
      // break map into grid squares
      var bounds = (function(){
@@ -340,7 +340,7 @@
 
      // draw all markers
      markers.forEach(function(marker){ 
-       if (!marker) { return }; // undefined markers left by delete above
+       if (!marker) { return }; // undefined markers not drawn
        marker.setMap(map);
      });
 
@@ -353,7 +353,6 @@
          labels[i].innerHTML = matches[1];
        }
      }, 500); // TODO: solution that isn't time-based
-
 
      // hack again for art icons because i haven't learned my lesson
      window.setTimeout(function(){
@@ -411,10 +410,40 @@
      map.setZoom(map.getZoom()-2);
    });
  });
-
 }
+
+/**
+ *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+ *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+/*
+var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//grafiki.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+
+/* * * Disqus Reset Function * * */
+var reset = function (newIdentifier, newUrl, newTitle, newLanguage) {
+  DISQUS.reset({
+    reload: true,
+    config: function () {
+      this.page.identifier = newIdentifier;
+      this.page.url = newUrl;
+      this.page.title = newTitle;
+      this.language = newLanguage;
+    }
+  });
+};
+
  </script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>
 <script type="text/javascript" src="//rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox.js"></script>
+
 <% end %>
