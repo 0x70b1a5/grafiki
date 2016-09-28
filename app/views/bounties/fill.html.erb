@@ -1,4 +1,5 @@
 <%= content_for :title do %> | fill<% end %>
+<%= content_for :titlebox do %><div id="hed" class="in-float">fill</div><% end %>
 <%= form_for @candidate, url: {action: "fill"}  do |f| %>
   <div class="box">
   <div class="in-float">

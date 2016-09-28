@@ -1,4 +1,5 @@
 <%= content_for :title do %> | bounties<% end %>
+<%= content_for :titlebox do %><div id="hed" class="in-float">bounties</div><% end %>
 <div class="box" style="width:100%; margin: 0 0 1rem 0">
 <%= form_tag bounties_path, :method => 'get', :class => 'in-float' do %>
   <p>

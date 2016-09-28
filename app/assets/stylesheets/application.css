@@ -68,9 +68,7 @@ html, body {
 #hed {
   font-family: Roboto;
   font-size: 2rem;
-  /*font-weight: bold;*/
   padding: 1rem 2rem;
-  margin-right: 40px;
   min-width: 6rem;
   color: #eee;
   background: #224;

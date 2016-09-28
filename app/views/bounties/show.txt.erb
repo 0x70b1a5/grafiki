@@ -17,12 +17,13 @@
     <% if @bounty.amount > 0 %>
       <div class='b-a'>bounty: $ <%= @bounty.amount %></div>
     <% end %>
-    <div style="display:flex; justify-content: center">
+    <div style="display:flex; align-items: center; justify-content: center">
+      tip this artist: 
       <%= link_to "/escrows/new/bounty_id?=" + @bounty.id.to_s do %>
-        <div class="in-float">tip with card</div>
+        <div class="in-float" id="ab">card</div>
       <% end %>
       <%= link_to "https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + @bounty.address do %>
-        <div class="in-float" id="ab">tip with bitcoin</div>
+        <div class="in-float">bitcoin</div>
       <% end %>
     </div>
   </div>

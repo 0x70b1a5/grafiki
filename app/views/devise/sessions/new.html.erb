@@ -1,4 +1,5 @@
 <%= content_for :title do %> | sign in<% end %>
+<%= content_for :titlebox do %><div id="hed" class="in-float">sign in</div><% end %>
 <div class="in-float" style="display:table">
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="signupfield">

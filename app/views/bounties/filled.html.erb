@@ -1,10 +1,9 @@
 <% content_for :title do %> | artwork<% end %>
+<%= content_for :titlebox do %><div id="hed" class="in-float">artwork</div><% end %>
 <div class="box" style="width:100%; margin: 0 0 1rem 0">
-<%= form_tag bounties_path, :method => 'get', :class => 'in-float' do %>
-  <p>
-    <%= text_field_tag :search, params[:search],:placeholder => ' search in title, description...' %>
-    <%= submit_tag "search", :name => nil %>
-  </p>
+<%= form_tag bounties_path, :method => 'get' do %>
+  <%= text_field_tag :search, params[:search],:placeholder => ' search in title, description...' , :class => 'in-float' %>
+  <%= submit_tag "search", :name => nil, :class => 'in-float', :id => 'ab', :style => "padding: 0px 1rem; border: 1px solid #eef;" %>
 <% end %>
 </div>
 <% @bounties.each_with_index do |bounty,ind| %>
