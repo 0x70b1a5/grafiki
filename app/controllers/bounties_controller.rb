@@ -2,30 +2,37 @@ class BountiesController < ApplicationController
   Stripe.api_key = "sk_live_RnAcOFZsGe36FGnJMRlhqsAb"
 
   def index
-    @bounties = Bounty.all
+    if params[:search]
+      @bounties = Bounty.search(params[:search])
+    else
+      @bounties = Bounty.all
+    end
 
     respond_to do |format|
-      format.html 
       format.json { render :json => @bounties.to_json }
+      format.html 
     end
   end
 
   def filled
-    @bounties = Bounty.all # we filter for artwork at the template level
+    if params[:search]
+      @bounties = Bounty.search(params[:search])
+    else
+      @bounties = Bounty.all
+    end
   end
 
   def show
     @bounty = Bounty.find(params[:id])
 
-    # don't show if pending review
-    if @bounty.hidden
+    if @bounty.hidden# don't show if pending review
       flash[:notice] = "this marker is pending review"
       redirect_to root_path
     else 
       respond_to do |format|
+        format.txt { render :txt => @bounty.to_json }
         format.html { redirect_to root_path(id: params[:id]) }
         format.json { render :json => @bounty.to_json }
-        format.txt { render :txt => @bounty.to_json }
       end
     end
   end

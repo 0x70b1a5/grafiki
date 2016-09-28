@@ -35,4 +35,11 @@ class Bounty < ApplicationRecord
     on: [:fill, :upload, :update],
     :if => :pic_changed?
 
+  def self.search(query)
+    if query
+      where(["title LIKE ?", "%#{query}%"]).to_a
+    else
+      all
+    end
+  end
 end

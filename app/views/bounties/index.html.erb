@@ -1,4 +1,12 @@
-<%= content_for :title do %> | browse<% end %>
+<%= content_for :title do %> | bounties<% end %>
+<div class="box" style="width:100%; margin: 0 0 1rem 0">
+<%= form_tag bounties_path, :method => 'get', :class => 'in-float' do %>
+  <p>
+    <%= text_field_tag :search, params[:search],:placeholder => ' search in title, description...' %>
+    <%= submit_tag "search", :name => nil %>
+  </p>
+<% end %>
+</div>
 <% @bounties.each_with_index do |bounty,ind| %>
 <% break if ind > 100 %><%# TODO: PAGINATE REMAINING ARTWORKS %>
 <% next if bounty.artist %>

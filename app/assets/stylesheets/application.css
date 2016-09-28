@@ -157,7 +157,6 @@ this is how to do mobile, by screen resolution:
 
 .box input[type=submit] {
   background: none;
-  font-weight: bold;
 }
 
 .box .in-float input[type=submit]{
