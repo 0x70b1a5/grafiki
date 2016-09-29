@@ -1,34 +1,39 @@
 <%= content_for :title do %> | bounties<% end %>
 <%= content_for :titlebox do %><div id="hed" class="in-float">bounties</div><% end %>
 <div class="box" style="width:100%; margin: 0 0 1rem 0">
-<%= form_tag bounties_path, :method => 'get' do %>
-  <%= text_field_tag :search, params[:search],:placeholder => ' search in title, description...' , :class => 'in-float' %>
-  <%= submit_tag "search", :name => nil, :class => 'in-float', :id => 'ab', :style => "padding: 0px 1rem; border: 1px solid #eef;" %>
-<% end %>
+  <%= form_tag bounties_path, :method => 'get' do %>
+    <%= text_field_tag :search, params[:search],:placeholder => ' search in title, description...' , :class => 'in-float' %>
+    <%= submit_tag "search", :name => nil, :class => 'in-float', :id => 'ab', :style => "padding: 0px 1rem; border: 1px solid #eef;" %>
+  <% end %>
 </div>
-<% paginator = params[:start].to_i || 0 
-@bounties.each_with_index do |bounty,ind| 
-   next if ind < paginator
-   break if ind > paginator+100 # 100 bounties per page
-   next if bounty.artist %>
+
+<%paginator = params[:start].to_i || 0 
+  limit = 50
+  @bounties.each_with_index do |bounty,ind| 
+    next if ind < paginator
+    break if ind > paginator+100 # 100 bounties per page
+    next if bounty.artist %>
   <div class="infoBox in-float" style="
     color: rgb(255, 255, 255);
     background: rgb(1, 1, 1);
     box-shadow: rgb(0, 0, 0) 1px 1px 3px;
     cursor: default;line-height:1rem;height:auto;margin-top:5px;min-width:400px">
-    <div id="<%=bounty.id%>"></div>
     <h3>#<%=bounty.id%></h3>
+    <div id="<%=bounty.id%>"></div>
   </div>
 <% end %>
+
 <div style="display:flex;justify-content:space-between;width:100%" class="box">
-<%= if paginator > 100 
-    link_to filled_bounties_path + "?start=#{paginator-100}" do %><div class="in-float">&lt; previous 100 bounties</div><% end end %>
-<%= link_to filled_bounties_path + "?start=#{paginator+100}" do %><div class="in-float">next 100 bounties &gt;</div><%end%>
+<% if paginator >= limit %>
+    <a href="<%= bounties_path + "?start=#{paginator-limit}"%>" rel="external"><div class="in-float">&lt; previous <%=limit%> bounties</div></a>
+<% end %>
+    <a href="<%= bounties_path + "?start=#{paginator+limit}"%>" rel="external"><div class="in-float">next <%=limit%> bounties &gt;</div>
 </div>
+
 <script>
 $( document ).ready(function(){
   Array($(".infoBox").length).fill().forEach(function(val,i){
-    var id = $(".infoBox")[i].firstElementChild.id
+    var id = $(".infoBox")[i].firstElementChild.nextElementSibling.id
     $.get ( '/bounties/'+id+'.txt' ).then(function(rendered){
       $( "#"+id ).html( rendered );
     });

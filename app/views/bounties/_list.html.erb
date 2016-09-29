@@ -1,0 +1,23 @@
+<div class="box" style="width:100%; margin: 0 0 1rem 0">
+  <%= form_tag bounties_path, :method => 'get' do %>
+    <%= text_field_tag :search, params[:search],:placeholder => ' search in title, description...' , :class => 'in-float' %>
+    <%= submit_tag "search", :name => nil, :class => 'in-float', :id => 'ab', :style => "padding: 0px 1rem; border: 1px solid #eef;" %>
+  <% end %>
+</div>
+
+<div style="display:flex;justify-content:space-between;width:100%" class="box">
+<% if paginator >= limit %>
+    <a href="<%= + "?start=#{paginator-limit}"%>" rel="external"><div class="in-float">&lt; previous <%=limit%> bounties</div></a>
+<% end %>
+    <a href="<%= + "?start=#{paginator+limit}"%>" rel="external"><div class="in-float">next <%=limit%> bounties &gt;</div>
+</div>
+<script>
+$( document ).ready(function(){
+  Array($(".infoBox").length).fill().forEach(function(val,i){
+    var id = $(".infoBox")[i].firstElementChild.nextElementSibling.id
+    $.get ( '/bounties/'+id+'.txt' ).then(function(rendered){
+      $( "#"+id ).html( rendered );
+    });
+  });
+});
+</script>
