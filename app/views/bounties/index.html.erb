@@ -11,7 +11,7 @@
   limit = 50
   @bounties.each_with_index do |bounty,ind| 
     next if ind < paginator
-    break if ind > paginator+100 # 100 bounties per page
+    break if ind > paginator+limit
     next if bounty.artist %>
   <div class="infoBox in-float" style="
     color: rgb(255, 255, 255);
