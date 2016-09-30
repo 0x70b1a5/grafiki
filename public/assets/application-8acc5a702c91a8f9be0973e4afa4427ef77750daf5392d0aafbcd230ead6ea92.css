@@ -1,0 +1,505 @@
+#hed {
+  background: #f00;
+}
+/* line 4, /home/hastur/grafiki/grafiki/app/assets/stylesheets/sessions.scss */
+#bgimg {
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+
+html, body { 
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif; 
+  background-color: transparent;
+  overflow: hidden;
+  text-align: center;
+}
+
+#page {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  text-align: left;
+  position: absolute;
+  top: 5.6rem;
+  left: 12rem;
+  height: 90%;
+  overflow: auto;
+  z-index:2;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index:1;
+}
+
+#nav-menu {
+  position: absolute;
+  top: 0;
+  padding-top: 0.3rem;
+  float: left;
+  margin: 5px;
+  width: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#nav-menu * {
+  pointer-events: all;
+}
+
+#map-nav {
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  background: #224;
+  color: #eef;
+}
+
+#hed {
+  font-family: Montserrat;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  min-width: 6rem;
+  color: #eee;
+  background: #224;
+}
+
+/* 
+this is how to do mobile, by screen resolution:
+@media (max-width: 1200px) {} 
+*/
+
+#bgimg {
+  background-size: cover;
+  height: 100vh; 
+  width: 100vw; 
+}
+
+#opac {
+  background: radial-gradient(black,grey); 
+  height: 100vh; 
+  width: 100vw; 
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+}
+
+#pac-box {
+  position:absolute;
+  left: 14rem;
+  top: 0.7rem;
+  z-index: 2;
+}
+
+.searchbar {
+  width: 400px;
+  padding-right: 0;
+}
+
+#fl {
+  float:left;
+  font: normal normal normal 14px/2 FontAwesome;
+}
+
+@media (max-width: 1000px) {
+#pac-box {
+  display: none;
+}
+}
+
+#pac-input{
+  background:none;
+} 
+
+.in-float {
+  height: 2rem;
+  line-height: 2rem;
+  background-color: #eef;
+  color: #000;
+  float: left;
+  border: 1px solid #aab;
+  margin: 0 5px;
+  padding: 0 1rem;
+}
+
+.in-float label {
+  font-size: 1em;
+  margin: 10px;
+  vertical-align: top;
+}
+
+.in-float input {
+  border: none;
+  font-family: inherit;
+}
+
+.box .in-float {
+  display: block;
+}
+
+.box {
+  margin: 10px;
+  float: left;
+  clear: both;
+}
+
+.box input[type=submit] {
+  background: none;
+}
+
+.box .in-float input[type=submit]{
+  background:#224; color:#eef;
+}
+
+#search-text-input {
+  font-size: 1em;
+  width: 100%;
+  border: 0px;
+  background: transparent;
+}
+
+#search-button {
+  height: 64px;
+  background-color: #cdcccc;
+  border: 0;
+  font-family: Roboto, sans-serif;
+  font-size: 1em;
+  margin: 0;
+  float: right;
+  margin-top: -3rem;
+  box-shadow: none;
+}
+
+.headline-info {
+  font-weight: normal;
+  font-size: smaller;
+}
+
+input:focus{
+  outline: none;
+}
+
+input {
+  background:transparent;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Montserrat;
+  font-weight: normal;
+}
+
+a { color: #00a; }
+
+  .row {
+    box-shadow: 1px 1px 1px #AAA; 
+    margin: 10px;
+    padding: 0px;
+    display: inline-block;
+    color: #000;
+  }
+ 
+  .row div {
+    display: inline-block;
+    padding: 10px;
+  }
+
+  .num {
+    background: #B8E4BD;
+    padding: 10px;
+  }
+
+  .num.fil {
+    background: forestgreen;
+    color: #eef;
+    text-shadow: 1px 1px #000;
+    font-weight: bold;
+    float: left;
+    margin: 0;
+  }
+
+  .sid {
+    text-align:center;
+    overflow-wrap: break-word;
+    max-width: 300px;
+    display: inline-block;
+    float: left;
+    color: #333;
+  }
+
+  .inf {
+    font-size: 0.8rem;
+  }
+
+  .tyt {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .tyt code {
+    font-weight: normal;
+  }
+
+  .tic {
+    float: right;
+    padding: 10px;
+    margin: 0;
+  }
+
+  .nym {
+    font-weight: bold;
+    padding: 5px;
+  }
+
+  .loc {
+    font-family: monospace;
+    background: #DDD;
+    border-radius: 3px;
+    padding: 3px !important;
+  }
+
+  .who {
+    float: right;
+    margin: 5px;
+    padding: 5px;
+  }
+
+  .how {
+    font-style: italic;
+    color: #AAA;
+  }
+
+  .wut {
+    color: #999;
+    max-width: 500px;
+    overflow-wrap: break-word;
+    display: block !important;
+  }
+
+  .adr {
+    font-family: monospace;
+    background: #b8e4ab;
+    border-radius: 3px;
+    padding: 3px !important;
+    margin: 0px;
+  }
+
+  .qr {  
+    max-width: 200px;
+    margin: 0;
+    padding: 0;
+    display: block;
+    margin: auto;
+  }
+
+  .fill {
+    margin: 5px;
+    padding: 10px 20px;
+    color: #000;
+    background: #B8E4BD;
+  }
+
+  input[type="submit"] {
+    margin: 0;
+    padding: 3px 10px;
+    background: #eee;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  textarea#bounty_description {
+    border: 0;
+    font-family: Roboto, sans-serif;
+    vertical-align: -webkit-baseline-middle;
+    display: block;
+    font-size: 1em;
+    resize:none;
+    min-height: 100px;
+    background: transparent;
+  }
+
+  *:focus{
+    background-color:#eee;
+    outline: none;
+  }
+
+  #b-f-d {
+    min-height: 150px;
+  }
+
+  .b-r form {
+    display: inline;
+  }
+
+  #ab {
+    background: #224;
+    color: #eef;
+  }
+
+  #cred {
+    font-size: 0.8rem;
+    background: #224;
+    color: #eff;
+  }
+
+  #signout-button {
+    position: absolute;
+    right: 1em;
+    width: 6.7rem;
+  }
+
+  #signup-button {
+    position: absolute;
+    right: 1rem;
+    text-decoration: none;
+    background: #224;
+    color: #eee;
+    margin: 0;
+    min-width: inherit;
+  }
+
+  #login-button {
+    position: absolute;
+    right: 7.5rem;
+    text-decoration: none;
+    margin: 0;
+    min-width: inherit;
+  }
+
+  .nav-button {
+    float:left;
+    clear:both;
+    margin-top: 1rem;
+    min-width: 8rem;
+  }
+
+  #flashes {
+    width: 100%;
+    position: absolute;
+    top: 1rem;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+  }
+
+  #botflashes {
+    position: absolute;
+    top: 5rem;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+  }
+
+  .flash {
+    background: #eee;
+    padding: 1rem;
+    border: 1px solid #dde;
+  }
+
+  .error {
+    background: #c55;
+  }
+
+  .alert {
+    background: #ff5;
+  }
+
+  .load {
+    font-size: 2em;
+    font-family: Roboto; 
+    color: #eff;
+    background: #224;
+  }
+
+  #buttonto {
+    background: #eef;
+    float: right;
+    display: inline-block;
+    box-shadow: none;
+    padding: 10px;
+  }
+
+  .signupfield {
+    text-align: center;
+  }
+
+  .signupfield input {
+    box-shadow: 1px 1px 1px #999;
+  }
+
+  .links a {
+    margin: 0 2px;
+    color: #000;
+  }
+
+  .infoBox a {
+    color: #f06090;
+    text-decoration: none;
+  }
+
+  #infovotes {
+    box-shadow: none;
+    color: #eff;
+  }
+
+  .in-float.rod {
+    font-size: 0.95rem;
+    background: #224;
+    color: #eff;
+  }
+
+  .in-float.sat {
+  }
+
+  .b-a {
+    font-weight: bold;
+    display: inline-block;
+    margin: 0.5rem;
+  }
+
+  .b-p {
+    text-align:center;
+  }
+
+  .b-n {
+    font-size:0.7em;
+    color:#888;
+    text-align:center;
+    padding: 2px;
+    clear: both;
+  }
+
+  .b-d {
+    text-align: left;
+    margin: 0;
+  }
+
+  .b-s {
+    margin:5px 3em;
+    max-width: 400px;
+    color: #aab;
+  }
+
+  p { margin: 0 }
+
+ .at300b * { background: black; } 
