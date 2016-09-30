@@ -253,6 +253,7 @@ class BountiesController < ApplicationController
 
     if params[:bounty] # POST
       @bounty = Bounty.create(upload_params)
+      @bounty.hidden = true
 
       if @bounty.save
         flash[:notice] = "artwork uploaded"

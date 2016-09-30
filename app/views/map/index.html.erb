@@ -195,7 +195,7 @@
         }
         ,icon: {
            path: google.maps.SymbolPath.CIRCLE
-          ,fillColor:   (function(){ return b.artist ? "#0bb" : "#2b2" })() 
+          ,fillColor:   (function(){ return b.artist ? "#0bb" : "#0d0" })() 
           ,fillOpacity: 1
           ,strokeColor: (function(){ return b.artist ? "#001" : "#121" })() 
           ,strokeWeight: 1
@@ -232,6 +232,7 @@
            $.get("/bounties/"+b.id+".txt").then(function(rendered){ 
              var info_div = $( "#marker"+b.id );
              info_div.html( rendered );
+             if (info_div.html() != rendered) info_div.html( rendered );
              addthis.toolbox('.addthis_toolbox'); // render share buttons
              reset(String(b.id),'http://grafiki.org/bounties/'+b.id,b.title+' on grafiki', 'en');
            });

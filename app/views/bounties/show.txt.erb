@@ -17,16 +17,6 @@
     <% if @bounty.amount > 0 %>
       <div class='b-a'>bounty: $ <%= @bounty.amount %></div>
     <% end %>
-    <div style="display:flex; align-items: center; justify-content: center">
-      tip this artist: 
-      <%= link_to "/escrows/new/bounty_id?=" + @bounty.id.to_s do %>
-        <div class="in-float" id="ab">card</div>
-      <% end %>
-      <% # if @bounty.address != "1BitcoinAddressNotCurrentlyKnown" %>
-      <%= link_to "https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + @bounty.address do %>
-        <div class="in-float">bitcoin</div>
-      <% end #end %>
-    </div>
   </div>
 <% else %>
   <div style='text-align:center'> 
@@ -39,29 +29,40 @@
 <% end %>
 <div class='b-s'> 
   <p><%= @bounty.description %></p>
-  <p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %>
-    <% if @bounty.artist == "unknown" %>
-      <br><em>we don't know who made this art yet. 
-      please <a href="mailto:go@grafiki.com">email us</a> if you do. 
-      <br>you can also to help spread the word by sharing this:</em>
-    <% end %>
-    <br>share: <span class="at_share_button_elements addthis_toolbox" addthis:title="see local art: <%=@bounty.title%> on grafiki" addthis:url="http://grafiki.org/bounties/<%= @bounty.id %>" >
-      <a class="addthis_button_instagram"></a>
-      <a class="addthis_button_tumblr"></a>
-      <a class="addthis_button_pinterest_share"></a>
-      <a class="addthis_button_twitter"></a>
-      <a class="addthis_button_facebook"></a>
-      <a class="addthis_button_reddit"></a>
-      <a class="addthis_button_email"></a>
-      <a class="addthis_button_hyperlink"></a>
-      <a class="addthis_counter addthis_bubble_style"></a>
-      <%= link_to @bounty do %> link <% end %> 
-    </span>
-  </p>
+  <p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %></p>
 </div>
+
+<div style="margin:5px;display:flex; align-items: center; justify-content: center">
+  <%= link_to "/escrows/new/bounty_id?=" + @bounty.id.to_s do %>
+    <div class="in-float" id="ab">tip this artist</div>
+  <% end %>
+  <% # if @bounty.address != "1BitcoinAddressNotCurrentlyKnown" %>
+  <%#= link_to "https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + @bounty.address do 
+    <div class="in-float">bitcoin</div>
+  <% end #end %>
+</div>
+
+<p class="b-n"><% if @bounty.artist == "unknown" %>
+  <em>we don't know who made this art yet. 
+  please <a href="mailto:go@grafiki.com">email us</a> if you do. 
+  <br>you can also to help spread the word by sharing this:</em>
+  <% end %>
+  <br>share: <span class="at_share_button_elements addthis_toolbox" addthis:title="see local art: <%=@bounty.title%> on grafiki" addthis:url="http://grafiki.org/bounties/<%= @bounty.id %>" >
+    <a class="addthis_button_instagram"></a>
+    <a class="addthis_button_tumblr"></a>
+    <a class="addthis_button_pinterest_share"></a>
+    <a class="addthis_button_twitter"></a>
+    <a class="addthis_button_facebook"></a>
+    <a class="addthis_button_reddit"></a>
+    <a class="addthis_button_email"></a>
+    <a class="addthis_button_hyperlink"></a>
+    <a class="addthis_counter addthis_bubble_style"></a>
+    <%= link_to @bounty do %> link <% end %> 
+  </span>
+</p>
 <div>
-  <div id="disqus_thread"></div>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <!-- maybe don't have comments just yet -->
+  <!-- <div id="disqus_thread"></div> -->
   <script> addthis.toolbox(".addthis_toolbox");</script>
 </div>
 
