@@ -4,6 +4,13 @@ class BountiesController < ApplicationController
   def index
     if params[:search]
       @bounties = Bounty.search(params[:search])
+    elsif (params[:swlat] and params[:swlng] and params[:nelat] and params[:nelng])
+      @bounties = Bounty.where(
+        "lat > #{params[:swlat]} AND 
+         lat < #{params[:nelat]} AND 
+         lng < #{params[:nelng]} AND 
+         lng > #{params[:swlng]}"
+      )
     else
       @bounties = Bounty.all
     end

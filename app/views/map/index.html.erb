@@ -162,7 +162,13 @@
    window.markers = [];
 
    // iterate over full db query
-   db_response = $.get("/bounties.json").then(function(bounties){ 
+   //    restrict to visible:
+   var sw = window.bounds.getSouthWest(), ne = window.bounds.getNorthEast();
+   db_response = $.get("/bounties.json?"+
+     "swlat="+sw.lat()+
+    "&swlng="+sw.lng()+
+    "&nelat="+ne.lat()+
+    "&nelng="+ne.lng()).then(function(bounties){ 
      bounties.forEach(function(raw){
        // stringify bounty info from database
        var b = {};
@@ -175,11 +181,6 @@
            b[attr] = escapeHtml(raw[attr]) 
          }
        }; 
-
-       // do not draw this marker if it is outside the view bounds!
-       if (!window.bounds.contains(new google.maps.LatLng(b.lat, b.lng))) {
-         return 
-       };
 
        // do not draw this marker if it is pending review!
        if (b.hidden) { return };
