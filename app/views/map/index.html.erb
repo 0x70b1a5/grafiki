@@ -19,12 +19,6 @@
      return div.innerHTML;
    }
    
-   Array.prototype.remove = function(from, to) {
-     var rest = this.slice((to || from) + 1 || this.length);
-     this.length = from < 0 ? this.length + from : from;
-     return this.push.apply(this, rest);
-   };
-
    var map;
    var service;
    
@@ -145,21 +139,12 @@
           map.fitBounds(bounds);
         });
 
-/*
- - server side clusterer
-    - runs every idle
-    - gets coords of current view corners
-    - clusters markers, returns clusterflags 
- - infowindows:
-    - interior is a div, guid
-    - on open, set innerhtml via ajax?
-*/
+
+ window.markers = [];
 
  function drawMarkers(){
    // first, let the user know we are loading.
    $( "#botflashes" ).html(`<div class="flash load">loading bounties... </div>`);
-
-   window.markers = [];
 
    // iterate over full db query
    //    restrict to visible:
@@ -322,10 +307,10 @@
              ,strokeWeight: 1
              ,scale: 17
             }
+           ,cluster: true
          });
 
          clustermark.addListener('click', function(e){
-           markers.forEach(function(m) { m.setMap(null) });
            map.setCenter({
              lat: e.latLng.lat(),
              lng: e.latLng.lng()
@@ -371,12 +356,18 @@
  }
 
  function clearMarkers() {
-   if (window.markers) {
-     var l = window.markers.length || 0;
-     for(var i=0;i<l;i++) {
-       if (markers[i]) window.markers[i].setMap(null);
+   window.markers.forEach(function(m){
+     if (m) {
+       m.setMap(null);
+       delete m;
      }
-   } else { window.markers = []; }
+   });
+   var l = window.markers.length;
+   for (var i=0;i<l;i++){
+     if (!window.markers[i] || window.markers[i].cluster) { 
+       window.markers = window.markers.splice(0,i).concat(window.markers.splice(i,l));
+     }
+   };
  }
 
  <% if params[:id] %>
