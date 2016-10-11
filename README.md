@@ -1,7 +1,5 @@
 # Grafiki: a global map of public art
 
-http://grafiki.org/
-
 1. Pay artists for street art
   1. Upload art from anywhere in the world
   1. The artist who made the art can verify it is theirs.

@@ -1,5 +1,5 @@
 class BountiesController < ApplicationController
-  Stripe.api_key = "sk_live_RnAcOFZsGe36FGnJMRlhqsAb"
+  Stripe.api_key = ENV["SSK"]
 
   def index
     if params[:search]
