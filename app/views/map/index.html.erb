@@ -295,7 +295,7 @@
            ,label: {
               text: label
              ,color: "#dde"
-             ,fontFamily: "Roboto,sans-serif,custom-label-"+label
+             ,fontFamily: "Roboto,sans-serif"
              ,fontSize: "18px"
            }
            ,map: map
@@ -331,17 +331,7 @@
        marker.setMap(map);
      });
 
-     // hack-tastic multicharacter marker labels
-     window.setTimeout(function(){
-       var labels = document.querySelectorAll("[style*='custom-label']")
-       for (var i = 0; i < labels.length; i++) {
-         // Retrieve the custom labels and rewrite the tag content
-         var matches = labels[i].getAttribute('style').match(/custom-label-([0-9]+)/);
-         labels[i].innerHTML = matches[1];
-       }
-     }, 500); // TODO: solution that isn't time-based
-
-     // hack again for art icons because i haven't learned my lesson
+     // hack for art icons 
      window.setTimeout(function(){
        var labels = document.querySelectorAll("[style*='art']")
        for (var i = 0; i < labels.length; i++) {
