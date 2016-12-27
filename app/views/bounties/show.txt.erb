@@ -33,7 +33,7 @@
 </div>
 
 <div style="margin:5px;display:flex; align-items: center; justify-content: center">
-  <%= link_to "/escrows/new/bounty_id?=" + @bounty.id.to_s do %>
+  <%= link_to "/escrows/new/?bounty_id=" + @bounty.id.to_s do %>
     <div class="in-float" id="ab">tip this artist</div>
   <% end %>
   <% # if @bounty.address != "1BitcoinAddressNotCurrentlyKnown" %>
