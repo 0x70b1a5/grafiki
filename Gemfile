@@ -8,7 +8,6 @@ gem 'omniauth'
 gem 'rufus-scheduler'
 gem 'mailgun-ruby'
 gem 'mailgun_rails'
-gem "react_on_rails", "~> 6"
 
 # for payments
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
