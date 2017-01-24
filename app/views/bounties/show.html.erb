@@ -1,4 +1,10 @@
-<%= @bounty.lat %> <%= @bounty.lng %>
-
-<%= link_to 'edit', edit_bounty_path(@bounty) %> | 
-<%= link_to 'back', bounties_path %>
+<%= react_component("Bounty", {
+  title: @bounty.title,
+  artist: @bounty.artist,
+  description: @bounty.description,
+  pic: @bounty.pic,
+  amount: @bounty.amount,
+  patron: @bounty.patron,
+  lat: @bounty.lat,
+  lng: @bounty.lng
+  }) %>

@@ -6,9 +6,9 @@ class BountiesController < ApplicationController
       @bounties = Bounty.search(params[:search])
     elsif (params[:swlat] and params[:swlng] and params[:nelat] and params[:nelng])
       @bounties = Bounty.where(
-        "lat > #{params[:swlat]} AND 
-         lat < #{params[:nelat]} AND 
-         lng < #{params[:nelng]} AND 
+        "lat > #{params[:swlat]} AND
+         lat < #{params[:nelat]} AND
+         lng < #{params[:nelng]} AND
          lng > #{params[:swlng]}"
       )
     else
@@ -17,7 +17,7 @@ class BountiesController < ApplicationController
 
     respond_to do |format|
       format.json { render :json => @bounties.to_json }
-      format.html 
+      format.html
     end
   end
 
@@ -35,11 +35,11 @@ class BountiesController < ApplicationController
     if @bounty.hidden# don't show if pending review
       flash[:notice] = "this marker is pending review"
       redirect_to root_path
-    else 
+    else
       respond_to do |format|
         format.txt { render :txt => @bounty.to_json }
-        format.html { redirect_to root_path(id: params[:id]) }
         format.json { render :json => @bounty.to_json }
+        format.html #{ redirect_to root_path(id: params[:id]) }
       end
     end
   end
@@ -137,7 +137,7 @@ class BountiesController < ApplicationController
           :owner_token =>params[:stripeToken],
           :owner_email =>params[:stripeEmail]
         })
-        if @bounty.save 
+        if @bounty.save
           redirect_to @bounty
         else
           flash[:error] = "escrow could not be created"
@@ -174,7 +174,7 @@ class BountiesController < ApplicationController
     @bounty = Bounty.find(params[:id])
     unless (user_signed_in? and @bounty.user == current_user)
       flash[:error] = "you do not own this bounty"
-      redirect_to "/users/sign_in" 
+      redirect_to "/users/sign_in"
     end
 
     if params[:award]
@@ -198,7 +198,7 @@ class BountiesController < ApplicationController
     else
       if @bounty.update(bounty_params)
         redirect_to @bounty
-      else 
+      else
         redirect_to edit_bounties_path
       end
     end
@@ -246,7 +246,7 @@ class BountiesController < ApplicationController
         else
           @escrow.delete
           flash[:error] = "error filling bounty"
-        end 
+        end
       else
         @escrow.delete
         flash[:error] = "error filling bounty"
@@ -285,7 +285,7 @@ class BountiesController < ApplicationController
   def destroy
     @bounty = Bounty.find(params[:id])
     unless (user_signed_in? and @bounty.user == current_user)
-      redirect_to "/users/sign_in" 
+      redirect_to "/users/sign_in"
     end
 
     @bounty.destroy
@@ -295,7 +295,7 @@ class BountiesController < ApplicationController
 
   private
     def bounty_params
-      stripe_params 
+      stripe_params
       params.require(:bounty).permit(:title,:lat,:lng,
         :amount,:description,:patron)
     end
