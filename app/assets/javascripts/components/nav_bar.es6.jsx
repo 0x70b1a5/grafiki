@@ -12,6 +12,7 @@ class NavBar extends React.Component {
         <Button url={"/about"} text={"about"} theme={"light"} />
         <Button url={"/users/sign_in"} text={"login"} theme={"light"} />
         <Button url={"/users/sign_up"} text={"register"} theme={"dark"} />
+        {this.props.children}
       </div>
     );
   }

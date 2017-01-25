@@ -6,24 +6,29 @@ class Bounty extends React.Component {
     //   theme={"light"} />
 
     // if we got the bounty as a parameter, use it exclusively
+    var bounty = this.props.bounty || this.props
 
     return (
-      <div className="bounty-component">
-        <div className="bc-img"><img src={this.props.pic} /></div>
+      <div className="bounty-component" key={bounty.id}>
+        <BountyImage img={bounty.pic} maxw={"500px"} maxh={"300px"}/>
         <div className="bc-info">
-          <h2>{this.props.title}</h2>
+          <h2>{bounty.title}</h2>
           <div><pre>Location: {
-              [this.props.lat, this.props.lng].map(
+              [bounty.lat, bounty.lng].map(
                 (coord) => {return String(coord).slice(0,8)}
               ).join(", ")
              }</pre></div>
-           <div>{this.props.description || "No description given."}</div>
-          <div>Artist: {this.props.artist}</div>
-          <div>Commissioned by: {this.props.patron || "unknown"}</div>
+           <div>{bounty.description || "No description given."}</div>
+          <div>Artist: {bounty.artist}</div>
+          <div>Commissioned by: {bounty.patron || "unknown"}</div>
           <Button
             text={"Donate to this artist"}
-            url={"/escrows/new/?bounty_id="+this.props.id}
+            url={"/escrows/new/?bounty_id="+bounty.id}
             theme={"dark"} />
+          <Button
+            text={"View on map"}
+            url={"/map/?id="+bounty.id}
+            theme={"light"} />
         </div>
       </div>
     );

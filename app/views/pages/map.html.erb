@@ -1,146 +1,137 @@
-<% content_for :satbutts do %>
- <div class="nav-button in-float" id="map-nav">
-   <div id="road">road</div>
-   <div id="sat">sat</div>
-   <div id="zumin"><i class="fa fa-search-plus" aria-hidden="true"></i></div>
-   <div id="zumout"><i class="fa fa-search-minus" aria-hidden="true"></i></div>
- </div>
-<% end %>
-<% content_for :map do %>
- <div class="in-float" id="pac-box" style="z-index:2">
-   <input id="pac-input" class="searchbar" type="text" placeholder="Find bounties near...">
- </div>
- <div style="z-index:1" id="map">this a map</div>
+<!-- TODO map controls? -->
+<input id="pac-input" class="searchbar" type="text" placeholder="Find bounties near...">
+<div id="map">this a map</div>
 
- <script>
-   function escapeHtml(str) {
-     var div = document.createElement('div');
-     div.appendChild(document.createTextNode(str));
-     return div.innerHTML;
-   }
-   
-   var map;
-   var service;
-   
-   // SET UP THE HUGE MAPS:
-   function initMap() {
-     var cen = {lat: 37.8321882116, lng: -122.221084724}
-     map = new google.maps.Map(document.getElementById('map'), {
-       zoom: 10,
-       center: cen,
-       disableDefaultUI: true,
-       styles: [
-         {
-           stylers: [
-             { invert_lightness: true },
-             { saturation: -100 },
-             { lightness:  -30 }
-           ]
-         },
-         {
-           featureType: 'poi.park',
-           elementType: 'labels',
-           stylers: [
-             { visibility: 'off' }
-           ]
-         },
-         {
-           featureType: 'all',
-           elementType: 'labels.text.stroke',
-           stylers: [
-             { lightness: 0 }
-           ]
-         },
-         {
-           featureType: 'all',
-           elementType: 'labels.text.fill',
-           stylers: [
-             { lightness: 1 }
-           ]
-         },
-         {
-           featureType: 'road',
-           elementType: 'labels',
-           stylers: [
-             { visibility: 'off' }
-           ]
-         },
-         {
-           featureType: 'water',
-           elementType: 'geometry',
-           stylers: [
-             { lightness: -90 }
-           ]
-         },
-         {
-           featureType: 'landscape.natural.terrain',
-           elementType: 'geometry',
-           stylers: [
-             { visibility: 'off' }
-           ]
-         }
-       ]
-     });	
+<script>
+ function escapeHtml(str) {
+   var div = document.createElement('div');
+   div.appendChild(document.createTextNode(str));
+   return div.innerHTML;
+ }
 
-       /*
-       *  SET UP SEARCH BOX
-       */
-       // Create the search box and link it to the UI element.
-        var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.SearchBox(input);
+ var map;
+ var service;
 
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
+ // SET UP THE HUGE MAPS:
+ function initMap() {
+   console.log("initMap")
+   var cen = {lat: 37.8321882116, lng: -122.221084724}
+   map = new google.maps.Map(document.getElementById('map'), {
+     zoom: 10,
+     center: cen,
+     disableDefaultUI: true,
+     styles: [
+       {
+         stylers: [
+           { invert_lightness: true },
+           { saturation: -100 },
+           { lightness:  -30 }
+         ]
+       },
+       {
+         featureType: 'poi.park',
+         elementType: 'labels',
+         stylers: [
+           { visibility: 'off' }
+         ]
+       },
+       {
+         featureType: 'all',
+         elementType: 'labels.text.stroke',
+         stylers: [
+           { lightness: 0 }
+         ]
+       },
+       {
+         featureType: 'all',
+         elementType: 'labels.text.fill',
+         stylers: [
+           { lightness: 1 }
+         ]
+       },
+       {
+         featureType: 'road',
+         elementType: 'labels',
+         stylers: [
+           { visibility: 'off' }
+         ]
+       },
+       {
+         featureType: 'water',
+         elementType: 'geometry',
+         stylers: [
+           { lightness: -90 }
+         ]
+       },
+       {
+         featureType: 'landscape.natural.terrain',
+         elementType: 'geometry',
+         stylers: [
+           { visibility: 'off' }
+         ]
+       }
+     ]
+   });
+
+     /*
+     *  SET UP SEARCH BOX
+     */
+     // Create the search box and link it to the UI element.
+      var input = document.getElementById('pac-input');
+      var searchBox = new google.maps.places.SearchBox(input);
+
+      // Bias the SearchBox results towards current map's viewport.
+      map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      var searchmarkers = [];
+      // Listen for the event fired when the user selects a prediction and retrieve
+      // more details for that place.
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+
+        // Clear out the old markers.
+        searchmarkers.forEach(function(marker) {
+          marker.setMap(null);
         });
+        searchmarkers = [];
 
-        var searchmarkers = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        searchBox.addListener('places_changed', function() {
-          var places = searchBox.getPlaces();
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
 
-          if (places.length == 0) {
-            return;
+          // Create a marker for each place.
+          searchmarkers.push(new google.maps.Marker({
+            map: map,
+            icon: icon,
+            title: place.name,
+            position: place.geometry.location
+          }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
           }
-
-          // Clear out the old markers.
-          searchmarkers.forEach(function(marker) {
-            marker.setMap(null);
-          });
-          searchmarkers = [];
-
-          // For each place, get the icon, name and location.
-          var bounds = new google.maps.LatLngBounds();
-          places.forEach(function(place) {
-            var icon = {
-              url: place.icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            searchmarkers.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              title: place.name,
-              position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
         });
+        map.fitBounds(bounds);
+      });
 
 
- window.markers = [];
+window.markers = [];
 
  function drawMarkers(){
    // first, let the user know we are loading.
@@ -153,19 +144,19 @@
      "swlat="+sw.lat()+
     "&swlng="+sw.lng()+
     "&nelat="+ne.lat()+
-    "&nelng="+ne.lng()).then(function(bounties){ 
+    "&nelng="+ne.lng()).then(function(bounties){
      bounties.forEach(function(raw){
        // stringify bounty info from database
        var b = {};
-       for (attr in raw) { 
-         if (attr=="lat" || attr=="lng" || attr=="amount" || attr=="id") { 
+       for (attr in raw) {
+         if (attr=="lat" || attr=="lng" || attr=="amount" || attr=="id") {
            b[attr] = Number(raw[attr]);
-           continue 
+           continue
          };
          if (typeof(raw[attr]) == "string") {
-           b[attr] = escapeHtml(raw[attr]) 
+           b[attr] = escapeHtml(raw[attr])
          }
-       }; 
+       };
 
        // do not draw this marker if it is pending review!
        if (b.hidden) { return };
@@ -181,13 +172,13 @@
         }
         ,icon: {
            path: google.maps.SymbolPath.CIRCLE
-          ,fillColor:   (function(){ return b.artist ? "#0bb" : "#0d0" })() 
+          ,fillColor:   (function(){ return b.artist ? "#0bb" : "#0d0" })()
           ,fillOpacity: 1
-          ,strokeColor: (function(){ return b.artist ? "#001" : "#121" })() 
+          ,strokeColor: (function(){ return b.artist ? "#001" : "#121" })()
           ,strokeWeight: 1
           ,scale: 15
          }
-       }); 
+       });
 
        /* set up the info window shell w/guid */
        var opts = {
@@ -215,7 +206,7 @@
            info.open(map, marker);
            marker.open = true;
            window.infosOpen = true;
-           $.get("/bounties/"+b.id+".txt").then(function(rendered){ 
+           $.get("/bounties/"+b.id+".txt").then(function(rendered){
              var info_div = $( "#marker"+b.id );
              info_div.html( rendered );
              if (info_div.html() != rendered) info_div.html( rendered );
@@ -267,10 +258,10 @@
              nelng = sw.lng()+(j+1)*vertiStep;
 
          var miniSW = new google.maps.LatLng(
-             { lat: swlat, 
+             { lat: swlat,
                lng: swlng }),
              miniNE = new google.maps.LatLng(
-             { lat: nelat, 
+             { lat: nelat,
                lng: nelng });
 
          var miniBounds = new google.maps.LatLngBounds(miniSW, miniNE);
@@ -278,7 +269,7 @@
          var cluster = [];
          for (var k=0;k<markers.length;k++){
            if (markers[k] && miniBounds.contains(markers[k].getPosition())) {
-             cluster.push(markers[k]); 
+             cluster.push(markers[k]);
              if (cluster.length > 1) delete markers[k];
            }
          };
@@ -326,12 +317,12 @@
      }
 
      // draw all markers
-     markers.forEach(function(marker){ 
+     markers.forEach(function(marker){
        if (!marker) { return }; // undefined markers not drawn
        marker.setMap(map);
      });
 
-     // hack for art icons 
+     // hack for art icons
      window.setTimeout(function(){
        var labels = document.querySelectorAll("[style*='art']")
        for (var i = 0; i < labels.length; i++) {
@@ -343,7 +334,7 @@
      // remove loading message; restore map nav
      $( "#botflashes" ).html("");
    });
- }
+}
 
  function clearMarkers() {
    window.markers.forEach(function(m){
@@ -354,19 +345,19 @@
    });
    var l = window.markers.length;
    for (var i=0;i<l;i++){
-     if (!window.markers[i] || window.markers[i].cluster) { 
+     if (!window.markers[i] || window.markers[i].cluster) {
        window.markers = window.markers.splice(0,i).concat(window.markers.splice(i,l));
      }
    };
  }
+ //
+ // <% if params[:id] %>
+ //   $.get("/bounties/<%= params[:id] %>.json").then(function(ub){
+ //     map.setCenter({lat: ub.lat, lng: ub.lng});
+ //     map.setZoom(20);
+ //   });
+ // <% end %>
 
- <% if params[:id] %>
-   $.get("/bounties/<%= params[:id] %>.json").then(function(ub){  
-     map.setCenter({lat: ub.lat, lng: ub.lng});
-     map.setZoom(20);
-   });
- <% end %>
-      
  google.maps.event.addListener(map, 'bounds_changed', function() {
    window.bounds = map.getBounds();
  });
@@ -376,48 +367,9 @@
    clearMarkers();
    drawMarkers();
  });
-
- // navigation buttons
- $(document).ready(function(){
-   $( "#pac-input" ).css( "class", "searchbar" );
-   //$( "#pac-input" ).focus();
-   $( "#road" ).click(function() {
-     map.setOptions({ mapTypeId: google.maps.MapTypeId.ROADMAP });
-   });
-   $( "#sat" ).click(function() {
-     map.setOptions({ mapTypeId: google.maps.MapTypeId.SATELLITE });
-   });
-   $( "#zumin" ).click(function() {
-     map.setZoom(map.getZoom()+2);
-   });
-   $( "#zumout" ).click(function() {
-     map.setZoom(map.getZoom()-2);
-   });
- });
 }
 
-(function() {  
-    var d = document, s = d.createElement('script');
-    s.src = '//grafiki.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-})();
-
-/* * * Disqus Reset Function * * */
-var reset = function (newIdentifier, newUrl, newTitle, newLanguage) {
-  DISQUS.reset({
-    reload: true,
-    config: function () {
-      this.page.identifier = newIdentifier;
-      this.page.url = newUrl;
-      this.page.title = newTitle;
-      this.language = newLanguage;
-    }
-  });
-};
- </script>
+</script>
 
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyAYj7nHWwgJgu6r8GVUnbsPPQ0cvmVPunM&callback=initMap&libraries=places"></script>
 <script type="text/javascript" src="//rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox.js"></script>
-
-<% end %>

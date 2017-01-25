@@ -4,82 +4,16 @@
     <title>grafiki<%= yield :title %></title>
     <meta name='viewport' content='width=550'>
     <%= csrf_meta_tags %>
-
     <%= favicon_link_tag 'assets/images/favicon.svg' %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="https://use.fontawesome.com/0abae758ff.js"></script>
   </head>
-
   <body>
-
- <div id="nav-menu">
-   <%= link_to root_path do %>
-     <div id="hed" class="in-float"><%= image_tag "textlogo.svg", style: "height:2rem" %></div>
-   <% end %>
-
-   <%= yield :titlebox %>
-
-   <%= link_to new_bounty_path do %><div class="nav-button in-float"><i class="fa fa-plus" id="fl" aria-hidden="true"></i>post a bounty</div><% end %>
-   <%= link_to bounties_path do %><div class="nav-button in-float"><i class="fa fa-usd" id="fl" aria-hidden="true"></i> fill a bounty</div><% end %>
-   <%= link_to upload_bounties_path do %><div class="nav-button in-float"><i class="fa fa-plus-square" id="fl" aria-hidden="true"></i> post art</div><% end %>
-   <%= link_to filled_bounties_path do %><div class="nav-button in-float"><i class="fa fa-map-o" id="fl" aria-hidden="true"></i> browse art</div><% end %>
-   <%= link_to pages_about_path do%><div id="ab" class="nav-button in-float"><i class="fa fa-question" id="fl" aria-hidden="true"></i> about grafiki</div><%end%>
-   <% if request.url != root_url %><a id="credshell"><div id="cred" class="nav-button in-float">view backdrop on map</div></a><% end %>
-   <%= yield :satbutts %>
-   <% if not user_signed_in? %>
-     <%= link_to new_user_registration_path do %><div id="signup-button" class="nav-button in-float">register</div><% end %>
-     <%= link_to new_user_session_path do %><div id="login-button" class="nav-button in-float">login</div><% end %>
-   <% else %>
-     <div id="signup-button" class="in-float"
-       style="right:7rem"><%= current_user.email.split("@")[0] %></div>
-     <%= link_to "sign out", destroy_user_session_path, method: :delete, class: "in-float",
-       id: "signout-button", style: "text-decoration: none; width:initial" %>
-   <% end %>
- </div>
-    <% if flash %>
-    <div id="flashes">
-    <% flash.each do |name,msg| %>
-    <%= content_tag :div, msg, class: "flash "+name %>
-    <% end -%>
+    <%= react_component("NavBar") %>
+    <div id="page">
+      <%= yield %>
     </div>
-    <%end%>
-
-    <%= yield :map %>
-    <div id="page"><%= yield %></div>
-    <div style="
-    position: absolute;
-    text-align: center;
-    top: 5rem;
-    z-index: 5;
-    left: 40%;
-  " id="botflashes"></div>
-
-    <script type="text/javascript">
-      $(document).ready(function(){
-        setTimeout(function(){
-          $('.flash').remove();
-        }, 5000);
-      });
-    </script>
-
-    <%# set a random bounty as the background image %>
-    <% b=Bounty.where({:id=>(Bounty.all.length*rand).to_i}) %>
-    <% if b.exists? %>
-      <div id="bgimg" style="
-        background: url(<%= b.first['pic'] %>) center center no-repeat;
-        background-size: cover;
-      "></div>
-
-      <%# link to the bounty in the navbar %>
-      <script>
-        $(document).ready(function(){$( "#credshell" ).attr( 
-          "href","/bounties/<%= b.first.id %>"
-        )});
-      </script>
-    <% end %>
-
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57e96a6c22459337#async=1"></script>
   </body>
 </html>

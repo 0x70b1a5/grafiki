@@ -1,11 +1,1 @@
-<%= react_component("Bounty", {
-  id: @bounty.id,
-  title: @bounty.title,
-  artist: @bounty.artist,
-  description: @bounty.description,
-  pic: @bounty.pic,
-  amount: @bounty.amount,
-  patron: @bounty.patron,
-  lat: @bounty.lat,
-  lng: @bounty.lng
-  }) %>
+<%= react_component("Bounty", @bounty.component_hash) %>

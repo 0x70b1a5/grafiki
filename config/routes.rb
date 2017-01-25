@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pages/map'
   get 'pages/about'
 
   resources :candidates
