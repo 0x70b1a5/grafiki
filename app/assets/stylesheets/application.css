@@ -32,7 +32,7 @@ this is how to do mobile, by screen resolution:
   position: absolute;
   z-index: 0;
   width: 100%;
-  height: 90%;
+  height: 100%;
 }
 
 #bgimg {
@@ -65,14 +65,27 @@ h1, h2, h3, h4, h5, h6 {
   padding-left: 1em;
 }
 
+.nav {
+  display: flex;
+}
 a{
   text-decoration: none;
   color: inherit;
+}
+.nav a{
+  flex-grow: 1;
 }
 .button {
   border-right: 1px solid #aaa;
   padding: 0.5em;
   display: inline-block;
+}
+.nav .button{
+  vertical-align: top;
+  height: 2em;
+  line-height: 2em;
+  display: block;
+  text-align: center;
 }
 .dark {
   background: #334;
@@ -81,11 +94,6 @@ a{
 .light {
   background: #eef;
   color: #001;
-}
-.nav .button{
-  vertical-align: top;
-  height: 2em;
-  line-height: 2em;
 }
 #pac-input {
   position: absolute;
