@@ -5,17 +5,19 @@ class Bounty extends React.Component {
     //   url={"/bounties/fill/?id="+this.props.id}
     //   theme={"light"} />
 
+    // if we got the bounty as a parameter, use it exclusively
+
     return (
       <div className="bounty-component">
         <div className="bc-img"><img src={this.props.pic} /></div>
         <div className="bc-info">
-          <div><em>{this.props.title}</em></div>
+          <h2>{this.props.title}</h2>
           <div><pre>Location: {
               [this.props.lat, this.props.lng].map(
                 (coord) => {return String(coord).slice(0,8)}
               ).join(", ")
              }</pre></div>
-          <div>Description: {this.props.description || "none"}</div>
+           <div>{this.props.description || "No description given."}</div>
           <div>Artist: {this.props.artist}</div>
           <div>Commissioned by: {this.props.patron || "unknown"}</div>
           <Button

@@ -1,9 +1,12 @@
 class Button extends React.Component {
   render () {
     return (
-      <div className={this.props.theme+" button"}>
-        <a href={this.props.url}>{this.props.text}</a>
-      </div>
+      <a href={this.props.url}>
+        <div className={this.props.theme+" button"}>
+          {this.props.text}
+          {this.props.children}
+        </div>
+      </a>
     );
   }
 }
