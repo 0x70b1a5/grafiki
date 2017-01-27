@@ -9,7 +9,7 @@ class NavBar extends React.Component {
     return (
       <div className="nav">
         <Button theme="dark" url="/">
-          <img id="logo" src="/assets/textlogo.svg"/>
+          <img id="logo" src="/assets/images/textlogo.svg"/>
         </Button>
         <Button url={"/bounties/new"} text={"post a bounty"} theme={"light"} />
         <Button url={"/bounties"} text={"browse bounties"} theme={"light"} />
