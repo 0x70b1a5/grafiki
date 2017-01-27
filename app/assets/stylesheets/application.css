@@ -38,6 +38,10 @@ html, body {
   height: 100%;
 }
 
+.marker {
+display: inline-block;
+}
+
 #bgimg {
   background-size: cover;
   height: 100vh;

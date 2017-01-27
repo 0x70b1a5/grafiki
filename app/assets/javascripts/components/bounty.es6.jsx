@@ -3,7 +3,7 @@ class Bounty extends React.Component {
     // if we got the bounty as a parameter, use it
     var bounty = this.props.bounty || this.props
     var payText = bounty.pic == "" ?
-      "Fill this bounty"
+      "Raise this bounty"
       : "Donate to this artist"
 
     return (

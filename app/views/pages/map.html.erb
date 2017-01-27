@@ -14,7 +14,6 @@
 
  // SET UP THE HUGE MAPS:
  function initMap() {
-   console.log("initMap")
    var cen = {lat: 37.8321882116, lng: -122.221084724}
    map = new google.maps.Map(document.getElementById('map'), {
      zoom: 10,
@@ -182,7 +181,7 @@
 
        /* set up the info window shell w/guid */
        var opts = {
-         content: "<div id='marker"+b.id+"'></div>"
+         content: "<div class='marker' id='marker"+b.id+"'></div>"
          ,closeBoxURL: ""
        };
 
@@ -198,6 +197,7 @@
            window.infosOpen = true;
            $.get("/bounties/"+b.id+".txt").then(function(rendered){
              var info_div = $( "#marker"+b.id );
+             console.log(rendered);
              info_div.html( rendered );
              if (info_div.html() != rendered) info_div.html( rendered );
            });

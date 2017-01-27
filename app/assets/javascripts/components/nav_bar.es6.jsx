@@ -1,5 +1,11 @@
 class NavBar extends React.Component {
   render () {
+    var login_sensitive_1 = this.props.username ?
+      <Button text={this.props.username} theme={"dark"} />
+      : <Button url={"/users/sign_in"} text={"Login"} theme={"light"} />
+    var login_sensitive_2 = this.props.username ?
+      <Button url={"/logout"} text={"Sign out"} theme={"light"} />
+      : <Button url={"/users/sign_up"} text={"Register"} theme={"dark"} />
     return (
       <div className="nav">
         <Button theme="dark" url="/">
@@ -10,8 +16,8 @@ class NavBar extends React.Component {
         <Button url={"/bounties/upload"} text={"post art"} theme={"light"} />
         <Button url={"/bounties/filled"} text={"browse art"} theme={"light"} />
         <Button url={"/pages/about"} text={"about"} theme={"light"} />
-        <Button url={"/users/sign_in"} text={"login"} theme={"light"} />
-        <Button url={"/users/sign_up"} text={"register"} theme={"dark"} />
+        {login_sensitive_1}
+        {login_sensitive_2}
         {this.props.children}
       </div>
     );
