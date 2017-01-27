@@ -1,12 +1,10 @@
 class Bounty extends React.Component {
   render () {
-    // var fillBtn = <Button
-    //   text={"Fill this bounty"}
-    //   url={"/bounties/fill/?id="+this.props.id}
-    //   theme={"light"} />
-
-    // if we got the bounty as a parameter, use it exclusively
+    // if we got the bounty as a parameter, use it
     var bounty = this.props.bounty || this.props
+    var payText = bounty.pic == "" ?
+      "Fill this bounty"
+      : "Donate to this artist"
 
     return (
       <div className="bounty-component" key={bounty.id}>
@@ -21,14 +19,17 @@ class Bounty extends React.Component {
            <div>{bounty.description || "No description given."}</div>
           <div>Artist: {bounty.artist}</div>
           <div>Commissioned by: {bounty.patron || "unknown"}</div>
-          <Button
-            text={"Donate to this artist"}
-            url={"/escrows/new/?bounty_id="+bounty.id}
-            theme={"dark"} />
-          <Button
-            text={"View on map"}
-            url={"/map/?id="+bounty.id}
-            theme={"light"} />
+          <p></p>
+          <div>
+            <Button
+              text={payText}
+              url={"/escrows/new/?bounty_id="+bounty.id}
+              theme={"dark"} />
+            <Button
+              text={"View on map"}
+              url={"/pages/map/?id="+bounty.id}
+              theme={"dark"} />
+          </div>
         </div>
       </div>
     );

@@ -18,14 +18,17 @@ html, body {
   padding: 0;
   font-family: Roboto, sans-serif;
   background-color: transparent;
+  overflow-x: hidden;
 }
 
-/*
-this is how to do mobile, by screen resolution:
-@media (max-width: 1200px) {}
-*/
 #logo {
   height: 2rem;
+}
+
+#page{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 #map {
@@ -88,15 +91,52 @@ a{
   text-align: center;
 }
 .dark {
-  background: #334;
-  color: #eee;
+  background: #334 !important;
+  color: #eee !important;
 }
 .light {
-  background: #eef;
-  color: #001;
+  background: #eef !important;
+  color: #001 !important;
 }
 #pac-input {
   position: absolute;
   z-index: 1;
+  width: 300px;
+}
+.normalize-input{
   height: 2em;
+  margin: 1em;
+  padding-left: 1em;
+  font-size: 1em;
+}
+.paginator{
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+}
+.links{
+  display: flex;
+}
+input[type="submit"]{
+  background: inherit;
+  border: inherit;
+  font-family: 'Roboto';
+  font-size: 1em;
+}
+#bgimg{
+  width: 100vw;
+  height: 100vw;
+  position: absolute;
+  top: 0;
+  z-index: -2;
+}
+
+#opac {
+  background: radial-gradient(black,grey);
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+  z-index: -1;
 }

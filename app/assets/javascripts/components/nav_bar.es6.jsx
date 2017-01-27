@@ -9,7 +9,7 @@ class NavBar extends React.Component {
         <Button url={"/bounties"} text={"browse bounties"} theme={"light"} />
         <Button url={"/bounties/upload"} text={"post art"} theme={"light"} />
         <Button url={"/bounties/filled"} text={"browse art"} theme={"light"} />
-        <Button url={"/about"} text={"about"} theme={"light"} />
+        <Button url={"/pages/about"} text={"about"} theme={"light"} />
         <Button url={"/users/sign_in"} text={"login"} theme={"light"} />
         <Button url={"/users/sign_up"} text={"register"} theme={"dark"} />
         {this.props.children}

@@ -1,6 +1,6 @@
 <!-- TODO map controls? -->
-<input id="pac-input" class="searchbar" type="text" placeholder="Find bounties near...">
-<div id="map">this a map</div>
+<input id="pac-input" class="normalize-input" type="text" placeholder="Find bounties near...">
+<div id="map">Loading map...</div>
 
 <script>
  function escapeHtml(str) {
@@ -73,65 +73,65 @@
      ]
    });
 
-     /*
-     *  SET UP SEARCH BOX
-     */
-     // Create the search box and link it to the UI element.
-      var input = document.getElementById('pac-input');
-      var searchBox = new google.maps.places.SearchBox(input);
+   /*
+   *  SET UP SEARCH BOX
+   */
+   // Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
 
-      // Bias the SearchBox results towards current map's viewport.
-      map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-      });
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
 
-      var searchmarkers = [];
-      // Listen for the event fired when the user selects a prediction and retrieve
-      // more details for that place.
-      searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
+  var searchmarkers = [];
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
 
-        if (places.length == 0) {
-          return;
-        }
+    if (places.length == 0) {
+      return;
+    }
 
-        // Clear out the old markers.
-        searchmarkers.forEach(function(marker) {
-          marker.setMap(null);
-        });
-        searchmarkers = [];
+    // Clear out the old markers.
+    searchmarkers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    searchmarkers = [];
 
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
-          var icon = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-          };
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
 
-          // Create a marker for each place.
-          searchmarkers.push(new google.maps.Marker({
-            map: map,
-            icon: icon,
-            title: place.name,
-            position: place.geometry.location
-          }));
+      // Create a marker for each place.
+      // searchmarkers.push(new google.maps.Marker({
+      //   map: map,
+      //   icon: icon,
+      //   title: place.name,
+      //   position: place.geometry.location
+      // }));
 
-          if (place.geometry.viewport) {
-            // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport);
-          } else {
-            bounds.extend(place.geometry.location);
-          }
-        });
-        map.fitBounds(bounds);
-      });
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
 
 
-window.markers = [];
+  window.markers = [];
 
  function drawMarkers(){
    // first, let the user know we are loading.
@@ -182,18 +182,8 @@ window.markers = [];
 
        /* set up the info window shell w/guid */
        var opts = {
-         maxWidth: 400
-         ,content: "<div class='ib' id='marker"+b.id+"'></div>"
+         content: "<div id='marker"+b.id+"'></div>"
          ,closeBoxURL: ""
-         ,boxStyle: {
-           width: "400px"
-           ,color: "#fff"
-           ,background: "#010101"
-           ,border: "1px solid #686868"
-           ,"border-radius": "3px"
-           ,"font-size": "1rem"
-           ,"box-shadow": "1px 1px 3px #000"
-         }
        };
 
        var info = new InfoBox(opts);
@@ -210,8 +200,6 @@ window.markers = [];
              var info_div = $( "#marker"+b.id );
              info_div.html( rendered );
              if (info_div.html() != rendered) info_div.html( rendered );
-             addthis.toolbox('.addthis_toolbox'); // render share buttons
-             reset(String(b.id),'http://grafiki.org/bounties/'+b.id,b.title+' on grafiki', 'en');
            });
          } else {
            info.close();
@@ -350,13 +338,13 @@ window.markers = [];
      }
    };
  }
- //
- // <% if params[:id] %>
- //   $.get("/bounties/<%= params[:id] %>.json").then(function(ub){
- //     map.setCenter({lat: ub.lat, lng: ub.lng});
- //     map.setZoom(20);
- //   });
- // <% end %>
+
+ <% if params[:id] %>
+   $.get("/bounties/<%= params[:id] %>.json").then(function(ub){
+     map.setCenter({lat: ub.lat, lng: ub.lng});
+     map.setZoom(20);
+   });
+ <% end %>
 
  google.maps.event.addListener(map, 'bounds_changed', function() {
    window.bounds = map.getBounds();

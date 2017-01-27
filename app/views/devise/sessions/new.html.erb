@@ -1,26 +1,15 @@
 <%= content_for :title do %> | sign in<% end %>
-<%= content_for :titlebox do %><div id="hed" class="in-float">sign in</div><% end %>
-<div class="in-float" style="display:table">
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="signupfield">
-    <p>email</p>
-    <p><%= f.email_field :email, autofocus: true %></p>
-
-    <p>password</p>
-    <p><%= f.password_field :password, autocomplete: "off" %></p>
-
-  <% if devise_mapping.rememberable? -%>
-      <p><%= f.check_box :remember_me %>
-      remember me</p>
-  <div class="actions">
-    <p><%= f.submit "sign in" %></p>
+  <div class="button light">
+    <h2> Log in to Grafiki </h2>
+    <p><%= f.email_field :email, autofocus: true, placeholder: "Email", class: "normalize-input" %></p>
+    <p><%= f.password_field :password, autocomplete: "off", placeholder: "Password", class: "normalize-input" %></p>
+    <% if devise_mapping.rememberable? -%>
+        <p><%= f.submit "Sign in", :class => "dark button" %> <%= f.check_box :remember_me %> Remember me</p>
+    <% end -%>
   </div>
-  <% end -%>
-  </div>
-
 <% end %>
 
-  <div class='links'>
-    <%= render "devise/shared/links" %>
-  </div>
+<div class='links'>
+  <%= render "devise/shared/links" %>
 </div>

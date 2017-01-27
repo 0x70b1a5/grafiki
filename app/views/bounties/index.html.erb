@@ -1,33 +1,19 @@
 <%= content_for :title do %> | bounties<% end %>
-<div class="box" style="width:100%; margin: 0 0 1rem 0">
-  <%= form_tag bounties_path, :method => 'get' do %>
-    <%= text_field_tag :search, params[:search],:placeholder => ' search in title, description...' , :class => 'in-float' %>
-    <%= submit_tag "search", :name => nil, :class => 'in-float', :id => 'ab', :style => "padding: 0px 1rem; border: 1px solid #eef;" %>
-  <% end %>
-</div>
-
-<%=
-paginator = params[:start].to_i || 0
+<% paginator = params[:start].to_i || 0
 limit = 20
-react_component("BountiesList", {
-  bounties: @bounties.where("id>? AND id<?", paginator, limit+paginator)})
-%>
+if @bounties.is_a? Array
+  bounties = @bounties
+else
+  bounties = @bounties.where("id>? AND id<? AND pic==?",
+    paginator,
+    limit+paginator,
+    "")
+end %>
 
-<div style="display:flex;justify-content:space-between;width:100%" class="box">
-<%=
-  if paginator >= limit
-    react_component("Button",
-      {
-        text: "< previous #{limit} bounties",
-        url: "/bounties/?start=#{paginator-limit}",
-        theme: "light"
-      })
-  end
-  react_component("Button",
-    {
-      text: "next #{limit} bounties >",
-      url: "/bounties/?start=#{paginator+limit}",
-      theme: "light"
-    })
-%>
-</div>
+<%= react_component("BountyIndexPage", {
+  bounties: bounties,
+  items: "bounties",
+  route: "/bounties",
+  paginator: paginator,
+  limit: limit
+  }) %>

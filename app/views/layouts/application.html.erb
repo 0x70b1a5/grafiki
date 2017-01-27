@@ -14,6 +14,14 @@
     <%= react_component("NavBar") %>
     <div id="page">
       <%= yield %>
+      <% b=Bounty.where({:id=>(Bounty.all.length*rand).to_i}) %>
+      <% if b.exists? %>
+        <div id="opac"></div>
+        <div id="bgimg" style="
+          background: url(<%= b.first['pic'] %>) center center no-repeat;
+          background-size: cover;
+        "></div>
+      <% end %>
     </div>
   </body>
 </html>
