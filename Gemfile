@@ -9,6 +9,14 @@ gem 'rufus-scheduler'
 gem 'mailgun-ruby'
 gem 'mailgun_rails'
 
+# whoa frontends
+gem 'react-rails', '~>1.0'
+source 'http://rails-assets.org' do
+  gem 'rails-assets-alt'
+  gem 'rails-assets-react-router'
+  gem 'rails-assets-moment'
+end
+
 # for payments
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 

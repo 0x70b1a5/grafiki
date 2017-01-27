@@ -1,4 +1,1 @@
-<%= @bounty.lat %> <%= @bounty.lng %>
-
-<%= link_to 'edit', edit_bounty_path(@bounty) %> | 
-<%= link_to 'back', bounties_path %>
+<%= react_component("Bounty", @bounty.component_hash) %>

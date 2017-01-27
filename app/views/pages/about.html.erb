@@ -1,31 +1,24 @@
 <% content_for :title do %> | about<% end %>
-<%= content_for :titlebox do %><div id="hed" class="in-float">about</div><% end %>
-<div style="  
-  margin: 0;
-  margin-right: 75px;
-  padding: 1rem;
-  background-color: #eef;
-  display: inline-table;
-  border: 1px solid #99a">
-<h1> What is Grafiki? </h1>
-<p>Grafiki is how artists get paid for public art. We help creators accept donations for their work, and we empower communities to commission unique art from talented artists by posting public bounties.</p>
+<h1 class="dark button"> About Grafiki </h1>
+<div class="light button">
+  <h2> What is Grafiki? </h2>
+  <p>Grafiki is how artists get paid for public art. We help creators accept donations for their work, and we empower communities to commission unique art from talented artists by posting public bounties.</p>
 
-<p>Grafiki is the world's first map of real-world art. Up to now, artists have needed museums or websites to make a living. On Grafiki, artists no longer need to be tech-savvy can monetize their passion.</p>
+  <p>Grafiki is the world's first map of real-world art. Up to now, artists have needed museums or websites to make a living. On Grafiki, artists no longer need to be tech-savvy can monetize their passion.</p>
 
-<h2> How does it work? </h2>
-<h3> For artists: </h3>
-<ol><li>If you have art that's already public, you can <%= link_to upload_bounties_path do %>upload it to the map<% end %> to start accepting payments, once you prove the art is yours.</li>
-  <ul><li><span style="font-size:0.8rem">Confirm you are the artist by posting a status update from a verified source, like social media or email. We will approve you upon receipt.</span></li></ul>
-  <li>If you are looking for work, you can <%= link_to bounties_path do %>browse open art bounties<% end %> to get started hunting.</li>
-  <ul><li><span style="font-size:0.8rem">Once you see a bounty you like, contact the patron to arrange the work. Funds are released to you once the patron confirms the project is finished.</span></li></ul></ol>
-<h3> For patrons: </h3>
-<ol><li>When you're out and about and you see art that you like - a mural, a sculpture - pull up grafiki to <%= link_to filled_bounties_path do %>find the artwork by location<% end %>. You can tip the artist as much as you like.</li>
-  <li>If you own a property or a space, you can <%= link_to new_bounty_path do %>post a public bounty<% end %> to entice local artists to create the art that you're envisioning.</li>
-  <ul><li><span style="font-size:0.8rem">You can screen every applicant before accepting them. We do not release your payment until you are satisfied with their work.</span></li></ul></ol>
-<h3> For the public: </h3>
-<ol><li>Like urban exploration, Grafiki lets you <%= link_to root_path do %>adventure locally<% end %> to discover art you didn't know was there. Every place has its beautiful secrets.</li>
-  <li>Finally, communities can <%= link_to new_bounty_path do %>commission art<% end %> and keep their environment special.</li></ol>
+  <h2> How does it work? </h2>
+  <h3> For artists: </h3>
+  <ol><li>If you have art that's already public, you can <%= link_to upload_bounties_path do %>upload it to the map<% end %> to start accepting payments, once you prove the art is yours.</li>
+    <ul><li><span style="font-size:0.8rem">Confirm you are the artist by posting a status update from a verified source, like social media or email. We will approve you upon receipt.</span></li></ul>
+    <li>If you are looking for work, you can <%= link_to bounties_path do %>browse open art bounties<% end %> to get started hunting.</li>
+    <ul><li><span style="font-size:0.8rem">Once you see a bounty you like, contact the patron to arrange the work. Funds are released to you once the patron confirms the project is finished.</span></li></ul></ol>
+  <h3> For patrons: </h3>
+  <ol><li>When you're out and about and you see art that you like - a mural, a sculpture - pull up grafiki to <%= link_to filled_bounties_path do %>find the artwork by location<% end %>. You can tip the artist as much as you like.</li>
+    <li>If you own a property or a space, you can <%= link_to new_bounty_path do %>post a public bounty<% end %> to entice local artists to create the art that you're envisioning.</li>
+    <ul><li><span style="font-size:0.8rem">You can screen every applicant before accepting them. We do not release your payment until you are satisfied with their work.</span></li></ul></ol>
+  <h3> For the public: </h3>
+  <ol><li>Like urban exploration, Grafiki lets you <%= link_to root_path do %>adventure locally<% end %> to discover art you didn't know was there. Every place has its beautiful secrets.</li>
+    <li>Finally, communities can <%= link_to new_bounty_path do %>commission art<% end %> and keep their environment special.</li></ol>
 </div>
-</div>
-<style> h1 { margin-top: 0 } p {margin-top:1rem;} 
+<style> h1 { margin-top: 0 } p {margin-top:1rem;}
 </style>

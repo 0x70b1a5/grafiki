@@ -1,68 +1,27 @@
-<% if @bounty.pic %>
-  <div class='b-p'>
-    <%= link_to @bounty.pic, target: "_blank" do %>
-      <img style='max-width:400px;max-height:400px;' src='<%= @bounty.pic %>'>
-    <% end %>
+<div class="bounty-component">
+  <div class="bc-image">
+    <a href="<%= @bounty.pic %>">
+      <img src="<%= @bounty.pic %>" style="max-height: 300px" />
+    </a>
   </div>
-  <div style='text-align:center'> 
-    <div class='b-r'> 
-      <b><%= @bounty.title %></b> <span style="font-size:0.8rem">by <%= @bounty.artist %></span> | <%=@bounty.votes.count%>
-      <% if @bounty.user != current_user %>
-        <%= button_to '+vote', 
-          vote_bounty_path(@bounty), 
-          method: :post, 
-          style: "font-size: 0.8rem; background: none; color: #f06090" %>
-      <%end%>
+  <div class="bc-info">
+    <h2><%= @bounty.title %></h2>
+    <div><pre>Location: <%= @bounty.lat.round(6) %>, <%= @bounty.lng.round(6) %></pre></div>
+     <div><%= @bounty.description || "No description given." %></div>
+    <div>Artist: <%=@bounty.artist%></div>
+    <div>Commissioned by: <%=@bounty.patron || "unknown"%></div>
+    <p></p>
+    <div>
+      <a href="/escrows/new/?bounty_id=<%=@bounty.id%>">
+        <div class="dark button">
+          <%= if @bounty.pic then "Donate to this artist" else "Raise this bounty" end %>
+        </div>
+      </a>
+      <a href="/bounties/<%=@bounty.id%>">
+        <div class="dark button">
+          View on webpage
+        </div>
+      </a>
     </div>
-    <% if @bounty.amount > 0 %>
-      <div class='b-a'>bounty: $ <%= @bounty.amount %></div>
-    <% end %>
   </div>
-<% else %>
-  <div style='text-align:center'> 
-    <div class='b-a'>$ <%= @bounty.amount %></div>
-  </div>
-  <% if @bounty.user != current_user %>
-    <%= button_to 'fill', fill_bounty_path(@bounty), 
-      method: :post, class: "row", id: "buttonto" %>
-  <% end %>
-<% end %>
-<div class='b-s'> 
-  <p><%= @bounty.description %></p>
-  <p class='b-n'>commissioned by <%= @bounty.patron || 'anonymous' %></p>
 </div>
-
-<div style="margin:5px;display:flex; align-items: center; justify-content: center">
-  <%= link_to "/escrows/new/bounty_id?=" + @bounty.id.to_s do %>
-    <div class="in-float" id="ab">tip this artist</div>
-  <% end %>
-  <% # if @bounty.address != "1BitcoinAddressNotCurrentlyKnown" %>
-  <%#= link_to "https://chart.googleapis.com/chart?cht=qr&chs=75x75&chl" + @bounty.address do 
-    <div class="in-float">bitcoin</div>
-  <% end #end %>
-</div>
-
-<p class="b-n"><% if @bounty.artist == "unknown" %>
-  <em>we don't know who made this art yet. 
-  please <a href="mailto:go@grafiki.com">email us</a> if you do. 
-  <br>you can also to help spread the word by sharing this:</em>
-  <% end %>
-  <br>share: <span class="at_share_button_elements addthis_toolbox" addthis:title="see local art: <%=@bounty.title%> on grafiki" addthis:url="http://grafiki.org/bounties/<%= @bounty.id %>" >
-    <a class="addthis_button_instagram"></a>
-    <a class="addthis_button_tumblr"></a>
-    <a class="addthis_button_pinterest_share"></a>
-    <a class="addthis_button_twitter"></a>
-    <a class="addthis_button_facebook"></a>
-    <a class="addthis_button_reddit"></a>
-    <a class="addthis_button_email"></a>
-    <a class="addthis_button_hyperlink"></a>
-    <a class="addthis_counter addthis_bubble_style"></a>
-    <%= link_to @bounty do %> link <% end %> 
-  </span>
-</p>
-<div>
-  <!-- maybe don't have comments just yet -->
-  <!-- <div id="disqus_thread"></div> -->
-  <script> addthis.toolbox(".addthis_toolbox");</script>
-</div>
-

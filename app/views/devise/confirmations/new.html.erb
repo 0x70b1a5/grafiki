@@ -1,18 +1,11 @@
-<div class="in-float" style="display:table">
 <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
-
-  <div class="signupfield">
-    email<br />
-    <%= f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+  <div class="button light">
+    <h2> Resend confirmation email </h2>
+    <p><%= f.email_field :email, autofocus: true, placeholder: "Email", class: "normalize-input", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %></p>
+    <p><%= f.submit "Resend email", :class => "dark button" %></p>
   </div>
-
-  <div class="actions">
-    <%= f.submit "resend confirmation instructions" %>
-  </div>
-<% end %>
-
+  <% end %>
   <div class='links'>
     <%= render "devise/shared/links" %>
   </div>
-</div>

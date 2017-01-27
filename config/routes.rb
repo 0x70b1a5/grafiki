@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pages/map'
   get 'pages/about'
 
   resources :candidates
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
       get  'award'
       post 'award'
       get  'detail'
+      get  'show'
     end
 
     collection do
@@ -34,5 +36,5 @@ Rails.application.routes.draw do
   resources :escrows
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'map#index'
+  root 'pages#map'
 end

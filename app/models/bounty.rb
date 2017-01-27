@@ -6,11 +6,11 @@ class Bounty < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 128 },
     on: [:create]
-  validates :lat, presence: true, 
+  validates :lat, presence: true,
     numericality: { less_than_or_equal_to: 90,
                     greater_than_or_equal_to: -90 },
     on: [:create]
-  validates :lng, presence: true, 
+  validates :lng, presence: true,
     numericality: { less_than_or_equal_to: 180,
                     greater_than_or_equal_to: -180 },
     on: [:create]
@@ -41,5 +41,19 @@ class Bounty < ApplicationRecord
     else
       all
     end
+  end
+
+  def component_hash
+    {
+      "id": self.id,
+      "title": self.title,
+      "artist": self.artist,
+      "description": self.description,
+      "pic": self.pic,
+      "amount": self.amount,
+      "patron": self.patron,
+      "lat": self.lat,
+      "lng": self.lng
+    }
   end
 end

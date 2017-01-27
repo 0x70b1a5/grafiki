@@ -1,16 +1,10 @@
 <%= content_for :title do %> | reset<% end %>
-
-<div class="in-float" style="display:table">
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
-
-  <div class="signupfield">
-    <p>email</p>
-    <p><%= f.email_field :email, autofocus: true %></p>
-  </div>
-
-  <div class="actions">
-    <p><%= f.submit "reset password" %></p>
+  <div class="button light">
+    <h2> Reset Password </h2>
+    <p><%= f.email_field :email, autofocus: true, placeholder: "Email", class: "normalize-input" %></p>
+    <p><%= f.submit "Reset password", :class => "dark button" %></p>
   </div>
 <% end %>
 
