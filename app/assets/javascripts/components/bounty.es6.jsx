@@ -11,12 +11,13 @@ class Bounty extends React.Component {
         url={"/bounties/"+bounty.id+"/fill"}
         theme={"light"} />
       : null
+    var bountyAmount = bounty.pic == "" ? bounty.amount : ""  
 
     return (
       <div className="bounty-component" key={bounty.id}>
         <BountyImage img={bounty.pic} maxw={"500px"} maxh={"300px"}/>
         <div className="bc-info">
-          <h2>{bounty.title}</h2>
+          <h2>{"$"+bountyAmount+": "+bounty.title}</h2>
           <div><pre>Location: {
               [bounty.lat, bounty.lng].map(
                 (coord) => {return String(coord).slice(0,8)}
