@@ -1,6 +1,7 @@
 <!-- TODO map controls? -->
 <input id="pac-input" class="normalize-input" type="text" placeholder="Find bounties near...">
 <div id="map">Loading map...</div>
+<div id="loading" class="button dark" style="display: none">Loading...</div>
 
 <script>
  function escapeHtml(str) {
@@ -134,7 +135,7 @@
 
  function drawMarkers(){
    // first, let the user know we are loading.
-   $( "#botflashes" ).html(`<div class="flash load">loading bounties... </div>`);
+   $( "#loading" ).attr("style", "display:block");
 
    // iterate over full db query
    //    restrict to visible:
@@ -319,8 +320,8 @@
        }
      }, 500); // TODO: solution that isn't time-based
 
-     // remove loading message; restore map nav
-     $( "#botflashes" ).html("");
+     // remove loading message
+     $( "#loading" ).attr("style", "display:none");
    });
 }
 
