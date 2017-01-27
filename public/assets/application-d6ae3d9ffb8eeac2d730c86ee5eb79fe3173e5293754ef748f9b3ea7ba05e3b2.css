@@ -1,0 +1,156 @@
+#hed {
+  background: #f00;
+}
+/* line 4, /home/hastur/grafiki/grafiki/app/assets/stylesheets/sessions.scss */
+#bgimg {
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+  background-color: transparent;
+  overflow-x: hidden;
+}
+
+#logo {
+  height: 2rem;
+}
+
+#page{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+#map {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.marker {
+display: inline-block;
+}
+
+#bgimg {
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+#opac {
+  background: radial-gradient(black,grey);
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+.bounty-component {
+  display: flex;
+  background: #eef;
+  border: 1px solid #aab;
+  padding: 1em;
+}
+
+.bc-info {
+  padding-left: 1em;
+}
+
+.nav {
+  display: flex;
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+.nav a{
+  flex-grow: 1;
+}
+.button {
+  border-right: 1px solid #aaa;
+  padding: 0.5em;
+  display: inline-block;
+}
+.nav .button{
+  vertical-align: top;
+  height: 2em;
+  line-height: 2em;
+  display: block;
+  text-align: center;
+}
+.dark {
+  background: #334 !important;
+  color: #eee !important;
+}
+.light {
+  background: #eef !important;
+  color: #001 !important;
+}
+#pac-input {
+  position: absolute;
+  z-index: 1;
+  width: 300px;
+}
+.normalize-input{
+  height: 2em;
+  margin: 1em;
+  padding-left: 1em;
+  font-size: 1em;
+}
+.paginator{
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+}
+.links{
+  display: flex;
+}
+input[type="submit"]{
+  background: inherit;
+  border: inherit;
+  font-family: 'Roboto';
+  font-size: 1em;
+}
+#bgimg{
+  width: 100vw;
+  height: 100vw;
+  position: absolute;
+  top: 0;
+  z-index: -2;
+}
+
+#opac {
+  background: radial-gradient(black,grey);
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
