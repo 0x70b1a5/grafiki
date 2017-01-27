@@ -5,6 +5,12 @@ class Bounty extends React.Component {
     var payText = bounty.pic == "" ?
       "Raise this bounty"
       : "Donate to this artist"
+    var fillBountyBtn = bounty.pic == "" ?
+      <Button
+        text="Fill this bounty"
+        url={"/bounties/"+bounty.id+"/fill"}
+        theme={"light"} />
+      : null
 
     return (
       <div className="bounty-component" key={bounty.id}>
@@ -25,6 +31,7 @@ class Bounty extends React.Component {
               text={payText}
               url={"/escrows/new/?bounty_id="+bounty.id}
               theme={"dark"} />
+            {fillBountyBtn}
             <Button
               text={"View on map"}
               url={"/pages/map/?id="+bounty.id}
