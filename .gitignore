@@ -44,3 +44,4 @@ bower.json
 
 # vim swap fils
 *.swp
+node_modules/
